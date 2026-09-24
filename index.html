@@ -121,9 +121,10 @@
     display: flex;
     min-height: 0;
     position: relative;
+    overflow: hidden;
   }
 
-  /* Sidebar */
+  /* Sidebar thu gọn được cả Desktop & Mobile */
   .sidebar {
     width: 260px;
     border-right: 1px solid var(--border);
@@ -134,7 +135,15 @@
     gap: 8px;
     overflow-y: auto;
     flex-shrink: 0;
+    transition: width 0.22s ease, padding 0.22s ease, transform 0.22s ease;
   }
+  .sidebar.collapsed {
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+    border-right: none;
+  }
+
   .btn-create {
     width: 100%;
     padding: 8px 12px;
@@ -147,6 +156,7 @@
     border-radius: 6px;
     cursor: pointer;
     transition: background 0.15s ease;
+    white-space: nowrap;
   }
   .btn-create:hover {
     background: #dbeafe;
@@ -532,21 +542,22 @@
     font-weight: 600;
   }
 
-  /* Vocab Drawer */
+  /* Vocab Drawer (Tra từ) */
   .drawer {
     position: fixed;
     top: 0;
-    right: -360px;
-    width: 340px;
+    right: -380px;
+    width: 360px;
     max-width: 90vw;
     height: 100%;
     background: var(--bg-surface);
     border-left: 1px solid var(--border);
     z-index: 50;
-    transition: right 0.2s ease;
+    transition: right 0.22s ease;
     display: flex;
     flex-direction: column;
     padding: 16px;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.1);
   }
   .drawer.open {
     right: 0;
@@ -555,7 +566,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
   .drawer-title {
     font-size: 14px;
@@ -564,7 +575,7 @@
   .drawer-close {
     background: transparent;
     border: none;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
     color: var(--text-muted);
   }
@@ -577,7 +588,7 @@
     flex: 1;
     padding: 8px 10px;
     font-family: inherit;
-    font-size: 12px;
+    font-size: 13px;
     border-radius: 6px;
     border: 1px solid var(--border);
     background: var(--bg-surface);
@@ -588,9 +599,9 @@
     border-color: var(--brand);
   }
   .search-row button {
-    padding: 8px 12px;
+    padding: 8px 14px;
     font-family: inherit;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     border-radius: 6px;
     border: none;
@@ -598,16 +609,44 @@
     color: #ffffff;
     cursor: pointer;
   }
+  
+  /* Cấu trúc hiển thị kết quả từ vựng cũ */
   .vocab-body {
     flex: 1;
     overflow-y: auto;
+  }
+  .vocab-result .word {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--brand);
+    margin-bottom: 4px;
+  }
+  .vocab-result .pos {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--success);
+    margin-top: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .vocab-result .def {
     font-size: 13px;
+    margin: 6px 0;
+    line-height: 1.5;
+    color: var(--text-primary);
+    padding-left: 8px;
+    border-left: 2px solid var(--border);
+  }
+  .vocab-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 12px;
   }
 
   .backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.3);
     z-index: 40;
     display: none;
   }
@@ -621,6 +660,7 @@
     line-height: 1.5;
   }
 
+  /* Responsive Mobile */
   @media (max-width: 768px) {
     .sidebar {
       position: fixed;
@@ -628,10 +668,16 @@
       left: 0;
       bottom: 0;
       z-index: 45;
+      width: 85%;
       transform: translateX(-100%);
-      transition: transform 0.2s ease;
     }
-    .sidebar.open { transform: translateX(0); }
+    .sidebar.open {
+      transform: translateX(0);
+    }
+    .sidebar.collapsed {
+      width: 85%;
+      padding: 12px;
+    }
     .panels-split { flex-direction: column; }
     .viewer-panel { height: 40vh; flex: none; }
   }
@@ -643,7 +689,7 @@
   <div style="display:flex; align-items:center; gap:10px;">
     <button id="sidebarToggleBtn" class="btn-outline" style="padding:4px 8px;">Mục lục</button>
     <div class="brand-title">
-      TOEIC
+      TOEIC Prep Hub
       <span class="brand-badge">ETS Series</span>
     </div>
   </div>
@@ -669,19 +715,20 @@
 
   <div class="drawer" id="vocabDrawer">
     <div class="drawer-head">
-      <span class="drawer-title">Từ điển tra cứu</span>
+      <span class="drawer-title">Tra từ vựng</span>
       <button class="drawer-close" id="vocabCloseBtn">&times;</button>
     </div>
     <div class="search-row">
-      <input type="text" id="vocabInput" placeholder="Nhập từ cần tra...">
+      <input type="text" id="vocabInput" placeholder="Nhập từ tiếng Anh...">
       <button id="vocabSearchBtn">Tra</button>
     </div>
-    <div class="vocab-body" id="vocabResult"></div>
+    <div class="vocab-body">
+      <div class="vocab-result" id="vocabResult"></div>
+    </div>
   </div>
 </div>
 
 <script>
-// Toàn bộ logic lõi giữ nguyên 100%
 window.TOEIC_KEYS = window.TOEIC_KEYS || {};
 window.TOEIC_SCRIPTS = window.TOEIC_SCRIPTS || {};
 window.TOEIC_EXPLANATIONS = window.TOEIC_EXPLANATIONS || {};
@@ -735,9 +782,14 @@ const sidebarEl = document.getElementById('sidebar');
 const mainStage = document.getElementById('mainStage');
 const backdrop = document.getElementById('backdrop');
 
+// Xử lý nút Mục lục cho cả Mobile và Desktop
 document.getElementById('sidebarToggleBtn').addEventListener('click', () => {
-  sidebarEl.classList.toggle('open');
-  backdrop.classList.toggle('open', sidebarEl.classList.contains('open'));
+  if (window.innerWidth <= 768) {
+    sidebarEl.classList.toggle('open');
+    backdrop.classList.toggle('open', sidebarEl.classList.contains('open'));
+  } else {
+    sidebarEl.classList.toggle('collapsed');
+  }
 });
 
 document.getElementById('addTestBtn').addEventListener('click', () => {
@@ -757,7 +809,10 @@ document.getElementById('addTestBtn').addEventListener('click', () => {
     renderMain();
   });
 
-  if (window.innerWidth <= 768) { sidebarEl.classList.remove('open'); backdrop.classList.remove('open'); }
+  if (window.innerWidth <= 768) { 
+    sidebarEl.classList.remove('open'); 
+    backdrop.classList.remove('open'); 
+  }
 });
 
 function renderSidebar() {
@@ -772,7 +827,10 @@ function renderSidebar() {
         renderSidebar(); 
         renderMain();
       });
-      if (window.innerWidth <= 768) { sidebarEl.classList.remove('open'); backdrop.classList.remove('open'); }
+      if (window.innerWidth <= 768) { 
+        sidebarEl.classList.remove('open'); 
+        backdrop.classList.remove('open'); 
+      }
     });
 
     card.innerHTML = `
@@ -948,7 +1006,7 @@ function renderMain() {
           const letter = b.getAttribute('data-letter');
           t.answers[q] = (t.answers[q] === letter) ? undefined : letter; 
           updateQuestionRowDOM(t, q);
-          document.getElementById('scoreDisplay').textContent = `Đã chọn: ${Object.keys(t.answers).length} / 200`;
+          document.getElementById('scoreDisplay').textContent = `Đã hoàn thành: ${Object.keys(t.answers).length} / 200`;
         }
       });
     });
@@ -1003,32 +1061,79 @@ function renderMain() {
   }
 }
 
-// Logic Tra từ
+// Logic Tra từ kết hợp Datamuse + Google Translate
 const vocabDrawer = document.getElementById('vocabDrawer');
 const vocabInput = document.getElementById('vocabInput');
 const vocabResult = document.getElementById('vocabResult');
 
-document.getElementById('vocabToggleBtn').addEventListener('click', () => { vocabDrawer.classList.add('open'); backdrop.classList.add('open'); vocabInput.focus(); });
-document.getElementById('vocabCloseBtn').addEventListener('click', () => { vocabDrawer.classList.remove('open'); backdrop.classList.remove('open'); });
-backdrop.addEventListener('click', () => { vocabDrawer.classList.remove('open'); backdrop.classList.remove('open'); sidebarEl.classList.remove('open'); });
+document.getElementById('vocabToggleBtn').addEventListener('click', () => {
+  vocabDrawer.classList.add('open');
+  backdrop.classList.add('open');
+  vocabInput.focus();
+});
+document.getElementById('vocabCloseBtn').addEventListener('click', () => {
+  vocabDrawer.classList.remove('open');
+  backdrop.classList.remove('open');
+});
+backdrop.addEventListener('click', () => {
+  vocabDrawer.classList.remove('open');
+  backdrop.classList.remove('open');
+  sidebarEl.classList.remove('open');
+});
+
+async function fetchWithTimeout(url, ms) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), ms);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error('bad status');
+    return await res.json();
+  } catch (err) { clearTimeout(timer); throw err; }
+}
+
+async function tryDatamuse(word) {
+  const data = await fetchWithTimeout('https://api.datamuse.com/words?sp=' + encodeURIComponent(word.toLowerCase()) + '&md=d&max=1', 2500);
+  const entry = data && data[0];
+  if (!entry || !entry.defs || entry.defs.length === 0) throw new Error('no defs');
+  let html = '<div class="word">' + entry.word + '</div>';
+  entry.defs.slice(0, 4).forEach(d => {
+    const parts = d.split('\t');
+    const pos = parts[0];
+    const def = parts[1] || parts[0];
+    html += '<div class="pos">' + pos + '</div><div class="def">• ' + def + '</div>';
+  });
+  return html;
+}
+
+async function translateToVi(text) {
+  const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=' + encodeURIComponent(text);
+  const data = await fetchWithTimeout(url, 2500);
+  return data[0].map(seg => seg[0]).join('');
+}
 
 async function lookupWord() {
   const word = vocabInput.value.trim(); if (!word) return;
-  vocabResult.innerHTML = '<div style="color:var(--text-muted); padding:10px 0;">Đang tra cứu dữ liệu...</div>';
+  vocabResult.innerHTML = '<div class="vocab-note">Đang tra từ...</div>';
+  const cambridgeUrl = 'https://dictionary.cambridge.org/dictionary/english/' + encodeURIComponent(word.toLowerCase());
+  
+  let viHtml = '';
   try {
-    const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=' + encodeURIComponent(word);
-    const res = await fetch(url);
-    const data = await res.json();
-    const vi = data[0].map(s => s[0]).join('');
-    vocabResult.innerHTML = `
-      <div style="font-weight:700; font-size:16px; margin-bottom:8px; color:var(--brand);">${word}</div>
-      <div style="font-size:13px; line-height:1.6; color:var(--text-secondary); background:var(--bg-subtle); padding:10px; border-radius:6px;">${vi}</div>
-      <div style="margin-top:12px;"><a href="https://dictionary.cambridge.org/dictionary/english/${encodeURIComponent(word)}" target="_blank" style="color:var(--brand); font-size:12px; text-decoration:none;">Xem thêm trên Cambridge Dictionary &rarr;</a></div>
-    `;
-  } catch (err) {
-    vocabResult.innerHTML = '<div style="color:var(--danger); font-size:12px;">Không thể tra từ vựng lúc này.</div>';
-  }
+    const vi = await translateToVi(word);
+    if (vi && vi.toLowerCase() !== word.toLowerCase()) {
+      viHtml = '<div class="pos" style="color:var(--success);">🇻🇳 Nghĩa tiếng Việt</div><div class="def"><b>' + vi + '</b></div>';
+    }
+  } catch (eVi) {}
+
+  try {
+    const html = await tryDatamuse(word);
+    vocabResult.innerHTML = html + viHtml + `<div class="vocab-note" style="margin-top:16px;"><a href="${cambridgeUrl}" target="_blank" style="color:var(--brand); text-decoration:none;">Xem Cambridge Dictionary ↗</a></div>`;
+    return;
+  } catch (e1) {}
+
+  vocabResult.innerHTML = (viHtml || '<div class="vocab-note">Không tìm thấy định nghĩa nhanh.</div>') + `<div class="vocab-note" style="margin-top:16px;"><a href="${cambridgeUrl}" target="_blank" style="color:var(--brand); text-decoration:none;">Mở trên Cambridge Dictionary ↗</a></div>`;
 }
+
 document.getElementById('vocabSearchBtn').addEventListener('click', lookupWord);
 vocabInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') lookupWord(); });
 
