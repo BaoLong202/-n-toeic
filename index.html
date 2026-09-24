@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ôn luyện TOEIC</title>
+<title>Ôn luyện TOEIC - Đề thi & Script</title>
 <style>
   :root {
     --bg: #f7f7f8; --panel: #ffffff; --border: #e2e2e6; --text: #1c1c1f; --muted: #6b6b73;
@@ -119,7 +119,7 @@
     <div style="display:flex; align-items:center; gap:8px;">
       <button id="sidebarToggleBtn" style="padding:4px 8px;">☰ Đề</button>
       <h1>📘 Ôn TOEIC</h1>
-      <div class="hint">Tự động chấm & Hỗ trợ xem Transcript</div>
+      <div class="hint">Tự động chấm & Hỗ trợ xem Transcript linh hoạt</div>
     </div>
     <div>
       <button id="vocabToggleBtn">🔤 Tra từ</button>
@@ -132,8 +132,8 @@
     </div>
     <div class="main" id="main">
       <div class="empty" id="emptyMsg">
-        Bấm <b>"+ Thêm bộ đề mới"</b>, tải lên file Đề thi, Audio nghe và file <b>Transcript</b>.<br><br>
-        Nhập Key đáp án một lần, bạn vừa làm bài vừa có thể chuyển đổi linh hoạt giữa <b>Đề thi</b> và <b>Transcript</b> để đối chiếu lời giải!
+        Bấm <b>"+ Thêm bộ đề mới"</b>, tải lên file Đề thi, Audio nghe và file <b>Transcript (Script)</b>.<br><br>
+        Nhập Key đáp án một lần, bạn vừa làm bài vừa có thể chuyển đổi mượt mà giữa <b>Đề thi</b> và <b>Transcript</b>!
       </div>
     </div>
     <div class="overlay" id="overlay"></div>
@@ -174,7 +174,7 @@ document.getElementById('addTestBtn').addEventListener('click', () => {
     pdfFile: null, pdfUrl: null,
     audioFile: null, audioUrl: null,
     transcriptFile: null, transcriptUrl: null,
-    viewMode: 'pdf', // 'pdf' hoặc 'transcript'
+    viewMode: 'pdf',
     numQuestions: 200, answers: {}, key: {}, notes: {}, keyOpen: false, keyText: ''
   };
   tests.push(t);
@@ -250,11 +250,11 @@ function renderSidebar() {
     audioLabel.appendChild(audioInput);
     btnRow.appendChild(audioLabel);
 
-    // Tải Transcript
+    // Tải Script / Transcript (Nhận cả PDF, HTML, TXT, Ảnh)
     const trLabel = document.createElement('label');
     trLabel.textContent = t.transcriptFile ? 'Đổi Script' : 'Tải Script';
     const trInput = document.createElement('input');
-    trInput.type = 'file'; trInput.accept = 'application/pdf,image/*';
+    trInput.type = 'file'; trInput.accept = 'application/pdf,text/html,text/plain,image/*';
     trInput.addEventListener('change', (e) => {
       const f = e.target.files[0]; if (!f) return;
       if (t.transcriptUrl) URL.revokeObjectURL(t.transcriptUrl);
@@ -264,7 +264,7 @@ function renderSidebar() {
     trLabel.appendChild(trInput);
     btnRow.appendChild(trLabel);
 
-    // Nút Xoá
+    // Xoá đề
     const delBtn = document.createElement('button');
     delBtn.className = 'del'; delBtn.textContent = 'Xoá';
     delBtn.addEventListener('click', (e) => {
@@ -385,7 +385,7 @@ function updateDocViewer(t) {
   } else {
     contentArea.innerHTML = `
       <div class="no-file">
-        <span>Chưa có file ${t.viewMode === 'pdf' ? 'Đề thi' : 'Transcript / Lời giải'}</span>
+        <span>Chưa có file ${t.viewMode === 'pdf' ? 'Đề thi' : 'Transcript / Script'}</span>
         <small>Tải file từ danh sách đề bên trái.</small>
       </div>
     `;
@@ -397,7 +397,6 @@ function renderMain() {
   if (!t) { mainEl.innerHTML = ''; mainEl.appendChild(emptyMsg); return; }
   mainEl.innerHTML = '';
 
-  // Thanh phát Audio
   const playerBar = document.createElement('div');
   playerBar.className = 'player-bar';
   if (t.audioUrl) {
@@ -429,15 +428,14 @@ function renderMain() {
   const split = document.createElement('div');
   split.className = 'center-split';
 
-  // Khung xem Đề thi / Transcript
   const docWrap = document.createElement('div');
   docWrap.className = 'doc-wrap';
 
   const docTabs = document.createElement('div');
   docTabs.className = 'doc-tabs';
   docTabs.innerHTML = `
-    <button class="doc-tab ${t.viewMode === 'pdf' ? 'active' : ''}" id="tabPdf">📄 Đề thi (PDF)</button>
-    <button class="doc-tab ${t.viewMode === 'transcript' ? 'active' : ''}" id="tabTranscript">📝 Transcript / Lời giải</button>
+    <button class="doc-tab ${t.viewMode === 'pdf' ? 'active' : ''}" id="tabPdf">📄 Đề thi</button>
+    <button class="doc-tab ${t.viewMode === 'transcript' ? 'active' : ''}" id="tabTranscript">📝 Script Lời thoại</button>
   `;
   docWrap.appendChild(docTabs);
 
@@ -447,7 +445,6 @@ function renderMain() {
   docWrap.appendChild(docContent);
   split.appendChild(docWrap);
 
-  // Khung bảng trả lời
   const ansPanel = document.createElement('div');
   ansPanel.className = 'answer-panel';
 
@@ -481,7 +478,6 @@ function renderMain() {
   head.appendChild(headBtns);
   ansPanel.appendChild(head);
 
-  // Khung nhập đáp án đúng (Key)
   const keyBox = document.createElement('div');
   keyBox.id = 'keyBoxArea';
   keyBox.className = 'key-box' + (t.keyOpen ? ' open' : '');
@@ -506,7 +502,6 @@ function renderMain() {
   keyBox.appendChild(keyActions);
   ansPanel.appendChild(keyBox);
 
-  // Danh sách các câu hỏi
   const scrollArea = document.createElement('div');
   scrollArea.className = 'scroll-area';
 
@@ -555,7 +550,7 @@ function renderMain() {
   split.appendChild(ansPanel);
   mainEl.appendChild(split);
 
-  // Bắt sự kiện chuyển tab Đề thi <-> Transcript
+  // Tab chuyển đổi
   document.getElementById('tabPdf').addEventListener('click', () => {
     t.viewMode = 'pdf';
     document.getElementById('tabPdf').classList.add('active');
