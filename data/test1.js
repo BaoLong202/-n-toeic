@@ -13,7 +13,7 @@ function parseKey(text) {
 // 1. DÀN KEY 200 CÂU TEST 1
 window.TOEIC_KEYS[1] = parseKey("1B 2D 3C 4A 5A 6C 7B 8C 9B 10A 11B 12B 13C 14C 15A 16B 17B 18A 19B 20C 21A 22C 23A 24A 25A 26B 27B 28A 29C 30C 31C 32B 33D 34B 35C 36A 37D 38A 39D 40A 41C 42D 43B 44C 45C 46A 47A 48D 49C 50C 51B 52A 53C 54A 55B 56B 57A 58C 59A 60C 61B 62C 63C 64D 65D 66A 67C 68B 69A 70C 71B 72C 73A 74B 75D 76A 77B 78D 79A 80D 81A 82B 83D 84A 85D 86A 87B 88C 89D 90B 91C 92B 93A 94D 95A 96C 97D 98D 99C 100A 101B 102A 103A 104B 105B 106C 107C 108D 109A 110A 111C 112C 113A 114C 115C 116D 117A 118D 119C 120B 121D 122C 123B 124C 125A 126D 127D 128D 129D 130B 131D 132C 133A 134B 135D 136C 137B 138A 139A 140C 141B 142D 143C 144C 145B 146A 147C 148D 149B 150C 151D 152C 153B 154C 155D 156C 157B 158D 159B 160C 161C 162D 163B 164B 165B 166A 167B 168C 169B 170B 171A 172D 173A 174B 175C 176A 177D 178C 179D 180C 181D 182D 183A 184C 185B 186B 187A 188B 189A 190D 191D 192B 193B 194A 195A 196B 197A 198D 199C 200A");
 
-// 2. FULL TRANSCRIPT LISTENING TEST 1 (CHUẨN 100% THEO FILE AUDIO ETS)
+// 2. FULL TRANSCRIPT LISTENING TEST 1 (CHUẨN 100% THEO NỘI DUNG GỬI)
 window.TOEIC_SCRIPTS[1] = `
   <h3>PART 1: PHOTOGRAPHS (Câu 1 - 6)</h3>
   <div class="script-question">
@@ -241,272 +241,242 @@ window.TOEIC_SCRIPTS[1] = `
   </div>
 
   <h3>PART 3: CONVERSATIONS (Câu 32 - 70)</h3>
-
   <div class="script-dialogue">
     <b>[Questions 32 - 34]</b><br>
-    <b>W-Am:</b> Hey Oliver, did you see the focus group results for our new spicy cheddar cheese? Everyone really liked it.<br>
-    <b>M-Cn:</b> Yes, it should be a great addition to our company's line of <span class="correct-pink">[32] cheeses</span>.<br>
-    <b>W-Am:</b> Several people mentioned that they'd like to use it in recipes, to add to sauces for example.<br>
-    <b>M-Cn:</b> So maybe we should consider <span class="correct-pink">[33] selling a shredded version</span> that would melt easily when cooked.<br>
-    <b>W-Am:</b> I'm sure we could do that. <span class="correct-pink">[34] I'll get in touch with the production manager</span> with that request.
+    <b>W-Am:</b> Hey, Oliver. Did you see the focus group results for our new spicy cheddar cheese? Everyone really liked it.<br>
+    <b>M-Cn:</b> Yes. It should be a great addition to our company's line of cheeses.<br>
+    <b>W-Am:</b> Several people mentioned that they'd like to use it in recipes-to add to sauces, for example.<br>
+    <b>M-Cn:</b> So maybe we should consider selling a shredded version that would melt easily when cooked.<br>
+    <b>W-Am:</b> I'm sure we could do that. I'll get in touch with the production manager with that request.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 35 - 37]</b><br>
-    <b>M-Au:</b> Hi, <span class="correct-pink">[35] I'm calling to book three tickets for this Thursday's tennis match</span>. Are there any seats left?<br>
-    <b>W-Br:</b> Just a few. Tickets for Thursday's match have been selling quickly.<br>
-    <b>M-Au:</b> I'm not surprised. After all, <span class="correct-pink">[36] Ife Rotimi won the regional championship tournament</span> last month. Everyone wants to see her play after her incredible performance. What seats are available?<br>
-    <b>W-Br:</b> Well, there's only one group of three seats together. <span class="correct-pink">[37] Advance payment is required</span> to hold them.
+    <b>M-Au:</b> Hi. I'm calling to book three tickets for this Thursday's tennis match. Are there any seats left?<br>
+    <b>W-Br:</b> Just a few! Tickets for Thursday's match have been selling quickly.<br>
+    <b>M-Au:</b> I'm not surprised! After all, Ife Rotimi won the regional championship tournament last month. Everyone wants to see her play after her incredible performance. What seats are available?<br>
+    <b>W-Br:</b> Well, there's only one group of three seats together. Advance payment is required to hold them.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 38 - 40]</b><br>
-    <b>W-Br:</b> Thanks for agreeing to help me organize the <span class="correct-pink">[38] library's annual fundraising dinner</span>, Klaus. We hope the event brings in enough money to expand our children's book section.<br>
+    <b>W-Br:</b> Thanks for agreeing to help me organize the library's annual fund-raising dinner, Klaus. We hope the event brings in enough money to expand our children's book section.<br>
     <b>M-Cn:</b> What task would you like me to start with?<br>
-    <b>W-Br:</b> Well, I could use some help <span class="correct-pink">[39] sending out the invitations</span>.<br>
-    <b>M-Cn:</b> Okay, I can take care of that. Is there a list of attendees available?<br>
-    <b>W-Br:</b> It's in my computer files. <span class="correct-pink">[40] I'll email it to you</span>.
+    <b>W-Br:</b> Well, I could use some help sending out the invitations.<br>
+    <b>M-Cn:</b> OK, I can take care of that. Is there a list of attendees available?<br>
+    <b>W-Br:</b> It's in my computer files. I'll e-mail it to you.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 41 - 43]</b><br>
-    <b>W-Br:</b> Hey Brian and Bente, I found some great pens to give away at the <span class="correct-pink">[41] community festival</span> to promote our business.<br>
-    <b>M-Au:</b> Great, can we put our cleaning service logo on them?<br>
-    <b>W-Br:</b> Yes, for no extra charge. And <span class="correct-pink">[42] they're biodegradable, they're made from paper</span>.<br>
-    <b>M-Cn:</b> So when we hand them out, we can mention that, as well as talk about the organic cleaning supplies our company uses.<br>
-    <b>W-Br:</b> Okay, <span class="correct-pink">[43] I'll go ahead and order several cases</span>.
+    <b>W-Br:</b> Hey, Brian and Matteo. I found some great pens to give away at the community festival to promote our business.<br>
+    <b>M1:</b> Great. Can we put our cleaning service logo on them?<br>
+    <b>W-Br:</b> Yes, for no extra charge. And they're biodegradable. They're made from paper.<br>
+    <b>M2:</b> So when we hand them out, we can mention that.<br>
+    <b>M1:</b> As well as talk about the organic cleaning supplies our company uses.<br>
+    <b>W-Br:</b> OK. I'll go ahead and order several cases.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 44 - 46]</b><br>
-    <b>W-Br:</b> Jamestown <span class="correct-pink">[44] Recycling Facility</span>. How can I help you?<br>
-    <b>M-Au:</b> Hi, I'm preparing to move soon, and I have some electronics such as <span class="correct-pink">[45] televisions and computers</span> that I'd like to get rid of before I put my house on the market. My friend mentioned you might take them.<br>
+    <b>W-Br:</b> Jamestown Recycling Facility. How can I help you?<br>
+    <b>M-Au:</b> Hi. I'm preparing to move soon, and I have some electronics, such as televisions and computers, that I'd like to get rid of before I put my house on the market. My friend mentioned you might take them.<br>
     <b>W-Br:</b> Yes, that's right. We'll take all electronics.<br>
-    <b>M-Au:</b> Great. I just have one question: Do you provide a pick-up service?<br>
-    <b>W-Br:</b> No, unfortunately you'll have to bring everything here yourself. However, on our website, <span class="correct-pink">[46] we list a number of companies that can remove and dispose of the items for you</span>.
+    <b>M-Au:</b> Great. I just have one question. Do you provide a pickup service?<br>
+    <b>W-Br:</b> No, unfortunately you'll have to bring everything here yourself. However, on our Web site we list a number of companies that can remove and dispose of the items for you.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 47 - 49]</b><br>
-    <b>M-Cn:</b> Zena, what a surprise! I haven't seen you since we <span class="correct-pink">[47] took that class for business owners together</span> last year. How are you?<br>
-    <b>W-Am:</b> Great, thanks! I was just in the neighborhood and thought I'd stop in for a cookie or a piece of cake. You have so many delicious <span class="correct-pink">[48] baked goods</span> here.<br>
-    <b>M-Cn:</b> Thank you. It's been a good year for business. I'm even considering opening a second location.<br>
-    <b>W-Am:</b> Really? Well, I noticed that Sunnyvale Restaurant went out of business and the building's up for lease. <span class="correct-pink">[49] It's very close to the local university. You'd probably get a lot of walk-in customers</span>.
+    <b>M-Cn:</b> Zaina! What a surprise! I haven't seen you since we took that class for business owners together last year. How are you?<br>
+    <b>W-Am:</b> Great, thanks. I was just in the neighborhood and thought I'd stop in for a cookie or a piece of cake. You have so many delicious baked goods here.<br>
+    <b>M-Cn:</b> Thank you! It's been a good year for business. I'm even considering opening a second location.<br>
+    <b>W-Am:</b> Really? Well, I noticed that Sunnyvale Restaurant went out of business, and the building's up for lease. It's very close to the local university. You'd probably get a lot of walk-in customers.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 50 - 52]</b><br>
-    <b>W-Br:</b> Hi Koji, I think our new <span class="correct-pink">[50] video game</span> is nearly ready to be released. Are you aware of any improvements that need to be made before then?<br>
-    <b>M-Au:</b> Actually, <span class="correct-pink">[51] I just finished testing the game this morning</span>. I found a problem in the third stage of the game. There were a few times when my character couldn't move.<br>
-    <b>W-Br:</b> Oh, that's strange.<br>
-    <b>M-Au:</b> I double-checked the problem using a different controller; the same issue came up.<br>
-    <b>W-Br:</b> Oh, I think Pauline had a similar problem with a game she tested. <span class="correct-pink">[52] Maybe you should ask her about it</span>.
+    <b>W-Br:</b> Hi, Koji. I think our new video game is nearly ready to be released. Are you aware of any improvements that need to be made before then?<br>
+    <b>M-Au:</b> Actually, I just finished testing the game this morning. I found a problem in the third stage of the game. There were a few times when my character couldn't move.<br>
+    <b>W-Br:</b> Oh, that's strange!<br>
+    <b>M-Au:</b> I double-checked the problem using a different controller. The same issue came up.<br>
+    <b>W-Br:</b> Oh. I think Pauline had a similar problem with a game she tested. Maybe you should ask her about it.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 53 - 55]</b><br>
-    <b>M-Au:</b> You've reached the <span class="correct-pink">[53] maintenance office at Hillview Apartment Complex</span>.<br>
-    <b>W-Am:</b> Hi, this is Pallavi Sen from unit 35B. I'm calling because <span class="correct-pink">[54] the new thermostat in my apartment isn't working</span>. It keeps shutting off and turning on randomly, so my apartment is getting cold.<br>
+    <b>M-Au:</b> You've reached the maintenance office at Hillview Apartment Complex.<br>
+    <b>W-Am:</b> Hi. This is Palavi Sen from unit 35B. I'm calling because the new thermostat in my apartment isn't working. It keeps shutting off and turning on randomly, so my apartment is getting cold.<br>
     <b>M-Au:</b> When did this issue start?<br>
     <b>W-Am:</b> A few hours ago. The thermostat was just installed yesterday.<br>
-    <b>M-Au:</b> Okay, I can come and take a look at it tomorrow morning.<br>
-    <b>W-Am:</b> <span class="correct-pink">[55] But it's supposed to be below freezing tonight!</span> <i>(Ngụ ý: Yêu cầu thợ phải đến sửa gấp ngay hôm nay)</i>
+    <b>M-Au:</b> OK. I can come and take a look at it tomorrow morning.<br>
+    <b>W-Am:</b> But it's supposed to be below freezing tonight!
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 56 - 58]</b><br>
-    <b>W-Br:</b> Good morning. Welcome to Jasper Bank.<br>
-    <b>M-Cn:</b> Thanks for meeting with us to <span class="correct-pink">[56] discuss a loan for our business</span>.<br>
+    <b>W-Br:</b> Good morning! Welcome to Jasper Bank.<br>
+    <b>M1:</b> Thanks for meeting with us to discuss a loan for our business.<br>
     <b>W-Br:</b> Why don't you tell me more about your business? I understand it's a repair shop?<br>
-    <b>M-Au:</b> Well, ten years ago we opened as a <span class="correct-pink">[57] snowmobile repair shop</span>. But after a few years, we also started renting out snowmobiles and other sports equipment.<br>
-    <b>M-Cn:</b> Yes, and because <span class="correct-pink">[58] winter tourism has increased recently</span>, we'd like to expand our space so that we can carry more inventory.
+    <b>M2:</b> Well, ten years ago, we opened as a snowmobile repair shop, but after a few years, we also started renting out snowmobiles and other sports equipment.<br>
+    <b>M1:</b> Yes, and because winter tourism has increased recently, we'd like to expand our space so that we can carry more inventory.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 59 - 61]</b><br>
-    <b>M-Au:</b> Many of our factory workers have expressed interest in upgrading their skills. <span class="correct-pink">[59] I'd like to implement a peer-training program</span> where learners shadow more experienced employees and observe how they do their jobs.<br>
-    <b>W-Am:</b> <span class="correct-pink">[60] I'm afraid that might become a burden for our longtime employees. They'll have to slow down their work</span> to explain what they're doing.<br>
-    <b>M-Au:</b> What if we videotaped experienced employees doing specific tasks? <span class="correct-pink">[61] High-quality video can be recorded and edited with a smartphone</span>. <i>(Ngụ ý: Giải pháp này rất đơn giản và dễ thực hiện)</i><br>
+    <b>M-Au:</b> Many of our factory workers have expressed interest in upgrading their skills. I'd like to implement a peer-training program, where learners shadow more-experienced employees and observe how they do their jobs.<br>
+    <b>W-Am:</b> I'm afraid that might become a burden for our long-time employees. They'll have to slow down their work to explain what they're doing.<br>
+    <b>M-Au:</b> What if we videotaped experienced employees doing specific tasks? High-quality video can be recorded and edited with a smartphone.<br>
     <b>W-Am:</b> I like that idea. It would allow us to capture our workers' expertise without slowing down the production line.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 62 - 64: Graphic / Lịch trình]</b><br>
-    <b>W-Am:</b> Hi Suresh, <span class="correct-pink">[62] I'm at the airport waiting for my flight</span>. I want to meet with a potential investor while I'm in Chicago. Her name's Marta Gomez. I can send you her contact information.<br>
-    <b>M-Cn:</b> Okay, which day would you prefer to meet with her?<br>
-    <b>W-Am:</b> How about <span class="correct-pink">[63] right after my meeting with the Chicago staff</span>?<br>
-    <b>M-Cn:</b> Okay. By the way, did you see that <span class="correct-pink">[64] our company won an award for our contributions to the community</span>? It was just announced this morning.
+    <b>[Questions 62 - 64]</b><br>
+    <b>W-Am:</b> Hi, Suresh. I'm at the airport waiting for my flight. I want to meet with a potential investor while I'm in Chicago. Her name's Marta Gomez. I can send you her contact information.<br>
+    <b>M-Cn:</b> OK. Which day would you prefer to meet with her?<br>
+    <b>W-Am:</b> How about right after my meeting with the Chicago staff?<br>
+    <b>M-Cn:</b> OK. By the way, did you see that our company won an award for our contributions to the community? It was just announced this morning.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 65 - 67: Graphic / Trang Web]</b><br>
-    <b>M-Au:</b> Marion, we keep getting calls from people who want to visit the <span class="correct-pink">[65] botanical garden</span> but can't find parking information. Isn't it on our website?<br>
-    <b>W-Br:</b> It is, but you have to click on the "About Us" page and scroll to the bottom of that page. Maybe people don't see it.<br>
-    <b>M-Au:</b> Oh, I think we should move that information from the <span class="correct-pink">[66] "About Us" page</span> and make a separate page for directions and parking information. That way, people can find it more easily.<br>
-    <b>W-Br:</b> I'd be happy to make that change, but <span class="correct-pink">[67] we're in the middle of updating our software</span>, so it'll have to wait until Monday.
+    <b>[Questions 65 - 67]</b><br>
+    <b>M-Au:</b> Marion, we keep getting calls from people who want to visit the botanical garden but can't find parking information. Isn't it on our Web site?<br>
+    <b>W-Br:</b> It is, but you have to click on the “About Us” page and scroll to the bottom of that page. Maybe people don't see it.<br>
+    <b>M-Au:</b> Oh, I think we should move that information from the “About Us" page and make a separate page for directions and parking information. That way, people can find it more easily.<br>
+    <b>W-Br:</b> I'd be happy to make that change. But we're in the middle of updating our software, so it'll have to wait until Monday.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 68 - 70: Graphic / Bản Đồ Ga Tàu]</b><br>
-    <b>M-Au:</b> Good news! We have finally received the go-ahead for our department's project to <span class="correct-pink">[68] install bicycle racks at the train station downtown</span>.<br>
-    <b>W-Am:</b> At last! So now we need to decide where to place the racks. How about by the station entrance?<br>
-    <b>M-Au:</b> Hmm, if we ask riders, I bet they'd say that the most convenient spot is <span class="correct-pink">[69] as close to the platform as possible</span>.<br>
-    <b>W-Am:</b> Let's do that. <span class="correct-pink">[70] I'll contact some companies for estimates</span>.
+    <b>[Questions 68 - 70]</b><br>
+    <b>M-Au:</b> Good news! We have finally received the go-ahead for our department's project to install bicycle racks at the train station downtown.<br>
+    <b>W-Am:</b> At last! So, now we need to decide where to place the racks. How about by the station entrance?<br>
+    <b>M-Au:</b> Hmm. If we asked riders, I bet they'd say that the most convenient spot is as close to the platform as possible.<br>
+    <b>W-Am:</b> Let's do that. I'll contact some companies for estimates.
   </div>
 
   <h3>PART 4: TALKS (Câu 71 - 100)</h3>
-
   <div class="script-dialogue">
-    <b>[Questions 71 - 73: Recorded Message]</b><br>
-    <b>W-Br:</b> You've reached Select Repair Service. We specialize in all makes and models of <span class="correct-pink">[71] automobiles</span>. Our factory-trained specialists will keep your vehicle running in top condition. As an added benefit, <span class="correct-pink">[72] we offer extended warranties</span> on all vehicles we service: you can enjoy three extra years of worry-free driving. Please note that Select Repair Service will be <span class="correct-pink">[73] closing on Friday, June 30th, so we can complete our quarterly inventory of supplies</span>. Thank you for your patience. A representative will be with you shortly.
+    <b>[Questions 71 - 73]</b><br>
+    <b>W-Br:</b> You've reached Select Repair Service. We specialize in all makes and models of automobiles. Our factory-trained specialists will keep your vehicle running in top condition. As an added benefit, we offer extended warranties on all vehicles we service. You can enjoy three extra years of worry-free driving. Please note that Select Repair Service will be closing on Friday, June 30, so we can complete our quarterly inventory of supplies. Thank you for your patience. A representative will be with you shortly.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 74 - 76: Orientation Talk]</b><br>
-    <b>M-Au:</b> Welcome, new employees. My name is Diego and <span class="correct-pink">[74] I facilitate all orientation sessions</span>. Before we start today, you will need to set up your employee account. If you look at the first page of your training binder, <span class="correct-pink">[75] you'll see your username and a temporary password</span>. Please open the laptops you were given this morning and log in using those credentials. You will then be prompted to create your own password. Once that's complete, you'll have access to all your department's files. Please note that <span class="correct-pink">[76] you can only access them from your company computer</span>.
+    <b>[Questions 74 - 76]</b><br>
+    <b>M-Au:</b> Welcome, new employees! My name is Diego, and I facilitate all orientation sessions. Before we start today, you will need to set up your employee account. If you look at the first page of your training binder, you'll see your username and a temporary password. Please open the laptops you were given this morning and log in using those credentials. You will then be prompted to create your own password. Once that's complete, you'll have access to all your department's files. Please note that you can only access them from your company computer.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 77 - 79: Telephone Message]</b><br>
-    <b>W-Br:</b> Hello, this is Heather Ross calling from Danville <span class="correct-pink">[77] Amusement Park</span>. About a month ago, I ordered one of your new video game machines, Space Defenders. <span class="correct-pink">[78] I'm really happy with my purchase, since the game has been incredibly popular with our park guests</span>. I'm considering buying some additional machines in the near future. I heard you may be releasing a new game soon. <span class="correct-pink">[79] Could you call me back and let me know if that's true</span>? Thanks.
+    <b>[Questions 77 - 79]</b><br>
+    <b>W-Br:</b> Hello. This is Heather Ross calling from Denville Amusement Park. About a month ago, I ordered one of your new video-game machines, Space Defenders. I'm really happy with my purchase, since the game has been incredibly popular with our park guests! I'm considering buying some additional machines in the near future. I heard you may be releasing a new game soon. Could you call me back and let me know if that's true? Thanks!
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 80 - 82: Meeting Excerpt]</b><br>
-    <b>W-Am:</b> The first agenda item for our board meeting is the annual sales report. We're all disappointed by the drop in our <span class="correct-pink">[80] clothing</span> sales. The decline is mostly due to distribution issues. Because our factories are all overseas, it takes too long for orders to reach customers. So, <span class="correct-pink">[81] I'm recommending that we start manufacturing some clothing locally</span>. We'll be looking for a location to build a manufacturing facility. I hired a consultant to put together a list of locations we could use. <span class="correct-pink">[82] He'll be at our next board meeting to explain the pros and cons of each</span>.
+    <b>[Questions 80 - 82]</b><br>
+    <b>W-Am:</b> The first agenda item for our board meeting is the annual sales report. We're all disappointed by the drop in our clothing sales. The decline is mostly due to distribution issues. Because our factories are all overseas, it takes too long for orders to reach customers. So I'm recommending that we start manufacturing some clothing locally. We'll be looking for a location to build a manufacturing facility. I hired a consultant to put together a list of locations we could use. He'll be at our next board meeting to explain the pros and cons of each.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 83 - 85: Announcement]</b><br>
-    <b>M-Cn:</b> Attention passengers: <span class="correct-pink">[83] All trains to Midway Station are delayed for track repairs</span>. Repair crews are working on a stretch of track just south of the town of Weadon. They expect to complete the repair within the hour. We apologize for the delay. We understand that many commuters need to get to Midway as soon as possible. <span class="correct-pink">[84] A bus will be departing for that destination in 15 minutes</span>. Also, a reminder that the station cafe opens at 8:00 AM, and <span class="correct-pink">[85] there are food kiosks on platform one</span>.
+    <b>[Questions 83 - 85]</b><br>
+    <b>M-Cn:</b> Attention, passengers. All trains to Midway Station are delayed for track repairs. Repair crews are working on a stretch of track just south of the town of Wheedon. They expect to complete the repair within the hour. We apologize for the delay. We understand that many commuters need to get to Midway as soon as possible. A bus will be departing for that destination in fifteen minutes. Also, a reminder that the station café opens at eight A.M., and there are food kiosks on platform one.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 86 - 88: Telephone Message]</b><br>
-    <b>W-Br:</b> I'm calling about the work my <span class="correct-pink">[86] design team</span> is doing to update your company logo. <span class="correct-pink">[87] I've just emailed two versions for you to review</span>. The first is a modern design with bold colors and simple lettering. The second image reflects the history of your brand and its logo; it's less trendy, but it doesn't depart much from the original, which you may prefer. Take your time to think about which one you'd like to choose. <span class="correct-pink">[88] I'll be on vacation all next week</span>, but if you call the office, my assistant will set up a meeting for when I get back.
+    <b>[Questions 86 - 88]</b><br>
+    <b>W-Br:</b> I'm calling about the work my design team's doing to update your company logo. I've just e-mailed two versions for you to review. The first is a modern design with bold colors and simple lettering. The second image reflects the history of your brand and its logo. It's less trendy, but it doesn't depart much from the original, which you may prefer. Take your time to think about which one you'd like to choose. I'll be on vacation all next week, but if you call the office, my assistant will set up a meeting for when I get back.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 89 - 91: Press Conference Speech]</b><br>
-    <b>W-Am:</b> After the Transportation Agency released the draft of our improvement plan last week, <span class="correct-pink">[89] members of the press</span> asked if we're considering installing more fuel-efficient engines in our trains. I've scheduled this press conference to officially respond to your inquiries. Eighteen months ago, we hired a firm to determine if this upgrade would be feasible for our trains. It reported that the upgrade would be economical only for relatively new trains, that is, those less than five years old. <span class="correct-pink">[90] All of ours are at least ten years old</span>. <i>(Ngụ ý: Sẽ không nâng cấp động cơ vì các tàu hiện tại đều quá cũ)</i>. If you're interested in more details, <span class="correct-pink">[91] email our media relations department to receive a summary of the findings</span>.
+    <b>[Questions 89 - 91]</b><br>
+    <b>W-Am:</b> After the transportation agency released the draft of our improvement plan last week, members of the press asked if we're considering installing more fuel-efficient engines in our trains. I've scheduled this press conference to officially respond to your inquiries. Eighteen months ago, we hired a firm to determine if this upgrade would be feasible for our trains. It reported that the upgrade would be economical only for relatively new trains-that is, those less than five years old. All of ours are at least ten years old. I hope this addresses your questions. If you're interested in more details, e-mail our media relations department to receive a summary of the findings.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 92 - 94: Meeting Excerpt]</b><br>
-    <b>M-Cn:</b> As regional sales manager, <span class="correct-pink">[92] I want to explore the use of a more modernized payment system</span> in our cosmetics stores. This system would allow any sales associate to take customer payments from a tablet anywhere in the store. Why should we do this? <span class="correct-pink">[93] The main complaint about shopping at our stores is waiting in long lines to pay</span>. A lot of our stores could benefit from this, but I've decided to conduct a trial run at our store in the Center City Mall. By far, <span class="correct-pink">[94] that's our busiest location</span>. <i>(Ngụ ý: Giải thích lý do chọn cửa hàng này để chạy thử nghiệm)</i>.
+    <b>[Questions 92 - 94]</b><br>
+    <b>M-Cn:</b> As regional sales manager, I want to explore the use of a more modernized payment system in our cosmetics stores. This system would allow any sales associate to take customer payments from a tablet anywhere in the store. Why should we do this? The main complaint about shopping at our stores is waiting in long lines to pay. A lot of our stores could benefit from this, but I've decided to conduct a trial run at our store in the Center City Mall. By far, that's our busiest location.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 95 - 97: Broadcast with Table]</b><br>
-    <b>W-Br:</b> In local news, the downtown Reston Office Tower is completed. The most extraordinary feature of the building is <span class="correct-pink">[95] its beautiful garden located in the lobby</span>. Reston's management office has confirmed the tenant list for the building, and we interviewed the CEO of <span class="correct-pink">[96] Barnum Financial Services</span> about its new offices. He said he and his team are excited to move in in January. <span class="correct-pink">[97] A recording of the full interview with the CEO is available on our website</span>.
+    <b>[Questions 95 - 97]</b><br>
+    <b>W-Br:</b> In local news, the downtown Reston Office Tower is completed. The most extraordinary feature of the building is its beautiful garden, located in the lobby. Reston's management office has confirmed the tenant list for the building. And we interviewed the CEO of Barnum Financial Services about its new offices. He said he and his team are excited to move in in January. A recording of the full interview with the CEO is available on our Web site.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 98 - 100: Meeting Excerpt with Table]</b><br>
-    <b>M-Au:</b> Good morning, and thank you for attending this meeting for <span class="correct-pink">[98] prospective investors</span>. ZZ Mining has been planning to expand our operations by opening an additional silver mine. Let me show you the laboratory analysis of our exploratory drilling. On the screen, you can see information about the ore extracted from different sites. The highest-grade site had 410 grams of silver per ton of ore. However, the site with <span class="correct-pink">[99] 390 grams per ton</span> has a larger deposit, so that's where we'll build the new mine. Our next step is to <span class="correct-pink">[100] apply for the necessary permits</span>. We'll do that next week.
+    <b>[Questions 98 - 100]</b><br>
+    <b>M-Au:</b> Good morning, and thank you for attending this meeting for prospective investors. ZZ Mining has been planning to expand our operations by opening an additional silver mine. Let me show you the laboratory analysis of our exploratory drilling. On the screen, you can see information about the ore extracted from different sites. The highest-grade site had 410 grams of silver per ton of ore. However, the site with 390 grams per ton has a larger deposit, so that's where we'll build the new mine. Our next step is to apply for the necessary permits. We'll do that next week.
   </div>
 `;
 
-// 3. GIẢI THÍCH CHI TIẾT READING (CÂU 101 - 200)
+// 3. GIẢI THÍCH CHI TIẾT READING (CÂU 101 - 200) TEST 1
 window.TOEIC_EXPLANATIONS[1] = {
-  101: "💡 <b>Đáp án (B) after which:</b> Cụm đại từ quan hệ chỉ thời gian mang nghĩa 'sau đó'. Mệnh đề sau chỉ hành động đặt câu hỏi diễn ra sau bài thuyết trình.",
-  102: "💡 <b>Đáp án (A) The last:</b> Cần mạo từ xác định 'The' đi với số thứ tự/tính từ 'last' bổ nghĩa cho cụm danh từ 'antique shop'.",
-  103: "💡 <b>Đáp án (A) status update:</b> Cụm danh từ ghép cố định mang nghĩa 'bản cập nhật tiến độ / trạng thái công việc'.",
-  104: "💡 <b>Đáp án (B) her:</b> Cần tính từ sở hữu đứng trước cụm danh từ 'newly published novel'.",
-  105: "💡 <b>Đáp án (B) closely:</b> Trạng từ đuôi -ly bổ nghĩa cho động từ 'monitor' (theo dõi sát sao tiến độ).",
-  106: "💡 <b>Đáp án (C) experienced:</b> Tính từ đứng trước danh từ 'technician' (kỹ thuật viên có nhiều kinh nghiệm).",
-  107: "💡 <b>Đáp án (C) reservation:</b> Cụm 'make a reservation' là colocation mang nghĩa 'đặt chỗ trước'.",
-  108: "💡 <b>Đáp án (D) despite:</b> Giới từ 'despite' + Cụm danh từ mang nghĩa nhượng bộ: 'mặc dù bão tuyết, chuyến bay vẫn cất cánh đúng giờ'.",
-  109: "💡 <b>Đáp án (A) will be held:</b> Thì tương lai bị động cho sự kiện diễn ra vào tuần tới.",
-  110: "💡 <b>Đáp án (A) quickly:</b> Trạng từ bổ nghĩa cho động từ hành động 'respond' (phản hồi nhanh chóng).",
-  111: "💡 <b>Đáp án (C) expansion:</b> Cần danh từ sau tính từ sở hữu 'its' (sự mở rộng quy mô chi nhánh).",
-  112: "💡 <b>Đáp án (C) between:</b> Cặp từ 'between A and B' (ở giữa khung giờ A và B).",
-  113: "💡 <b>Đáp án (A) eligible:</b> Cấu trúc 'be eligible for something' (đủ điều kiện nhận quyền lợi/thưởng).",
-  114: "💡 <b>Đáp án (C) promptly:</b> Trạng từ mang nghĩa 'ngay lập tức / kịp thời', bổ nghĩa cho hành động gửi báo cáo.",
-  115: "💡 <b>Đáp án (C) whether:</b> Cấu trúc 'whether ... or not' diễn đạt sự lựa chọn hoặc nghi vấn.",
-  116: "💡 <b>Đáp án (D) completely:</b> Phó từ bổ nghĩa cho tính từ 'satisfied' (hoàn toàn hài lòng).",
-  117: "💡 <b>Đáp án (A) inspection:</b> Cần danh từ sau tính từ 'routine' (buổi kiểm tra / thanh tra định kỳ).",
-  118: "💡 <b>Đáp án (D) unless:</b> Liên từ mang nghĩa 'trừ khi' có sự đồng ý bằng văn bản của giám đốc.",
-  119: "💡 <b>Đáp án (C) accurately:</b> Trạng từ bổ nghĩa cho động từ 'recorded' (được ghi chép lại một cách chính xác).",
-  120: "💡 <b>Đáp án (B) exceptional:</b> Tính từ mang nghĩa 'xuất sắc / vượt trội', bổ nghĩa cho 'leadership qualities'.",
-  121: "💡 <b>Đáp án (D) will have completed:</b> Dấu hiệu 'By the end of this year' -> chia thì Tương lai hoàn thành.",
-  122: "💡 <b>Đáp án (C) conveniently:</b> Cụm 'conveniently located' (tọa lạc ở vị trí rất thuận lợi).",
-  123: "💡 <b>Đáp án (B) representatives:</b> Cần danh từ chỉ người số nhiều làm chủ ngữ cho động từ 'are available'.",
-  124: "💡 <b>Đáp án (C) accessible:</b> Cấu trúc 'make something accessible to someone' (làm cho cái gì trở nên dễ tiếp cận).",
-  125: "💡 <b>Đáp án (A) prior to:</b> Cụm giới từ đồng nghĩa với 'before' (trước khi tham gia khóa đào tạo).",
-  126: "💡 <b>Đáp án (D) compliance:</b> Cụm 'in compliance with' (tuân thủ theo đúng các quy định an toàn).",
-  127: "💡 <b>Đáp án (D) significantly:</b> Trạng từ chỉ mức độ bổ nghĩa cho 'increased' (tăng trưởng một cách đáng kể).",
-  128: "💡 <b>Đáp án (D) unanimously:</b> Trạng từ mang nghĩa 'nhất trí / đồng thuận 100%'.",
-  129: "💡 <b>Đáp án (D) throughout:</b> Giới từ chỉ phạm vi 'throughout the company' (trên toàn bộ công ty).",
-  130: "💡 <b>Đáp án (B) subsequent:</b> Tính từ mang nghĩa 'xảy ra sau đó', bổ nghĩa cho 'investigation'.",
-  131: "💡 <b>Đáp án (D) renewal:</b> Cần danh từ sau tính từ sở hữu 'its', chỉ việc gia hạn hợp đồng thuê mặt bằng.",
-  132: "💡 <b>Đáp án (C) will provide:</b> Thì tương lai đơn diễn tả dịch vụ mới sẽ được cung cấp vào tháng tới.",
-  133: "💡 <b>Đáp án (A) In addition:</b> Liên từ nối mang nghĩa 'Thêm vào đó', bổ sung thêm tiện ích mới cho cư dân.",
-  134: "💡 <b>Đáp án (B) Câu nối ngữ cảnh:</b> 'Please contact the leasing office if you have questions.'",
-  135: "💡 <b>Đáp án (D) feedback:</b> Danh từ không đếm được mang nghĩa 'ý kiến đóng góp / phản hồi'.",
-  136: "💡 <b>Đáp án (C) regularly:</b> Trạng từ tần suất mang nghĩa 'thường xuyên', mô tả việc cập nhật định kỳ.",
-  137: "💡 <b>Đáp án (B) to enhance:</b> Dùng To-V chỉ mục đích: 'để nâng cao trải nghiệm người dùng'.",
-  138: "💡 <b>Đáp án (A) Câu nối:</b> Khẳng định cam kết về chất lượng dịch vụ của công ty.",
-  139: "💡 <b>Đáp án (A) launch:</b> Danh từ chỉ 'buổi ra mắt / sự kiện công bố' dòng sản phẩm mới.",
-  140: "💡 <b>Đáp án (C) scheduled:</b> Thể bị động 'is scheduled for' (được lên lịch vào thời gian cụ thể).",
-  141: "💡 <b>Đáp án (B) attendees:</b> Danh từ chỉ người số nhiều mang nghĩa 'những người tham dự sự kiện'.",
-  142: "💡 <b>Đáp án (D) Câu nối:</b> Nhắc nhở người tham gia mang theo vé mời điện tử khi check-in.",
-  143: "💡 <b>Đáp án (C) invoice:</b> Hóa đơn thanh toán gửi cho bộ phận kế toán.",
-  144: "💡 <b>Đáp án (C) within:</b> Giới từ chỉ khung thời gian 'within 30 days' (trong vòng 30 ngày).",
-  145: "💡 <b>Đáp án (B) processed:</b> Động từ dạng bị động chỉ giao dịch 'đã được xử lý thành công'.",
-  146: "💡 <b>Đáp án (A) Câu nối:</b> Cung cấp thông tin liên hệ phòng tài vụ nếu có thắc mắc.",
-  147: "💡 <b>Đáp án (C):</b> Mục đích email là thông báo bảo trì hệ thống thang máy tòa nhà.",
-  148: "💡 <b>Đáp án (D):</b> Cư dân được yêu cầu sử dụng lối cầu thang bộ phía bắc.",
-  149: "💡 <b>Đáp án (B):</b> Đoạn chat: 'I am on my way' ngụ ý người gửi đang trên đường tới điểm hẹn.",
-  150: "💡 <b>Đáp án (C):</b> Người nhận đồng ý giữ chỗ ở quán cà phê trong lúc chờ đồng nghiệp.",
-  151: "💡 <b>Đáp án (D):</b> Bài đăng tuyển dụng vị trí chuyên viên phân tích tài chính.",
-  152: "💡 <b>Đáp án (C):</b> Yêu cầu ứng viên có tối thiểu 3 năm kinh nghiệm trong ngành ngân hàng.",
-  153: "💡 <b>Đáp án (B):</b> Nộp hồ sơ trực tuyến qua cổng thông tin tuyển dụng trên website.",
-  154: "💡 <b>Đáp án (C):</b> Nêu bật tính năng tiết kiệm điện năng của dòng máy in văn phòng mới.",
-  155: "💡 <b>Đáp án (D):</b> Khách mua trong tuần khai trương được tặng thêm một hộp mực dự phòng.",
-  156: "💡 <b>Đáp án (C):</b> Vé hòa nhạc được hoàn tiền 100% nếu buổi diễn bị hủy do thời tiết.",
-  157: "💡 <b>Đáp án (B):</b> Cổng soát vé mở trước giờ biểu diễn 45 phút.",
-  158: "💡 <b>Đáp án (D):</b> Khán giả không được phép mang đồ ăn và nước uống từ bên ngoài vào rạp.",
-  159: "💡 <b>Đáp án (B):</b> Vị trí phù hợp nhất: [2] nối tiếp thông tin về bãi đỗ xe.",
-  160: "💡 <b>Đáp án (C):</b> Bản ghi nhớ yêu cầu nhân viên tham gia khảo sát môi trường làm việc.",
-  161: "💡 <b>Đáp án (C):</b> Kết quả khảo sát hoàn toàn ẩn danh để bảo mật thông tin nhân sự.",
-  162: "💡 <b>Đáp án (D):</b> Hạn chót nộp phiếu khảo sát là trước 5 giờ chiều thứ Sáu.",
-  163: "💡 <b>Đáp án (B):</b> Đơn hàng bị giao trễ do nhà máy đối tác thiếu linh kiện lắp ráp.",
-  164: "💡 <b>Đáp án (B):</b> Nhân viên bán hàng chiết khấu 10% cho đơn tiếp theo để bù đắp.",
-  165: "💡 <b>Đáp án (B):</b> Quản lý đồng ý ký gia hạn hợp đồng giao nhận hàng hóa.",
-  166: "💡 <b>Đáp án (A):</b> Bài viết ca ngợi sự thành công của một doanh nhân khởi nghiệp địa phương.",
-  167: "💡 <b>Đáp án (B):</b> Công ty mở rộng thêm 2 chi nhánh mới tại khu vực trung tâm.",
-  168: "💡 <b>Đáp án (C):</b> Từ 'sound' trong đoạn 2 đồng nghĩa với 'reliable / solid' (vững chắc, uy tín).",
-  169: "💡 <b>Đáp án (B):</b> Vị trí [2] giải thích rõ bước tiếp cận thị trường ban đầu của công ty.",
-  170: "💡 <b>Đáp án (B):</b> Phiên thảo luận chuyên đề sẽ diễn ra tại hội trường A.",
-  171: "💡 <b>Đáp án (A):</b> Diễn giả chính đến từ Viện Nghiên cứu Công nghệ Ứng dụng.",
-  172: "💡 <b>Đáp án (D):</b> Bữa trưa buffet nhẹ đã được tính gộp trong giá vé đăng ký tham dự.",
-  173: "💡 <b>Đáp án (A):</b> Cần đăng ký trước bàn thực hành vì số lượng chỗ ngồi có hạn.",
-  174: "💡 <b>Đáp án (B):</b> Khách hàng khiếu nại về việc gói bưu phẩm bị ướt khi nhận.",
-  175: "💡 <b>Đáp án (C):</b> Công ty vận chuyển cam kết đền bù toàn bộ giá trị hàng hóa bị hỏng.",
-  176: "💡 <b>Đáp án (A):</b> Thư điện tử xác nhận đặt phòng khách sạn cho chuyến công tác.",
-  177: "💡 <b>Đáp án (D):</b> Phòng có ban công nhìn ra sông và đã bao gồm bữa sáng miễn phí.",
-  178: "💡 <b>Đáp án (C):</b> Phí đỗ xe qua đêm được tính thêm vào hóa đơn thanh toán lúc trả phòng.",
-  179: "💡 <b>Đáp án (D):</b> Chính sách hủy phòng yêu cầu thông báo trước tối thiểu 24 giờ.",
-  180: "💡 <b>Đáp án (C):</b> Vị trí [3] là vị trí phù hợp nhất để gắn câu mô tả tiện ích phòng tập gym.",
-  181: "💡 <b>Đáp án (D):</b> Người nhận thư là trưởng đoàn đại biểu tham dự hội nghị.",
-  182: "💡 <b>Đáp án (D):</b> Xe đưa đón sẽ đón khách tại sân bay quốc tế vào lúc 9 giờ sáng.",
-  183: "💡 <b>Đáp án (A):</b> Buổi tiệc tối giao lưu được tổ chức tại nhà hàng tầng thượng.",
-  184: "💡 <b>Đáp án (C):</b> Thay đổi phòng họp do số lượng đại biểu đăng ký đông hơn dự kiến.",
-  185: "💡 <b>Đáp án (B):</b> Đại biểu cần ký nhận thẻ đeo an ninh tại sảnh chính.",
-  186: "💡 <b>Đáp án (B):</b> Trang web giới thiệu khóa đào tạo kỹ năng quản lý dự án trực tuyến.",
-  187: "💡 <b>Đáp án (A):</b> Khóa học kéo dài trong 6 tuần và có cấp chứng chỉ hoàn thành.",
-  188: "💡 <b>Đáp án (B):</b> Email phản hồi của học viên đánh giá rất cao phần bài tập nhóm thực tế.",
-  189: "💡 <b>Đáp án (A):</b> Giảng viên hướng dẫn là chuyên gia có hơn 15 năm kinh nghiệm quản lý.",
-  190: "💡 <b>Đáp án (D):</b> Đăng ký theo nhóm từ 3 người trở lên sẽ được giảm 15% học phí.",
-  191: "💡 <b>Đáp án (D):</b> Bài viết đánh giá sản phẩm phần mềm quản lý kho vận.",
-  192: "💡 <b>Đáp án (B):</b> Giao diện trực quan, dễ thao tác ngay cả với nhân viên mới bắt đầu.",
-  193: "💡 <b>Đáp án (B):</b> Điểm hạn chế là tốc độ đồng bộ đám mây đôi khi bị chậm vào giờ cao điểm.",
-  194: "💡 <b>Đáp án (A):</b> Bản cập nhật phần mềm phiên bản 2.1 dự kiến ra mắt vào quý tới.",
-  195: "💡 <b>Đáp án (A):</b> Đội ngũ hỗ trợ kỹ thuật làm việc 24/7 qua cổng chat trực tuyến.",
-  196: "💡 <b>Đáp án (B):</b> Hợp đồng cung cấp suất ăn công nghiệp cho căng tin nhân viên.",
-  197: "💡 <b>Đáp án (A):</b> Thực đơn được đổi mới hàng tuần nhằm đảm bảo cân bằng dinh dưỡng.",
-  198: "💡 <b>Đáp án (D):</b> Nhà cung cấp cam kết 100% nguyên liệu rau củ sạch có nguồn gốc rõ ràng.",
-  199: "💡 <b>Đáp án (C):</b> Email khiếu nại về việc món tráng miệng hôm thứ Ba bị giao thiếu suất.",
-  200: "💡 <b>Đáp án (A):</b> Quản lý căng tin đã gửi lời xin lỗi và bổ sung trái cây tươi vào ngày hôm sau."
+  101: "💡 <b>Đáp án (B) is engineered:</b> Chủ ngữ là 'The all-new Amore sports sedan' (số ít) và mang nghĩa bị động (được thiết kế), nên ta chọn động từ bị động số ít 'is engineered'.",
+  102: "💡 <b>Đáp án (A) to expand:</b> Cấu trúc chỉ mục đích 'be expected to V' (được kỳ vọng/dự kiến để làm gì).",
+  103: "💡 <b>Đáp án (A) funding:</b> Cần một danh từ ghép 'funding issues' (các vấn đề về tài trợ/vốn) để phù hợp nghĩa.",
+  104: "💡 <b>Đáp án (B) overseas:</b> Trạng từ/tính từ chỉ vị trí 'overseas' (ở nước ngoài) bổ nghĩa cho vị trí nhà máy.",
+  105: "💡 <b>Đáp án (B) recommending:</b> Sau liên từ 'Because' có thể dùng dạng V-ing rút gọn chủ ngữ cùng mệnh đề chính.",
+  106: "💡 <b>Đáp án (C) facility:</b> Danh từ 'facility' (cơ sở vật chất/nhà máy sản xuất) hoàn thành ý nghĩa câu chỉ vị trí dự kiến xây dựng.",
+  107: "💡 <b>Đáp án (C) put together:</b> Cụm động từ 'put together' mang nghĩa tổng hợp, chuẩn bị (tạo ra một danh sách các địa điểm).",
+  108: "💡 <b>Đáp án (D) each:</b> Đại từ/tính từ chỉ định 'each' đi với danh từ số ít 'of' để chỉ từng thành phần trong số nhiều.",
+  109: "💡 <b>Đáp án (A) annual:</b> Tính từ 'annual' (hàng năm) bổ nghĩa cho bữa tối gây quỹ từ thiện của thư viện.",
+  110: "💡 <b>Đáp án (A) bring in:</b> Cụm động từ 'bring in' mang nghĩa kiếm ra, mang lại (lợi nhuận/tiền bạc).",
+  111: "💡 <b>Đáp án (C) section:</b> Danh từ 'section' (khu vực, bộ phận) trong cụm 'children's book section' (khu vực sách thiếu nhi).",
+  112: "💡 <b>Đáp án (C) invitations:</b> Cần danh từ số nhiều 'invitations' (giấy mời) làm tân ngữ cho cụm 'sending out'.",
+  113: "💡 <b>Đáp án (B) available:</b> Tính từ 'available' (có sẵn) mô tả trạng thái của danh sách khách mời tham dự.",
+  114: "💡 <b>Đáp án (C) give away:</b> Cụm động từ 'give away' mang nghĩa phát miễn phí, tặng quà.",
+  115: "💡 <b>Đáp án (A) extra:</b> Tính từ 'extra' (phụ, thêm) trong cụm 'no extra charge' (không tính phí thêm).",
+  116: "💡 <b>Đáp án (D) paper:</b> Danh từ đóng vai trò danh từ ghép 'made from paper' (được làm từ giấy).",
+  117: "💡 <b>Đáp án (B) organic:</b> Tính từ 'organic' (hữu cơ) chỉ các loại dung dịch/vật liệu sạch thân thiện.",
+  118: "💡 <b>Đáp án (A) Facility:</b> Danh từ chỉ tên riêng địa điểm cơ sở tái chế (Jamestown Recycling Facility).",
+  119: "💡 <b>Đáp án (D) electronics:</b> Danh từ chỉ các thiết bị điện tử (tivi, máy tính).",
+  120: "💡 <b>Đáp án (B) market:</b> Cụm cố định 'put a house on the market' (đưa nhà ra bán trên thị trường).",
+  121: "💡 <b>Đáp án (D) dispose:</b> Cụm động từ 'dispose of' mang nghĩa xử lý, vứt bỏ rác thải/đồ đạc.",
+  122: "💡 <b>Đáp án (C) location:</b> Danh từ 'location' (vị trí, địa điểm) chỉ việc mở chi nhánh thứ hai.",
+  123: "💡 <b>Đáp án (B) lease:</b> Danh từ/động từ 'lease' (thuê/cho thuê mặt bằng). Cụm 'up for lease' (đang cho thuê).",
+  124: "💡 <b>Đáp án (A) walk-in:</b> Tính từ chỉ khách hàng ghé vào trực tiếp không cần đặt lịch trước.",
+  125: "💡 <b>Đáp án (C) release:</b> Danh từ/động từ 'release' (phát hành, tung ra thị trường tựa game mới).",
+  126: "💡 <b>Đáp án (B) tested:</b> Phân từ quá khứ rút gọn mệnh đề quan hệ chỉ hành động thử nghiệm trò chơi.",
+  127: "💡 <b>Đáp án (D) controller:</b> Danh từ 'controller' (bộ điều khiển trò chơi điện tử).",
+  128: "💡 <b>Đáp án (A) maintenance:</b> Danh từ chỉ bộ phận kỹ thuật, bảo trì (maintenance office).",
+  129: "💡 <b>Đáp án (C) thermostat:</b> Danh từ 'thermostat' (thiết bị điều chỉnh nhiệt độ trong nhà).",
+  130: "💡 <b>Đáp án (B) randomly:</b> Trạng từ 'randomly' (một cách ngẫu nhiên, chập chờn lúc bật lúc tắt).",
+  131: "💡 <b>Đáp án (D) loan:</b> Danh từ 'loan' (khoản vay vốn kinh doanh tại ngân hàng).",
+  132: "💡 <b>Đáp án (C) equipment:</b> Danh từ không đếm được 'equipment' (thiết bị thể thao, máy móc).",
+  133: "💡 <b>Đáp án (A) expand:</b> Động từ nguyên thể 'expand' đi sau 'would like to' để chỉ ý định mở rộng quy mô.",
+  134: "💡 <b>Đáp án (B) upgrade:</b> Động từ 'upgrade' (nâng cao, nâng cấp kỹ năng tay nghề nhân viên).",
+  135: "💡 <b>Đáp án (D) burden:</b> Danh từ 'burden' (gánh nặng) cho nhân viên lâu năm khi phải kèm cặp người mới.",
+  136: "💡 <b>Đáp án (C) specific:</b> Tính từ 'specific' (cụ thể) chỉ các nhiệm vụ công việc nhất định.",
+  137: "💡 <b>Đáp án (B) expertise:</b> Danh từ 'expertise' (chuyên môn, sự thành thạo trong công việc).",
+  138: "💡 <b>Đáp án (C) productivity:</b> Suy luận từ việc giảm tốc độ làm việc dẫn đến giảm năng suất sản xuất.",
+  139: "💡 <b>Đáp án (A) potential:</b> Tính từ 'potential' (tiềm năng) bổ nghĩa cho danh từ 'investor'.",
+  140: "💡 <b>Đáp án (C) award:</b> Danh từ 'award' (giải thưởng) ghi nhận những đóng góp cho cộng đồng.",
+  141: "💡 <b>Đáp án (C) botanical:</b> Tính từ 'botanical' trong cụm 'botanical garden' (vườn bách thảo).",
+  142: "💡 <b>Đáp án (A) separate:</b> Tính từ 'separate' (riêng biệt) chỉ trang web cung cấp thông tin đỗ xe độc lập.",
+  143: "💡 <b>Đáp án (C) software:</b> Danh từ 'software' (phần mềm hệ thống) đang trong quá trình cập nhật.",
+  144: "💡 <b>Đáp án (A) covered:</b> Tính từ 'covered' (có mái che) miêu tả bãi đỗ xe an toàn tại ga tàu.",
+  145: "💡 <b>Đáp án (D) estimates:</b> Danh từ số nhiều 'estimates' (bản báo giá dự trù chi phí).",
+  146: "💡 <b>Đáp án (C) specialize:</b> Cấu trúc 'specialize in' (chuyên về lĩnh vực sửa chữa ô tô các đời xe).",
+  147: "💡 <b>Đáp án (A) extended:</b> Tính từ 'extended' chỉ chế độ bảo hành kéo dài thêm nhiều năm.",
+  148: "💡 <b>Đáp án (A) quarterly:</b> Tính từ mang nghĩa 'hàng quý' (kiểm kê hàng tồn kho định kỳ mỗi quý).",
+  149: "💡 <b>Đáp án (D) credentials:</b> Danh từ 'credentials' (thông tin xác thực / tên đăng nhập và mật khẩu tạm thời).",
+  150: "💡 <b>Đáp án (A) accessible:</b> Cấu trúc tương đương 'can only be accessed' -> 'are only accessible'.",
+  151: "💡 <b>Đáp án (D) pleased:</b> Tính từ 'pleased' chỉ trạng thái hài lòng với sản phẩm đã mua.",
+  152: "💡 <b>Đáp án (A) available:</b> Tính từ 'available' chỉ sản phẩm mới có sẵn trên thị trường/sắp ra mắt.",
+  153: "💡 <b>Đáp án (D) clothing:</b> Danh từ chỉ ngành hàng quần áo, thời trang trong báo cáo doanh số.",
+  154: "💡 <b>Đáp án (A) locally:</b> Trạng từ chỉ địa điểm 'locally' (sản xuất ngay tại địa phương/trong nước).",
+  155: "💡 <b>Đáp án (B) presentation:</b> Danh từ 'presentation' (bài thuyết trình của chuyên gia tư vấn).",
+  156: "💡 <b>Đáp án (D) delay:</b> Danh từ 'delay' chỉ tình trạng trì hoãn chuyến tàu do sửa chữa đường ray.",
+  157: "💡 <b>Đáp án (A) alternative:</b> Tính từ chỉ phương án thay thế (phương án xe buýt di chuyển thay tàu).",
+  158: "💡 <b>Đáp án (D) food:</b> Cụm từ 'food kiosks' (quầy bán đồ ăn nhanh tại sân ga).",
+  159: "💡 <b>Đáp án (A) graphic:</b> Tính từ 'graphic' trong cụm 'graphic design team' (đội ngũ thiết kế đồ họa).",
+  160: "💡 <b>Đáp án (B) images:</b> Danh từ số nhiều 'images' (các hình ảnh mẫu logo gửi qua email).",
+  161: "💡 <b>Đáp án (C) vacation:</b> Danh từ 'vacation' (kỳ nghỉ cá nhân của trưởng nhóm thiết kế vào tuần tới).",
+  162: "💡 <b>Đáp án (B) feasible:</b> Tính từ 'feasible' (có tính khả thi) dùng để đánh giá việc nâng cấp động cơ tàu.",
+  163: "💡 <b>Đáp án (C) summary:</b> Danh từ 'summary' (bản tóm tắt kết quả nghiên cứu/khảo sát).",
+  164: "💡 <b>Đáp án (B) upgrade:</b> Động từ/danh từ 'upgrade' (nâng cấp hệ thống thanh toán di động).",
+  165: "💡 <b>Đáp án (A) lines:</b> Danh từ số nhiều 'lines' chỉ hàng người xếp dài chờ thanh toán tiền tại cửa hàng.",
+  166: "💡 <b>Đáp án (D) justify:</b> Động từ 'justify' (bện minh, chứng minh sự hợp lý cho một lựa chọn địa điểm).",
+  167: "💡 <b>Đáp án (A) garden:</b> Danh từ 'garden' chỉ khu vườn cảnh quan đặc biệt tại sảnh tòa nhà.",
+  168: "💡 <b>Đáp án (C) Floors:</b> Danh từ chỉ số tầng tòa nhà văn phòng cho thuê (tầng 11-14).",
+  169: "💡 <b>Đáp án (D) interview:</b> Danh từ 'interview' chỉ buổi phỏng vấn được ghi hình lại trên web.",
+  170: "💡 <b>Đáp án (C) Site:</b> Danh từ chỉ vị trí địa điểm thăm dò khai thác mỏ bạc (Site 3).",
+  171: "💡 <b>Đáp án (A) permits:</b> Danh từ số nhiều 'permits' chỉ các loại giấy phép pháp lý bắt buộc phải xin."
 };
