@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Luyện Thi TOEIC</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📘</text></svg>">
 <style>
   :root {
     --bg: #f7f7f8; --panel: #ffffff; --border: #e2e2e6; --text: #1c1c1f; --muted: #6b6b73;
@@ -15,7 +16,6 @@
     --bg: #121212; --panel: #1e1e24; --border: #2d2d35; --text: #e1e1e6; --muted: #8b8b99;
     --accent: #4a8cff; --accent-soft: #1a2333;
   }
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📘</text></svg>">
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; transition: background 0.3s, color 0.3s; }
@@ -163,14 +163,12 @@
 </div>
 
 <script>
-// Khởi tạo các kho dữ liệu toàn cục
 window.TOEIC_KEYS = window.TOEIC_KEYS || {};
 window.TOEIC_SCRIPTS = window.TOEIC_SCRIPTS || {};
 window.TOEIC_EXPLANATIONS = window.TOEIC_EXPLANATIONS || {};
 
 const loadedScripts = {};
 
-// Hàm tự động nạp file dữ liệu khi người dùng chọn Test tương ứng
 function ensureTestDataLoaded(testNum, callback) {
   if (window.TOEIC_KEYS[testNum]) {
     if (callback) callback();
@@ -191,7 +189,6 @@ function ensureTestDataLoaded(testNum, callback) {
   document.head.appendChild(script);
 }
 
-// Dark Mode logic
 const themeToggleBtn = document.getElementById('themeToggleBtn');
 if (localStorage.getItem('toeic_theme') === 'dark') {
   document.body.classList.add('dark-theme');
