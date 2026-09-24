@@ -98,6 +98,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    position: relative;
   }
   .btn-outline {
     font-family: inherit;
@@ -118,6 +119,43 @@
     border-color: var(--border-hover);
   }
 
+  /* Dropdown Menu Style */
+  .dropdown-menu {
+    position: absolute;
+    top: 42px;
+    right: 0;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    display: none;
+    flex-direction: column;
+    width: 160px;
+    z-index: 60;
+    padding: 4px;
+  }
+  .dropdown-menu.open {
+    display: flex;
+  }
+  .dropdown-item {
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dropdown-item:hover {
+    background: var(--bg-subtle);
+  }
+
   /* Workspace Layout */
   .workspace {
     flex: 1;
@@ -127,7 +165,6 @@
     overflow: hidden;
   }
 
-  /* Sidebar thu gọn được cả Desktop & Mobile */
   .sidebar {
     width: 260px;
     border-right: 1px solid var(--border);
@@ -219,7 +256,6 @@
     background: var(--danger-subtle);
   }
 
-  /* Main Workspace */
   .main-stage {
     flex: 1;
     display: flex;
@@ -230,7 +266,6 @@
     overflow: hidden;
   }
 
-  /* Audio Bar */
   .audio-toolbar {
     background: var(--bg-surface);
     border: 1px solid var(--border);
@@ -250,7 +285,6 @@
     color: var(--text-muted);
   }
 
-  /* Panels Grid */
   .panels-split {
     flex: 1;
     display: flex;
@@ -258,7 +292,6 @@
     min-height: 0;
   }
 
-  /* Document Viewer */
   .viewer-panel {
     flex: 1.3;
     background: var(--bg-surface);
@@ -302,7 +335,6 @@
     border: none;
   }
 
-  /* Answer Sheet Panel */
   .sheet-panel {
     flex: 1;
     background: var(--bg-surface);
@@ -376,15 +408,21 @@
     background: var(--bg-subtle);
   }
 
-  /* Timer & Aim Sub-bar */
+  /* Score Strip & Progress Bar */
   .score-strip {
     background: var(--bg-subtle);
     padding: 8px 14px;
     border-bottom: 1px solid var(--border);
     display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .score-row-top {
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 12px;
     gap: 8px;
     flex-wrap: wrap;
   }
@@ -433,6 +471,21 @@
   .score-metric {
     font-weight: 600;
     color: var(--text-primary);
+  }
+
+  /* Progress Bar UI */
+  .progress-bar-container {
+    width: 100%;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--brand);
+    width: 0%;
+    transition: width 0.2s ease;
   }
 
   /* Grid Questions */
@@ -507,12 +560,20 @@
     background: var(--success-subtle);
   }
 
-  /* Explanation / Notes */
+  /* Review Section & Accordion / Filters */
   .review-section {
     margin-top: 16px;
     display: flex;
     flex-direction: column;
     gap: 8px;
+  }
+  .review-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
   }
   .review-header {
     font-size: 12px;
@@ -520,54 +581,59 @@
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--text-muted);
-    margin-bottom: 4px;
   }
+  .filter-tabs {
+    display: flex;
+    gap: 4px;
+  }
+  .filter-tab {
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .filter-tab.active {
+    background: var(--brand-subtle);
+    color: var(--brand);
+    border-color: var(--brand);
+  }
+
+  /* Accordion Review Card */
   .review-card {
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 10px 12px;
     background: var(--bg-surface);
+    overflow: hidden;
   }
-  .review-card-title {
+  .review-card-header {
+    padding: 10px 12px;
     font-size: 12px;
     font-weight: 600;
-    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    background: var(--bg-surface);
+  }
+  .review-card-header:hover {
+    background: var(--bg-subtle);
   }
   .review-card-body {
+    padding: 10px 12px;
     font-size: 12px;
     line-height: 1.6;
     color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+    background: var(--bg-page);
+    display: none;
   }
-
-  /* Transcript layout */
-  .script-container {
-    padding: 16px;
-  }
-  .script-container h3 {
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    color: var(--brand);
-    margin: 16px 0 10px 0;
-    padding-bottom: 4px;
-    border-bottom: 1px solid var(--border);
-  }
-  .script-question, .script-dialogue {
-    margin-bottom: 12px;
-    padding: 10px 12px;
-    background: var(--bg-subtle);
-    border-radius: 6px;
-    font-size: 12.5px;
-    line-height: 1.6;
-  }
-  .script-speaker {
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-  .script-opt.correct-pink {
-    color: var(--brand);
-    font-weight: 600;
+  .review-card.open .review-card-body {
+    display: block;
   }
 
   /* Vocab Drawer */
@@ -679,7 +745,7 @@
   }
   .backdrop.open { display: block; }
 
-  /* Hồ sơ đăng nhập (Profile) */
+  /* Profile Overlay */
   .profile-overlay {
     position: fixed;
     inset: 0;
@@ -726,27 +792,12 @@
     line-height: 1.5;
   }
 
-  /* Responsive tùy chỉnh tối ưu riêng cho điện thoại */
   @media (max-width: 768px) {
     header {
       padding: 0 8px;
-      overflow-x: auto;
-      overflow-y: hidden;
-      white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
-    }
-    header::-webkit-scrollbar {
-      display: none; /* Ẩn thanh cuộn trên mobile cho gọn */
     }
     .brand-badge {
-      display: none; /* Ẩn huy hiệu ETS Series trên màn hình nhỏ để tiết kiệm không gian */
-    }
-    .header-actions {
-      gap: 4px;
-    }
-    .btn-outline {
-      padding: 4px 6px;
-      font-size: 11px;
+      display: none;
     }
     .sidebar {
       position: fixed;
@@ -780,10 +831,16 @@
     </div>
   </div>
   <div class="header-actions">
-    <button id="themeToggleBtn" class="btn-outline">Theme</button>
-    <button id="historyToggleBtn" class="btn-outline">Lịch sử</button>
-    <button id="vocabToggleBtn" class="btn-outline">Tra từ</button>
     <button id="profileBtn" class="btn-outline profile-btn-active">👤 Đăng nhập</button>
+    <!-- Dropdown Menu Toggle -->
+    <button id="menuToggleBtn" class="btn-outline" style="padding: 5px 10px;">☰ Menu</button>
+    
+    <!-- Dropdown nội dung ẩn -->
+    <div class="dropdown-menu" id="dropdownMenu">
+      <button class="dropdown-item" id="themeToggleBtn">🌙 Giao diện</button>
+      <button class="dropdown-item" id="historyToggleBtn">📜 Lịch sử</button>
+      <button class="dropdown-item" id="vocabToggleBtn">📖 Tra từ</button>
+    </div>
   </div>
 </header>
 
@@ -901,6 +958,18 @@ function ensureTestDataLoaded(testNum, callback) {
   document.head.appendChild(script);
 }
 
+// Xử lý Dropdown menu trên header
+const menuToggleBtn = document.getElementById('menuToggleBtn');
+const dropdownMenu = document.getElementById('dropdownMenu');
+
+menuToggleBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  dropdownMenu.classList.toggle('open');
+});
+window.addEventListener('click', () => {
+  dropdownMenu.classList.remove('open');
+});
+
 const themeToggleBtn = document.getElementById('themeToggleBtn');
 if (localStorage.getItem('toeic_theme') === 'dark') {
   document.body.classList.add('dark-theme');
@@ -941,7 +1010,6 @@ function addResultRecord(record) {
   saveResults(profile, list);
 }
 
-// Hàm hiển thị Modal xác nhận tuỳ chỉnh trong web
 function showCustomConfirm(message, onOk) {
   const modal = document.getElementById('customConfirmModal');
   const msgEl = document.getElementById('customConfirmMessage');
@@ -971,7 +1039,6 @@ function showCustomConfirm(message, onOk) {
   cancelBtn.addEventListener('click', handleCancel);
 }
 
-// Hàm hiển thị Modal thông báo (Alert) tuỳ chỉnh trong web
 function showCustomAlert(message, onClose) {
   const modal = document.getElementById('customAlertModal');
   const msgEl = document.getElementById('customAlertMessage');
@@ -1078,6 +1145,7 @@ let activeId = null;
 let idCounter = 0;
 let userAimScore = parseInt(localStorage.getItem('toeic_user_aim') || '700', 10);
 const OPTS = ['A','B','C','D'];
+let currentReviewFilter = 'all'; // Trạng thái bộ lọc câu sai
 
 // Quản lý Timer
 let timerInterval = null;
@@ -1253,6 +1321,15 @@ function computeScore(t, testKey) {
   return { gradedCount, lcCorrect, rcCorrect, totalCorrect, scaled };
 }
 
+function updateProgressAndScoreDOM(t) {
+  const answeredCount = Object.keys(t.answers).length;
+  const percent = Math.round((answeredCount / 200) * 100);
+  const fillEl = document.getElementById('progressBarFill');
+  if (fillEl) fillEl.style.width = percent + '%';
+  const scoreSpan = document.getElementById('scoreDisplay');
+  if (scoreSpan) scoreSpan.textContent = `Đã hoàn thành: ${answeredCount} / 200 (${percent}%)`;
+}
+
 function updateQuestionRowDOM(t, q) {
   const row = document.getElementById(`qrow-` + q);
   if (!row) return;
@@ -1265,7 +1342,57 @@ function updateQuestionRowDOM(t, q) {
       b.classList.remove('selected');
     }
   });
+  updateProgressAndScoreDOM(t);
 }
+
+function renderReviewSection(t, testKey) {
+  const wrongQs = [];
+  for (let q = 1; q <= 200; q++) { 
+    if (testKey[q] && t.answers[q] && t.answers[q] !== testKey[q]) {
+      if (currentReviewFilter === 'listening' && q > 100) continue;
+      if (currentReviewFilter === 'reading' && q <= 100) continue;
+      wrongQs.push(q); 
+    } 
+  }
+
+  const notesContainer = document.getElementById('notesSectionContainer');
+  if (!notesContainer) return;
+
+  let html = `
+    <div class="review-header-row">
+      <div class="review-header">Phân tích câu làm sai</div>
+      <div class="filter-tabs">
+        <button class="filter-tab ${currentReviewFilter === 'all' ? 'active' : ''}" onclick="setReviewFilter('all')">Tất cả</button>
+        <button class="filter-tab ${currentReviewFilter === 'listening' ? 'active' : ''}" onclick="setReviewFilter('listening')">Listening (1-100)</button>
+        <button class="filter-tab ${currentReviewFilter === 'reading' ? 'active' : ''}" onclick="setReviewFilter('reading')">Reading (101-200)</button>
+      </div>
+    </div>`;
+
+  if (wrongQs.length === 0) {
+    html += `<div class="empty-state" style="padding:15px;">Không có câu sai nào trong mục này hoặc chưa có đáp án đối chiếu.</div>`;
+  } else {
+    const currentExpl = window.TOEIC_EXPLANATIONS[t.testNum] || {};
+    wrongQs.forEach(q => {
+      const expl = currentExpl[q] || 'Chưa có giải thích chi tiết.';
+      html += `
+        <div class="review-card">
+          <div class="review-card-header" onclick="this.parentElement.classList.toggle('open')">
+            <span>Câu ${q} • Đã chọn: <strong style="color:var(--danger)">${t.answers[q]}</strong> | Đúng: <strong style="color:var(--success)">${testKey[q]}</strong></span>
+            <span style="font-size:10px; color:var(--text-muted);">▼ Xem giải thích</span>
+          </div>
+          <div class="review-card-body">${expl}</div>
+        </div>`;
+    });
+  }
+  notesContainer.innerHTML = html;
+}
+
+window.setReviewFilter = function(filter) {
+  currentReviewFilter = filter;
+  const t = tests.find(x => x.id === activeId);
+  const testKey = window.TOEIC_KEYS[t.testNum] || {};
+  if (t && t.isGraded) renderReviewSection(t, testKey);
+};
 
 function renderMain() {
   const t = tests.find(x => x.id === activeId);
@@ -1286,7 +1413,6 @@ function renderMain() {
 
   const panels = document.createElement('div'); panels.className = 'panels-split';
 
-  // Left viewer
   const viewerPanel = document.createElement('div'); viewerPanel.className = 'viewer-panel';
   viewerPanel.innerHTML = `
     <div class="viewer-tabs">
@@ -1296,8 +1422,10 @@ function renderMain() {
     <div class="viewer-content" id="docArea"></div>`;
   panels.appendChild(viewerPanel);
 
-  // Right Sheet
   const sheetPanel = document.createElement('div'); sheetPanel.className = 'sheet-panel';
+  const answeredCount = Object.keys(t.answers).length;
+  const percent = Math.round((answeredCount / 200) * 100);
+
   sheetPanel.innerHTML = `
     <div class="sheet-header">
       <div class="sheet-header-info">
@@ -1310,25 +1438,31 @@ function renderMain() {
       </div>
     </div>
     <div class="score-strip">
-      <div class="strip-left">
-        <div class="aim-box">
-          <span>Aim:</span>
-          <input type="number" id="aimInput" value="${userAimScore}" step="50">
+      <div class="score-row-top">
+        <div class="strip-left">
+          <div class="aim-box">
+            <span>Aim:</span>
+            <input type="number" id="aimInput" value="${userAimScore}" step="50">
+          </div>
+          <div class="timer-box">
+            <select id="timerModeSelect" class="select-native" style="padding:2px 6px;">
+              <option value="120" ${selectedTimerMode === '120' ? 'selected' : ''}>120 phút (Full)</option>
+              <option value="75" ${selectedTimerMode === '75' ? 'selected' : ''}>75 phút (Reading)</option>
+              <option value="45" ${selectedTimerMode === '45' ? 'selected' : ''}>45 phút (Listening)</option>
+              <option value="none" ${selectedTimerMode === 'none' ? 'selected' : ''}>Không giới hạn</option>
+            </select>
+            <span class="timer-display" id="timerText">${selectedTimerMode === 'none' ? '--:--' : formatTimer(timerSeconds)}</span>
+            <button id="timerToggleBtn" class="btn-outline" style="padding:2px 8px; font-size:11px;">
+              ${isTimerRunning ? 'Dừng' : 'Chạy'}
+            </button>
+          </div>
         </div>
-        <div class="timer-box">
-          <select id="timerModeSelect" class="select-native" style="padding:2px 6px;">
-            <option value="120" ${selectedTimerMode === '120' ? 'selected' : ''}>120 phút (Full)</option>
-            <option value="75" ${selectedTimerMode === '75' ? 'selected' : ''}>75 phút (Reading)</option>
-            <option value="45" ${selectedTimerMode === '45' ? 'selected' : ''}>45 phút (Listening)</option>
-            <option value="none" ${selectedTimerMode === 'none' ? 'selected' : ''}>Không giới hạn</option>
-          </select>
-          <span class="timer-display" id="timerText">${selectedTimerMode === 'none' ? '--:--' : formatTimer(timerSeconds)}</span>
-          <button id="timerToggleBtn" class="btn-outline" style="padding:2px 8px; font-size:11px;">
-            ${isTimerRunning ? 'Dừng' : 'Chạy'}
-          </button>
-        </div>
+        <div id="scoreDisplay" class="score-metric">Đã hoàn thành: ${answeredCount} / 200 (${percent}%)</div>
       </div>
-      <div id="scoreDisplay" class="score-metric">Đã hoàn thành: ${Object.keys(t.answers).length} / 200</div>
+      <!-- Thanh tiến trình (Progress Bar) -->
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progressBarFill" style="width: ${percent}%;"></div>
+      </div>
     </div>
     <div class="sheet-body">
       <div class="q-grid" id="qgridArea"></div>
@@ -1441,7 +1575,6 @@ function renderMain() {
           const letter = b.getAttribute('data-letter');
           t.answers[q] = (t.answers[q] === letter) ? undefined : letter; 
           updateQuestionRowDOM(t, q);
-          document.getElementById('scoreDisplay').textContent = `Đã hoàn thành: ${Object.keys(t.answers).length} / 200`;
         }
       });
     });
@@ -1465,26 +1598,9 @@ function renderMain() {
 
   if (t.isGraded) {
     const { gradedCount, totalCorrect, scaled } = computeScore(t, testKey);
-
     const scoreSpan = document.getElementById('scoreDisplay');
     scoreSpan.innerHTML = `Kết quả: <b>${totalCorrect}</b>/${gradedCount} câu • Điểm dự tính: <b>${scaled.total}</b>/990 (LC ${scaled.lc} | RC ${scaled.rc})`;
-
-    const wrongQs = [];
-    for (let q = 1; q <= 200; q++) { if (testKey[q] && t.answers[q] && t.answers[q] !== testKey[q]) wrongQs.push(q); }
-    if (wrongQs.length > 0) {
-      const currentExpl = window.TOEIC_EXPLANATIONS[t.testNum] || {};
-      const notesContainer = document.getElementById('notesSectionContainer');
-      let html = `<div class="review-header">Phân tích câu làm sai (${wrongQs.length})</div>`;
-      wrongQs.forEach(q => {
-        const expl = currentExpl[q] || 'Chưa có giải thích chi tiết.';
-        html += `
-          <div class="review-card">
-            <div class="review-card-title">Câu ${q} • Đã chọn: <span style="color:var(--danger)">${t.answers[q]}</span> | Đúng: <span style="color:var(--success)">${testKey[q]}</span></div>
-            <div class="review-card-body">${expl}</div>
-          </div>`;
-      });
-      notesContainer.innerHTML = html;
-    }
+    renderReviewSection(t, testKey);
   }
 }
 
@@ -1528,11 +1644,12 @@ function renderHistoryDrawer() {
   list.forEach((r, idx) => {
     const card = document.createElement('div');
     card.className = 'review-card';
+    card.style.padding = '10px 12px';
     let dateStr = r.date;
     try { dateStr = new Date(r.date).toLocaleString('vi-VN'); } catch (e) {}
     card.innerHTML = `
       <div class="review-card-title">${r.testName} <span style="color:var(--text-muted); font-weight:500;">• ${dateStr}</span></div>
-      <div class="review-card-body">Đúng <b>${r.totalCorrect}</b>/${r.gradedCount} câu • Điểm dự tính: <b>${r.scaled.total}</b>/990 (LC ${r.scaled.lc} | RC ${r.scaled.rc})</div>`;
+      <div class="review-card-body" style="display:block; border:none; padding:0; background:transparent;">Đúng <b>${r.totalCorrect}</b>/${r.gradedCount} câu • Điểm dự tính: <b>${r.scaled.total}</b>/990 (LC ${r.scaled.lc} | RC ${r.scaled.rc})</div>`;
     const delBtn = document.createElement('button');
     delBtn.className = 'btn-outline';
     delBtn.style.marginTop = '8px'; delBtn.style.color = 'var(--danger)';
@@ -1607,48 +1724,30 @@ async function fetchSynonyms(word) {
       `https://api.datamuse.com/words?rel_syn=${encodeURIComponent(word)}&md=f&max=20`,
       2500
     );
-
     if (!Array.isArray(data) || data.length === 0) return [];
-
     const scoredWords = data.map(item => {
       let freqScore = 0;
       if (item.tags) {
         const fTag = item.tags.find(t => t.startsWith('f:'));
-        if (fTag) {
-          freqScore = parseFloat(fTag.slice(2)) || 0;
-        }
+        if (fTag) freqScore = parseFloat(fTag.slice(2)) || 0;
       }
-      return {
-        word: item.word.toLowerCase(),
-        score: item.score || 0,
-        freq: freqScore
-      };
+      return { word: item.word.toLowerCase(), score: item.score || 0, freq: freqScore };
     });
-
     scoredWords.sort((a, b) => b.freq - a.freq);
-
     const uniqueSyns = [];
     for (const item of scoredWords) {
-      if (
-        item.word !== word.toLowerCase() &&
-        !item.word.includes(' ') &&
-        !uniqueSyns.includes(item.word)
-      ) {
+      if (item.word !== word.toLowerCase() && !item.word.includes(' ') && !uniqueSyns.includes(item.word)) {
         uniqueSyns.push(item.word);
       }
       if (uniqueSyns.length >= 6) break;
     }
-
     return uniqueSyns;
-  } catch (e) {
-    return [];
-  }
+  } catch (e) { return []; }
 }
 
 async function fetchWordFamily(word) {
   const family = { n: [], v: [], adj: [], adv: [] };
   const rawWord = word.toLowerCase().trim();
-  
   let stem = rawWord;
   const commonSuffixes = ['tion', 'sion', 'ment', 'ence', 'ance', 'able', 'ible', 'ivity', 'ity', 'ive', 'ing', 'ed', 'ly', 'er', 'or', 'al', 'ate', 'ize'];
   for (const suf of commonSuffixes) {
@@ -1657,96 +1756,66 @@ async function fetchWordFamily(word) {
       break;
     }
   }
-
   try {
     const [wildcardData, baseWordData] = await Promise.all([
       fetchWithTimeout(`https://api.datamuse.com/words?sp=${encodeURIComponent(stem)}*&md=pf&max=50`, 2500).catch(() => []),
       fetchWithTimeout(`https://api.datamuse.com/words?sp=${encodeURIComponent(rawWord)}&md=pf&max=1`, 2500).catch(() => [])
     ]);
-
     const combined = [...baseWordData, ...wildcardData];
     const seen = new Set();
     const candidateList = [];
-
     combined.forEach(item => {
       const w = item.word.toLowerCase();
       if (seen.has(w) || w.includes(' ') || w.includes('-')) return;
       seen.add(w);
-
       if (!w.startsWith(stem)) return;
-
       let freq = 0;
       if (item.tags) {
         const fTag = item.tags.find(t => t.startsWith('f:'));
         if (fTag) freq = parseFloat(fTag.slice(2)) || 0;
       }
-
       if (w !== rawWord && freq < 0.08) return;
-
       const tags = item.tags || [];
-      candidateList.push({
-        word: w,
-        freq: freq,
-        isNoun: tags.includes('n'),
-        isVerb: tags.includes('v'),
-        isAdj: tags.includes('adj'),
-        isAdv: tags.includes('adv')
-      });
+      candidateList.push({ word: w, freq: freq, isNoun: tags.includes('n'), isVerb: tags.includes('v'), isAdj: tags.includes('adj'), isAdv: tags.includes('adv') });
     });
-
     candidateList.sort((a, b) => b.freq - a.freq);
-
     candidateList.forEach(item => {
       const w = item.word;
-
       if (item.isNoun && (w.endsWith('tion') || w.endsWith('sion') || w.endsWith('ment') || w.endsWith('er') || w.endsWith('or') || w.endsWith('ity') || w.endsWith('ance') || w.endsWith('ence') || w === rawWord)) {
         if (!family.n.includes(w)) family.n.push(w);
       } else if (item.isNoun && family.n.length < 2) {
         if (!family.n.includes(w)) family.n.push(w);
       }
-
       if (item.isVerb && (w.endsWith('e') || w.endsWith('ize') || w.endsWith('ate') || w.endsWith('fy') || w.endsWith('en') || w.endsWith('er') || w === rawWord)) {
-        if (!w.endsWith('ing') && !w.endsWith('ed') && !w.endsWith('re') && !family.v.includes(w)) {
-          family.v.push(w);
-        }
+        if (!w.endsWith('ing') && !w.endsWith('ed') && !w.endsWith('re') && !family.v.includes(w)) family.v.push(w);
       }
-
       if (item.isAdj && (w.endsWith('ive') || w.endsWith('able') || w.endsWith('ible') || w.endsWith('al') || w.endsWith('ic') || w.endsWith('ous') || w.endsWith('ful'))) {
         if (!family.adj.includes(w)) family.adj.push(w);
       }
-
       if ((item.isAdv || w.endsWith('ly')) && w.endsWith('ly')) {
         if (!family.adv.includes(w)) family.adv.push(w);
       }
     });
-
-    for (const k in family) {
-      family[k] = family[k].slice(0, 3);
-    }
+    for (const k in family) { family[k] = family[k].slice(0, 3); }
   } catch (e) {}
-
   return family;
 }
 
 async function lookupWord() {
   const word = vocabInput.value.trim().toLowerCase(); 
   if (!word) return;
-  
   vocabResult.innerHTML = '<div class="vocab-note">Đang tra từ...</div>';
   const cambridgeUrl = 'https://dictionary.cambridge.org/dictionary/english/' + encodeURIComponent(word);
-  
   const [viResult, datamuseHtml, syns, family] = await Promise.all([
     translateToVi(word).catch(() => ''),
     tryDatamuse(word).catch(() => ''),
     fetchSynonyms(word),
     fetchWordFamily(word)
   ]);
-
   let viHtml = '';
   if (viResult && viResult.toLowerCase() !== word) {
     viHtml = '<div class="pos" style="color:var(--success);">🇻🇳 Nghĩa tiếng Việt</div><div class="def"><b>' + viResult + '</b></div>';
   }
-
   const posLabels = [
     { key: 'n', label: 'Noun (Danh từ)' },
     { key: 'v', label: 'Verb (Động từ)' },
@@ -1766,7 +1835,6 @@ async function lookupWord() {
         </div>`;
     }
   }
-
   let synHtml = '';
   if (syns && syns.length > 0) {
     synHtml = `
@@ -1777,9 +1845,7 @@ async function lookupWord() {
         </div>
       </div>`;
   }
-
   let finalHtml = (datamuseHtml || `<div class="word">${word}</div>`) + viHtml;
-
   if (familyHtml) {
     finalHtml += `
       <div style="margin-top:12px; padding-top:10px; border-top:1px solid var(--border);">
@@ -1787,10 +1853,8 @@ async function lookupWord() {
         ${familyHtml}
       </div>`;
   }
-
   finalHtml += synHtml;
   finalHtml += `<div class="vocab-note" style="margin-top:14px;"><a href="${cambridgeUrl}" target="_blank" style="color:var(--brand); text-decoration:none;">Mở trên Cambridge Dictionary ↗</a></div>`;
-
   vocabResult.innerHTML = finalHtml;
 }
 
