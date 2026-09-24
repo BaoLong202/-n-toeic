@@ -1194,7 +1194,7 @@ function renderMain() {
   }
 }
 
-// Logic Tra từ: Giữ nguyên định nghĩa + dịch Google, bổ sung Word Family và Synonyms
+// Logic Tra từ: Giữ nguyên định nghĩa + dịch Google, bổ sung Word Family và Synonyms lọc theo độ phổ biến
 const vocabDrawer = document.getElementById('vocabDrawer');
 const vocabInput = document.getElementById('vocabInput');
 const vocabResult = document.getElementById('vocabResult');
@@ -1259,11 +1259,47 @@ async function translateToVi(text) {
   return '';
 }
 
-// Lấy từ đồng nghĩa (Synonyms)
+// Lấy từ đồng nghĩa (Synonyms) được lọc theo tần suất sử dụng thực tế (md=f)
 async function fetchSynonyms(word) {
   try {
-    const data = await fetchWithTimeout(`https://api.datamuse.com/words?rel_syn=${encodeURIComponent(word)}&max=6`, 2000);
-    return data.map(item => item.word);
+    const data = await fetchWithTimeout(
+      `https://api.datamuse.com/words?rel_syn=${encodeURIComponent(word)}&md=f&max=20`,
+      2500
+    );
+
+    if (!Array.isArray(data) || data.length === 0) return [];
+
+    const scoredWords = data.map(item => {
+      let freqScore = 0;
+      if (item.tags) {
+        const fTag = item.tags.find(t => t.startsWith('f:'));
+        if (fTag) {
+          freqScore = parseFloat(fTag.slice(2)) || 0;
+        }
+      }
+      return {
+        word: item.word.toLowerCase(),
+        score: item.score || 0,
+        freq: freqScore
+      };
+    });
+
+    // Sắp xếp theo độ phổ biến thực tế thay vì nghĩa hiếm của WordNet
+    scoredWords.sort((a, b) => b.freq - a.freq);
+
+    const uniqueSyns = [];
+    for (const item of scoredWords) {
+      if (
+        item.word !== word.toLowerCase() &&
+        !item.word.includes(' ') &&
+        !uniqueSyns.includes(item.word)
+      ) {
+        uniqueSyns.push(item.word);
+      }
+      if (uniqueSyns.length >= 6) break;
+    }
+
+    return uniqueSyns;
   } catch (e) {
     return [];
   }
