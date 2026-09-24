@@ -478,7 +478,7 @@ window.TOEIC_EXPLANATIONS[1] = {
   168: "💡 <b>Đáp án (C) Floors:</b> Danh từ chỉ số tầng tòa nhà văn phòng cho thuê (tầng 11-14).",
   169: "💡 <b>Đáp án (D) interview:</b> Danh từ 'interview' chỉ buổi phỏng vấn được ghi hình lại trên web.",
   170: "💡 <b>Đáp án (C) Site:</b> Danh từ chỉ vị trí địa điểm thăm dò khai thác mỏ bạc (Site 3).",
-  171: "💡 <b>Đáp án (A) permits:</b> Danh từ số nhiều 'permits' chỉ các loại giấy phép pháp lý bắt buộc phải xin."
+  171: "💡 <b>Đáp án (A) permits:</b> Danh từ số nhiều 'permits' chỉ các loại giấy phép pháp lý bắt buộc phải xin.",
   172: "💡 <b>Đáp án (D) To ask for clarification about a request:</b> Trong đoạn chat, cô Barry mở đầu để hỏi làm rõ liệu ông Kubelski cần danh sách toàn bộ chủ tài khoản hay chỉ trong một nhóm độ tuổi cụ thể ('Do you really need the e-mail addresses of all account holders?... Or do you need the e-mail addresses of account holders only within a certain age-group?').",
   173: "💡 <b>Đáp án (A) Account holders in one age-group:</b> Ông Kubelski nêu rõ: 'I want to e-mail account holders aged 55 to 65 to invite them to meet with a retirement planning expert' (chỉ gửi cho nhóm tuổi từ 55 đến 65).",
   174: "💡 <b>Đáp án (B) Make a change to a form:</b> Cô Choi đề nghị: 'We can update your current request form for you. You do not want to lose your place in the queue' (cập nhật biểu mẫu yêu cầu hiện tại thay vì bắt làm form mới).",
