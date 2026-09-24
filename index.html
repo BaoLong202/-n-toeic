@@ -171,22 +171,26 @@ window.TOEIC_EXPLANATIONS = window.TOEIC_EXPLANATIONS || {};
 const loadedScripts = {};
 
 function ensureTestDataLoaded(testNum, callback) {
-  if (window.TOEIC_KEYS[testNum]) {
+  if (window.TOEIC_SCRIPTS && window.TOEIC_SCRIPTS[testNum]) {
     if (callback) callback();
     return;
   }
-  if (loadedScripts[testNum]) return;
-  loadedScripts[testNum] = true;
 
+  // Dùng ./data/ để đảm bảo luôn trỏ đúng thư mục con của repo hiện tại
   const script = document.createElement('script');
-  script.src = `data/test${testNum}.js`;
+  script.src = `./data/test${testNum}.js?v=${Date.now()}`; // thêm ?v= để chống cache trình duyệt
+
   script.onload = () => {
+    // Sau khi nạp xong file test1.js, ép giao diện vẽ lại ngay lập tức
+    renderMain();
     if (callback) callback();
   };
+
   script.onerror = () => {
-    console.warn(`Chưa tìm thấy file data/test${testNum}.js trên máy hoặc server.`);
+    console.error(`Không thể tải: ./data/test${testNum}.js`);
     if (callback) callback();
   };
+
   document.head.appendChild(script);
 }
 
