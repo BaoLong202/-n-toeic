@@ -5,382 +5,399 @@ window.TOEIC_EXPLANATIONS = window.TOEIC_EXPLANATIONS || {};
 // 1. DÀN KEY 200 CÂU TEST 7
 window.TOEIC_KEYS[7] = parseKey("1C 2A 3B 4B 5C 6B 7A 8A 9C 10A 11C 12B 13B 14C 15C 16C 17B 18A 19A 20B 21A 22C 23C 24C 25C 26A 27A 28B 29A 30A 31C 32B 33C 34B 35A 36C 37D 38B 39C 40A 41A 42B 43D 44C 45D 46C 47B 48D 49A 50D 51C 52B 53B 54C 55B 56D 57C 58B 59D 60A 61C 62B 63D 64C 65A 66D 67B 68C 69B 70C 71A 72C 73B 74C 75B 76D 77B 78A 79A 80C 81B 82A 83C 84B 85B 86A 87D 88B 89D 90B 91B 92C 93B 94D 95D 96C 97C 98A 99B 100A 101A 102B 103B 104A 105D 106D 107A 108B 109A 110B 111A 112D 113C 114D 115B 116A 117C 118D 119C 120C 121D 122B 123A 124A 125B 126C 127D 128D 129A 130B 131C 132A 133D 134D 135B 136A 137C 138B 139D 140B 141B 142C 143B 144B 145A 146C 147A 148B 149A 150B 151B 152A 153B 154A 155C 156D 157C 158B 159C 160A 161C 162C 163B 164B 165D 166C 167D 168C 169C 170C 171B 172A 173B 174D 175D 176B 177D 178A 179C 180C 181C 182D 183C 184B 185A 186B 187C 188C 189D 190D 191A 192A 193D 194D 195B 196A 197D 198C 199A 200D");
 
-// 2. FULL TRANSCRIPT LISTENING TEST 7
+// 2. FULL TRANSCRIPT LISTENING TEST 7 (CHUẨN 100% THEO FILE AUDIO)
 window.TOEIC_SCRIPTS[7] = `
   <h3>PART 1: PHOTOGRAPHS (Câu 1 - 6)</h3>
   <div class="script-question">
     <span class="script-speaker">1. M-Au</span>
-    <div class="script-opt">(A) A woman is writing on a whiteboard.</div>
-    <div class="script-opt">(B) A woman is shelving some books in a library.</div>
-    <div class="script-opt correct-pink">(C) A woman is looking at some documents on a shelf.</div>
-    <div class="script-opt">(D) A woman is organizing folders on a desk.</div>
+    <div class="script-opt">(A) She's holding a water bottle.</div>
+    <div class="script-opt">(B) She's looking at a newspaper.</div>
+    <div class="script-opt correct-pink">(C) She's reaching for a book.</div>
+    <div class="script-opt">(D) She's standing next to a copier.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">2. W-Am</span>
-    <div class="script-opt correct-pink">(A) An automobile is raised on a lift in a repair shop.</div>
-    <div class="script-opt">(B) A vehicle is being washed outside a garage.</div>
-    <div class="script-opt">(C) Tools are being stored in a cabinet.</div>
-    <div class="script-opt">(D) A tire is being replaced on a car.</div>
+    <span class="script-speaker">2. W-Br</span>
+    <div class="script-opt correct-pink">(A) A tire is leaning against a car.</div>
+    <div class="script-opt">(B) A chain has been left on the ground.</div>
+    <div class="script-opt">(C) A car is backing out of a garage.</div>
+    <div class="script-opt">(D) A box of tools has been set on top of a car.</div>
   </div>
 
   <div class="script-question">
     <span class="script-speaker">3. M-Cn</span>
-    <div class="script-opt">(A) A man is opening the front door of a building.</div>
-    <div class="script-opt correct-pink">(B) A man is pushing a cleaning cart across a floor.</div>
-    <div class="script-opt">(C) A man is washing the glass of a window.</div>
-    <div class="script-opt">(D) A man is arranging chairs around a table.</div>
+    <div class="script-opt">(A) He's pushing a cart toward a doorway.</div>
+    <div class="script-opt correct-pink">(B) He's spraying cleaning liquid onto a glass door.</div>
+    <div class="script-opt">(C) He's mopping up a tiled floor.</div>
+    <div class="script-opt">(D) He's setting up a bulletin board.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">4. W-Br</span>
-    <div class="script-opt">(A) A woman is walking along a sidewalk near a park.</div>
-    <div class="script-opt correct-pink">(B) A woman is riding a bicycle on a city street.</div>
-    <div class="script-opt">(C) A woman is locking her bicycle to a rack.</div>
-    <div class="script-opt">(D) A woman is crossing a street at a crosswalk.</div>
+    <span class="script-speaker">4. W-Am</span>
+    <div class="script-opt">(A) The woman is walking across the street.</div>
+    <div class="script-opt correct-pink">(B) The woman is repairing a bicycle.</div>
+    <div class="script-opt">(C) The woman is wearing a helmet.</div>
+    <div class="script-opt">(D) The woman is getting into a vehicle.</div>
   </div>
 
   <div class="script-question">
     <span class="script-speaker">5. M-Au</span>
-    <div class="script-opt">(A) Some people are waiting for a table at a restaurant.</div>
-    <div class="script-opt">(B) Some people are standing under umbrellas.</div>
-    <div class="script-opt correct-pink">(C) Some picnic tables are set up outdoors.</div>
-    <div class="script-opt">(D) Some people are cleaning up after a meal.</div>
+    <div class="script-opt">(A) Some umbrellas have been opened in an outdoor dining area.</div>
+    <div class="script-opt">(B) All the tables are occupied by diners.</div>
+    <div class="script-opt correct-pink">(C) A worker is sweeping a dining area.</div>
+    <div class="script-opt">(D) Flowers have been placed on the tables.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">6. M-Cn</span>
-    <div class="script-opt">(A) A desk lamp has been placed next to a window.</div>
-    <div class="script-opt correct-pink">(B) An office chair is positioned in front of a desk.</div>
-    <div class="script-opt">(C) A filing cabinet is being moved into an office.</div>
-    <div class="script-opt">(D) A computer monitor is turned on.</div>
+    <span class="script-speaker">6. W-Br</span>
+    <div class="script-opt">(A) File folders have been arranged on a shelf.</div>
+    <div class="script-opt correct-pink">(B) Some window blinds have been raised.</div>
+    <div class="script-opt">(C) Some wastebaskets have been turned upside down.</div>
+    <div class="script-opt">(D) An office chair has been pushed under a desk.</div>
   </div>
 
   <h3>PART 2: QUESTION-RESPONSE (Câu 7 - 31)</h3>
   <div class="script-question">
-    <span class="script-speaker">7. M-Au: Where are the new office supplies?</span>
-    <div class="script-opt correct-pink">(A) In the storage room down the hall.</div>
-    <div class="script-opt">(B) Pens and notebooks.</div>
-    <div class="script-opt">(C) Yes, they were ordered yesterday.</div>
+    <span class="script-speaker">7. M-Au: Where do I sign this contract?</span>
+    <div class="script-opt correct-pink">(A) A large account.</div>
+    <div class="script-opt">(B) Here at the bottom.</div>
+    <div class="script-opt">(C) Hang it on the wall.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">8. W-Am: When will the marketing report be finalized?</span>
-    <div class="script-opt correct-pink">(A) By the end of the week.</div>
-    <div class="script-opt">(B) A detailed sales analysis.</div>
-    <div class="script-opt">(C) Mr. Henderson is writing it.</div>
+    <span class="script-speaker">8. M-Cn: How about planting a vegetable garden?</span>
+    <div class="script-opt correct-pink">(A) There's parking available on the next street.</div>
+    <div class="script-opt">(B) I think that's a good idea.</div>
+    <div class="script-opt">(C) A new hardware store.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">9. M-Cn: Why was the flight to Boston canceled?</span>
-    <div class="script-opt">(A) A round-trip ticket.</div>
-    <div class="script-opt">(B) Gate number twelve.</div>
-    <div class="script-opt correct-pink">(C) Due to severe weather.</div>
+    <span class="script-speaker">9. W-Br: When did the conference committee meeting get canceled?</span>
+    <div class="script-opt">(A) Yesterday morning.</div>
+    <div class="script-opt">(B) A new member.</div>
+    <div class="script-opt correct-pink">(C) At the hotel on Main Street.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">10. W-Br: Who is organizing the company picnic this year?</span>
-    <div class="script-opt correct-pink">(A) The human resources committee.</div>
-    <div class="script-opt">(B) At the city park.</div>
-    <div class="script-opt">(C) Next Saturday afternoon.</div>
+    <span class="script-speaker">10. W-Am: Does the company pay for our hotel rooms?</span>
+    <div class="script-opt correct-pink">(A) I have a layover in Dubai.</div>
+    <div class="script-opt">(B) No, we have to pay for them ourselves.</div>
+    <div class="script-opt">(C) That's my favorite airline.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">11. M-Au: How can I reset my password for the employee portal?</span>
-    <div class="script-opt">(A) A secure network connection.</div>
-    <div class="script-opt">(B) Yes, I remembered it.</div>
-    <div class="script-opt correct-pink">(C) Click on the link on the login page.</div>
+    <span class="script-speaker">11. W-Br: Our team's going to inspect the construction site tomorrow.</span>
+    <div class="script-opt">(A) His name is Alberto.</div>
+    <div class="script-opt">(B) The office down the hall.</div>
+    <div class="script-opt correct-pink">(C) That's the first I've heard of it.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">12. W-Am: Would you like to join us for lunch, or do you have too much work?</span>
-    <div class="script-opt">(A) A turkey sandwich, please.</div>
-    <div class="script-opt correct-pink">(B) I'll join you in a few minutes.</div>
-    <div class="script-opt">(C) In the break room.</div>
+    <span class="script-speaker">12. M-Cn: Why does the moon look so close in this photograph?</span>
+    <div class="script-opt">(A) Are there seats available for the astronomy presentation?</div>
+    <div class="script-opt correct-pink">(B) Because I used a special camera lens.</div>
+    <div class="script-opt">(C) She's always wanted to be an astronaut.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">13. M-Cn: Can you check this spreadsheet for errors?</span>
-    <div class="script-opt">(A) A financial forecast.</div>
-    <div class="script-opt correct-pink">(B) Sure, I'll take a look right now.</div>
-    <div class="script-opt">(C) No, it wasn't expensive.</div>
+    <span class="script-speaker">13. W-Am: How do I log on to this computer?</span>
+    <div class="script-opt">(A) Some printer ink and paper.</div>
+    <div class="script-opt correct-pink">(B) I'll send you a temporary password.</div>
+    <div class="script-opt">(C) No, he was late.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">14. W-Br: Didn't you order a new desk for your office?</span>
-    <div class="script-opt">(A) A wooden bookshelf.</div>
-    <div class="script-opt">(B) To complete the project.</div>
-    <div class="script-opt correct-pink">(C) Yes, it should arrive tomorrow.</div>
+    <span class="script-speaker">14. M-Cn: When does the property manager arrive?</span>
+    <div class="script-opt">(A) On Whitmer Boulevard.</div>
+    <div class="script-opt">(B) You're right, it doesn't fit.</div>
+    <div class="script-opt correct-pink">(C) At ten o'clock.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">15. M-Au: Where did you park your car?</span>
-    <div class="script-opt correct-pink">(A) In the underground garage.</div>
-    <div class="script-opt">(B) A full tank of gas.</div>
-    <div class="script-opt">(C) At nine o'clock.</div>
+    <span class="script-speaker">15. M-Cn: Let's have dinner at the French restaurant tonight.</span>
+    <div class="script-opt">(A) Okay, I'll see you there.</div>
+    <div class="script-opt">(B) I'd like to buy some new cookware.</div>
+    <div class="script-opt correct-pink">(C) Here's a copy of the agreement.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">16. W-Am: When is the deadline for submitting grant proposals?</span>
-    <div class="script-opt">(A) To fund our research.</div>
-    <div class="script-opt">(B) A scientific journal.</div>
-    <div class="script-opt correct-pink">(C) Next Friday at noon.</div>
+    <span class="script-speaker">16. M-Au: Who's supervising the production line?</span>
+    <div class="script-opt">(A) Please sign on the line.</div>
+    <div class="script-opt">(B) Luca's doing it.</div>
+    <div class="script-opt correct-pink">(C) A forty-five-minute lunch break.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">17. M-Cn: Why don't we reschedule the outdoor photo shoot?</span>
-    <div class="script-opt">(A) A digital camera.</div>
-    <div class="script-opt correct-pink">(B) Good idea, it looks like it's going to rain.</div>
-    <div class="script-opt">(C) In the studio.</div>
+    <span class="script-speaker">17. W-Br: When will the reception for the artist start?</span>
+    <div class="script-opt">(A) After the lecture.</div>
+    <div class="script-opt correct-pink">(B) Asian art.</div>
+    <div class="script-opt">(C) At the conference center.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">18. W-Br: How should I update the software on my computer?</span>
-    <div class="script-opt correct-pink">(A) Follow the prompts on your screen.</div>
-    <div class="script-opt">(B) A technical manual.</div>
-    <div class="script-opt">(C) Yesterday morning.</div>
+    <span class="script-speaker">18. W-Am: How often should I submit my travel expenses?</span>
+    <div class="script-opt correct-pink">(A) Sure, I'll trim the branches a little.</div>
+    <div class="script-opt">(B) Once a month.</div>
+    <div class="script-opt">(C) An updated owner's manual.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">19. M-Au: Who has the keys to the storage room?</span>
-    <div class="script-opt correct-pink">(A) The building supervisor has them.</div>
-    <div class="script-opt">(B) Cleaning supplies and boxes.</div>
-    <div class="script-opt">(C) Yes, it's locked.</div>
+    <span class="script-speaker">19. W-Br: Our print shop is going to have a sale on shirts.</span>
+    <div class="script-opt correct-pink">(A) I'm afraid I have no more change.</div>
+    <div class="script-opt">(B) It's his favorite television show.</div>
+    <div class="script-opt">(C) Okay, when will it start?</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">20. W-Am: Aren't there any copies of the agenda left?</span>
-    <div class="script-opt">(A) A meeting room.</div>
-    <div class="script-opt">(B) Yes, on the front desk.</div>
-    <div class="script-opt correct-pink">(C) Let me print another one for you.</div>
+    <span class="script-speaker">20. M-Cn: You already bought a new part for the sprinkler system, right?</span>
+    <div class="script-opt">(A) Check the weather forecast.</div>
+    <div class="script-opt correct-pink">(B) Yes, I did that last week.</div>
+    <div class="script-opt">(C) That flight departs soon.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">21. M-Cn: Would you rather take the bus or drive to the client's office?</span>
-    <div class="script-opt correct-pink">(A) Driving will be faster.</div>
-    <div class="script-opt">(B) A downtown meeting.</div>
-    <div class="script-opt">(C) Next Tuesday afternoon.</div>
+    <span class="script-speaker">21. M-Au: How many lamps are made at the factory every day?</span>
+    <div class="script-opt correct-pink">(A) Some new machinery.</div>
+    <div class="script-opt">(B) A new line of men's clothing.</div>
+    <div class="script-opt">(C) About five hundred.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">22. M-Au: Our team's quarterly performance review is tomorrow, isn't it?</span>
-    <div class="script-opt">(A) A financial bonus.</div>
-    <div class="script-opt">(B) In the conference room.</div>
-    <div class="script-opt correct-pink">(C) Yes, so we need to finish our slides.</div>
+    <span class="script-speaker">22. M-Cn: Are you going out to eat, or did you bring your lunch from home?</span>
+    <div class="script-opt">(A) Right next to my office.</div>
+    <div class="script-opt">(B) That'll be five dollars, please.</div>
+    <div class="script-opt correct-pink">(C) It's in the microwave.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">23. W-Br: Why is the main entrance blocked off?</span>
-    <div class="script-opt">(A) A sliding glass door.</div>
-    <div class="script-opt">(B) To the parking lot.</div>
-    <div class="script-opt correct-pink">(C) They're cleaning the windows.</div>
+    <span class="script-speaker">23. W-Br: Can I place an order online?</span>
+    <div class="script-opt">(A) The post office on Main Street.</div>
+    <div class="script-opt">(B) Our website is currently down for maintenance.</div>
+    <div class="script-opt correct-pink">(C) No, he put it in the filing cabinet.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">24. M-Cn: Have you submitted your travel reimbursement form yet?</span>
-    <div class="script-opt correct-pink">(A) I'll do it this afternoon.</div>
-    <div class="script-opt">(B) A business trip to Tokyo.</div>
-    <div class="script-opt">(C) The accounting department.</div>
+    <span class="script-speaker">24. M-Au: Shouldn't the new floor plan be finished today?</span>
+    <div class="script-opt">(A) I enjoyed the movie.</div>
+    <div class="script-opt">(B) My team is short-staffed right now.</div>
+    <div class="script-opt correct-pink">(C) We met in the cafeteria.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">25. W-Am: Can you recommend a good restaurant near our office?</span>
-    <div class="script-opt">(A) A table for four.</div>
-    <div class="script-opt correct-pink">(B) The Italian bistro on Elm Street is nice.</div>
-    <div class="script-opt">(C) At twelve-thirty.</div>
+    <span class="script-speaker">25. M-Cn: Who's the new head of the legal department?</span>
+    <div class="script-opt">(A) No, I think it's on the second floor.</div>
+    <div class="script-opt">(B) It hasn't been announced yet.</div>
+    <div class="script-opt correct-pink">(C) Thanks, that'll help.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">26. M-Au: When will the new office furniture arrive?</span>
-    <div class="script-opt correct-pink">(A) Sometime next week.</div>
-    <div class="script-opt">(B) Desks and chairs.</div>
-    <div class="script-opt">(C) From a local supplier.</div>
+    <span class="script-speaker">26. M-Au: Who's scheduled to repair the water heater in Building Two?</span>
+    <div class="script-opt correct-pink">(A) There's a bottle of water in the refrigerator.</div>
+    <div class="script-opt">(B) Twenty dollars each.</div>
+    <div class="script-opt">(C) That job was completed yesterday.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">27. W-Br: Why don't we order some food for the staff meeting?</span>
-    <div class="script-opt correct-pink">(A) That would save us time.</div>
-    <div class="script-opt">(B) A conference room.</div>
-    <div class="script-opt">(C) Ten attendees.</div>
+    <span class="script-speaker">27. M-Au: Why were the sales figures so high last quarter?</span>
+    <div class="script-opt correct-pink">(A) I think that storefront is vacant.</div>
+    <div class="script-opt">(B) Koji is in charge of analyzing market trends.</div>
+    <div class="script-opt">(C) Let me unlock the door first.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">28. M-Cn: How much does it cost to rent a storage unit?</span>
-    <div class="script-opt correct-pink">(A) It depends on the size.</div>
-    <div class="script-opt">(B) Boxes and packing tape.</div>
-    <div class="script-opt">(C) Down the street.</div>
+    <span class="script-speaker">28. M-Cn: Ms. Martin is demonstrating the new software at the conference.</span>
+    <div class="script-opt">(A) I live on Vine Street.</div>
+    <div class="script-opt correct-pink">(B) No, they catered food last year.</div>
+    <div class="script-opt">(C) I thought she was on vacation.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">29. W-Am: You've met our new web designer, haven't you?</span>
-    <div class="script-opt correct-pink">(A) Yes, yesterday morning.</div>
-    <div class="script-opt">(B) A company Web site.</div>
-    <div class="script-opt">(C) Graphic design software.</div>
+    <span class="script-speaker">29. W-Br: Let's hire Johnson Construction to fix this roof.</span>
+    <div class="script-opt correct-pink">(A) They don't seem to be.</div>
+    <div class="script-opt">(B) They can't start until next month.</div>
+    <div class="script-opt">(C) I think it's on the bottom shelf.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">30. M-Au: Shouldn't we notify clients about the system upgrade?</span>
-    <div class="script-opt">(A) A software update.</div>
-    <div class="script-opt">(B) In the IT department.</div>
-    <div class="script-opt correct-pink">(C) Yes, I'll send an email today.</div>
+    <span class="script-speaker">30. W-Am: Your travel itinerary says you're going to Seattle, right?</span>
+    <div class="script-opt correct-pink">(A) But I'm going to London!</div>
+    <div class="script-opt">(B) Turn left at the light, please.</div>
+    <div class="script-opt">(C) An email update.</div>
   </div>
 
   <div class="script-question">
-    <span class="script-speaker">31. W-Br: Where are we going to store all these promotional items?</span>
-    <div class="script-opt">(A) T-shirts and pens.</div>
-    <div class="script-opt">(B) A marketing campaign.</div>
-    <div class="script-opt correct-pink">(C) We can use the empty room upstairs.</div>
+    <span class="script-speaker">31. W-Br: Won't theater tickets become available later today?</span>
+    <div class="script-opt">(A) A new pair of work boots.</div>
+    <div class="script-opt">(B) It should say on their website.</div>
+    <div class="script-opt correct-pink">(C) Yes, I saw him at the convention.</div>
   </div>
 
   <h3>PART 3: CONVERSATIONS (Câu 32 - 70)</h3>
   <div class="script-dialogue">
     <b>[Questions 32 - 34]</b><br>
-    <b>M-Au:</b> Excuse me, <span class="correct-pink">[32] the printer in this room is making a loud buzzing noise</span>, and it won't print my documents.<br>
-    <b>W-Am:</b> Oh, sorry about that. It's been acting up all morning. <span class="correct-pink">[33] I'll contact the help desk</span> and let them know right away.<br>
-    <b>M-Au:</b> Thanks. In the meantime, <span class="correct-pink">[34] don't forget that our team project deadline is tomorrow afternoon</span>, so we need to get these printed soon.
+    <b>M-Cn:</b> Carmen, I don't know if you realize it, but <span class="correct-pink">[32] your office chair makes a squeaking sound</span> every time you move. It's a little distracting when the office is so quiet.<br>
+    <b>W-Am:</b> Oh, I had my headset on, so I didn't realize that. <span class="correct-pink">[33] I'll go swap this chair with one from the conference room</span>.<br>
+    <b>M-Cn:</b> Thanks for understanding. And don't forget that <span class="correct-pink">[34] our team is ordering takeout from a Thai restaurant for lunch</span>. Do you want anything?<br>
+    <b>W-Am:</b> Sure, I'd love some spring rolls.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 35 - 37]</b><br>
-    <b>W-Br:</b> Hi, Dave. How did you like the new menu items at the restaurant across the street?<br>
-    <b>M-Cn:</b> <span class="correct-pink">[36] The soup was delicious</span>, but the service was a bit slow.<br>
-    <b>W-Br:</b> Well, they just opened last week, so they're probably still training their staff. <span class="correct-pink">[37] I'm going to call them</span> to make a reservation for our team lunch next Tuesday.<br>
-    <b>M-Cn:</b> Good idea, just make sure to remind them about our dietary restrictions.
+    <b>M-Cn:</b> Amina, do you have a few minutes? <span class="correct-pink">[35] I finished preparing the sample dish</span> that you asked for. You can try it now if you'd like.<br>
+    <b>W-Br:</b> Sure, I have time now. I think the pasta is delicious. <span class="correct-pink">[36] I like the hint of fresh lemon flavor</span>. It'll make a great addition to our summer menu.<br>
+    <b>M-Cn:</b> I agree, but we don't use lemons in any other dish. Should I get in touch with our fruit and vegetable supplier?<br>
+    <b>W-Br:</b> Thanks. <span class="correct-pink">[37] Just ask him what the cost difference would be</span> if we added five kilograms of lemons to our regular delivery.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 38 - 40]</b><br>
-    <b>M-Au:</b> Hi, Karen. <span class="correct-pink">[38] I'm looking over the financial report</span> for our law firm's upcoming quarter, and I have a quick question.<br>
-    <b>W-Am:</b> Sure, what is it?<br>
-    <b>M-Au:</b> <span class="correct-pink">[39] Could you send me the latest staffing budget data?</span> I want to make sure my projections are accurate.<br>
-    <b>W-Am:</b> I'll email that to you right now. By the way, <span class="correct-pink">[40] why don't you ask a colleague to double-check your numbers</span> before you submit the final report?
+    <b>M-Au:</b> Dr. Ruiz, do you have a minute?<br>
+    <b>W-Am:</b> Sure.<br>
+    <b>M-Au:</b> It looks like the <span class="correct-pink">[38] hospital has a little money left over in our staff development budget</span>. Can you think of anything we could spend it on? I'm just looking for ideas.<br>
+    <b>W-Am:</b> Well, I'd love it if <span class="correct-pink">[39] we could get a subscription to Prescriber Meds newsletter</span>. A lot of the expert summaries in it are useful for my clinical practice work.<br>
+    <b>M-Au:</b> Sounds good. I'm going to ask other doctors too, and see how best to use these funds.<br>
+    <b>W-Am:</b> Great. <span class="correct-pink">[40] I'd suggest maybe sending out a survey</span> though. That'd be more convenient.<br>
+    <b>M-Au:</b> Good idea. I'll do that.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 41 - 43]</b><br>
-    <b>W-Br:</b> Hi, I'd like to <span class="correct-pink">[41] return a jacket I purchased online</span> last week. It's a bit too large.<br>
-    <b>M-Cn:</b> No problem. Do you have your receipt or order confirmation?<br>
-    <b>W-Br:</b> Yes, it's right here on my phone. <span class="correct-pink">[42] I'd like to exchange it for a smaller size</span>.<br>
-    <b>M-Cn:</b> Let me check our inventory... Unfortunately, we don't have this color in a smaller size in the store. But <span class="correct-pink">[43] I can order it for you online and have it shipped to your home for free</span>.
+    <b>M-Cn:</b> Hello, <span class="correct-pink">[41] I just received a pair of shoes I ordered from your online store</span>. They're nice, but they don't fit. Can I ship them back to you for a refund?<br>
+    <b>W-Br:</b> Yes, but for a refund, I'm afraid you'll have to ship the shoes back at your own expense. On the other hand, <span class="correct-pink">[42] if you'd like to exchange them, we'll send you a return label for free</span>.<br>
+    <b>M-Cn:</b> In that case, I'll exchange them for another size. How do I do that?<br>
+    <b>W-Br:</b> <span class="correct-pink">[43] I'll email you a link</span>. Just click on it, and you'll be redirected to the instructions for exchanges on our website.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 44 - 46]</b><br>
-    <b>M-Au:</b> Ms. Jensen, it's an honor to meet you. <span class="correct-pink">[44] Your books on medieval history</span> are fascinating.<br>
-    <b>W-Am:</b> Thank you so much! I'm glad you enjoyed them.<br>
-    <b>M-Au:</b> As you know, <span class="correct-pink">[45] I'm a film consultant</span>, and our studio is currently planning a historical movie set in that era. We'd love to have you advise us on set design and costumes.<br>
-    <b>W-Am:</b> That sounds like a wonderful project. <span class="correct-pink">[46] I'll be traveling abroad next week</span>, but I'd be happy to discuss it further when I return.
+    <b>M-Cn:</b> On today's podcast, we have Gabriella Espinosa, a former history professor who focuses on <span class="correct-pink">[44] ancient civilizations</span>. Recently, however, she left the university for another position. Tell us about that.<br>
+    <b>W-Am:</b> Well, last year, a film company was producing a movie about the famous pyramids at Giza. They needed an expert in ancient Egypt, and they found me. Now, <span class="correct-pink">[45] I work full-time as a consultant for the film industry</span>.<br>
+    <b>M-Cn:</b> Do you actually work on set?<br>
+    <b>W-Am:</b> Yes. When there are last-minute changes, I make sure the changes are historically accurate. In fact, <span class="correct-pink">[46] I'll be in Egypt next week, sailing down the Nile River</span>.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 47 - 49]</b><br>
-    <b>W-Br:</b> Hi, Mark. <span class="correct-pink">[47] We need to prepare for our annual charity fund-raiser</span> coming up in June.<br>
-    <b>M-Cn:</b> Right, time flies! <span class="correct-pink">[48] I'm so glad last year's event was such a huge success</span>. We raised more money than ever before.<br>
-    <b>W-Br:</b> Yes, and <span class="correct-pink">[49] we should make sure to invite all the local business leaders</span> who supported us last time. I'll start compiling the guest list today.
+    <b>W-Br:</b> Pedro, I just registered for <span class="correct-pink">[47] the National Marketing Convention</span> in June.<br>
+    <b>M-Cn:</b> Me too, and I printed out the program with all the talks and workshops.<br>
+    <b>W-Br:</b> Oh, can I take a look? This is great. <span class="correct-pink">[48] It looks like there are plenty of breaks in the schedule for networking with potential clients</span>.<br>
+    <b>M-Cn:</b> Right. So <span class="correct-pink">[49] don't forget to bring your business cards with you</span>. You'll need a lot of them.<br>
+    <b>W-Br:</b> Thanks for the reminder. I'd better order more.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 50 - 52]</b><br>
-    <b>M-Au:</b> Hi, Elena. <span class="correct-pink">[50] Have you seen the new employee guidelines</span> that were posted on the company portal this morning?<br>
-    <b>W-Am:</b> Yes, I just read through them. <span class="correct-pink">[51] Minoru did a great job designing the new company logo</span> that's featured on the cover.<br>
-    <b>M-Au:</b> He really did. Now, <span class="correct-pink">[52] we need to print copies of this manual</span> for everyone in our department before the meeting tomorrow afternoon.
+    <b>M-Cn:</b> We need to come up with a new menu design for <span class="correct-pink">[50] our seaside restaurant</span>. Something memorable. Do you two have any suggestions?<br>
+    <b>M-Au:</b> Maybe we could use a dolphin jumping out of the water? Junko, what do you think?<br>
+    <b>W-Br:</b> Oh, I really like that idea, and it's fitting, since our restaurant is at the beach. <span class="correct-pink">[51] Minoru, can you put together a graphic for the rest of us to look at?</span><br>
+    <b>M-Au:</b> I'll start working on it immediately.<br>
+    <b>M-Cn:</b> Great. Hopefully, we can finalize something <span class="correct-pink">[52] before next month's community fair</span>.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 53 - 55]</b><br>
-    <b>W-Br:</b> Excuse me, <span class="correct-pink">[53] how do I get to the central train station</span> from here? I'm visiting from out of town.<br>
-    <b>M-Cn:</b> It's about a fifteen-minute walk straight down this avenue. But <span class="correct-pink">[54] if you're in a hurry, you might want to take a taxi</span>—traffic is quite light right now.<br>
-    <b>W-Br:</b> Thanks for the tip, but I have plenty of time. <span class="correct-pink">[55] The visitor center is just up the road</span>, so I'll stop by there first to pick up a map.
+    <b>M-Au:</b> Hello, <span class="correct-pink">[53] welcome to Henderson State Park</span>. Parking is free this weekend.<br>
+    <b>W-Am:</b> That's great! I'm visiting here for the first time. Do you have a map of the park trails?<br>
+    <b>M-Au:</b> I'm sorry, I just ran out of maps. It's been a very busy weekend.<br>
+    <b>W-Am:</b> Well, <span class="correct-pink">[54] I'm just a little concerned since I don't know the trails</span>.<br>
+    <b>M-Au:</b> I understand. <span class="correct-pink">[55] The visitor center is about four hundred meters up the road</span>.<br>
+    <b>W-Am:</b> Oh, that's good to know. Thanks.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 56 - 58]</b><br>
-    <b>M-Au:</b> Good afternoon. <span class="correct-pink">[56] Welcome to the grand opening of our new technological research facility</span>!<br>
-    <b>W-Am:</b> Thank you! <span class="correct-pink">[57] I'm so impressed that the building was completed under budget</span>.<br>
-    <b>M-Au:</b> We worked hard to keep costs down without sacrificing quality. Now, <span class="correct-pink">[58] let's gather everyone by the entrance so we can take a group photo</span> for the local newspaper.
+    <b>M-Au:</b> Good morning, Mayor Ishikawa. I'm glad you could join Ms. Schneider and me for the ceremony as we begin this important first step: <span class="correct-pink">[56] the building demolition</span>.<br>
+    <b>M-Cn:</b> Happy to be here. The city appreciates your company's involvement in this project.<br>
+    <b>W-Br:</b> Our pleasure. TJO Property is excited to be <span class="correct-pink">[57] investing in this community in such a substantial way</span>.<br>
+    <b>M-Au:</b> Right. And tearing down this old shopping center will give us the space to create a new mixed-use project of apartments, shops, and offices.<br>
+    <b>M-Cn:</b> Community residents are looking forward to the new development.<br>
+    <b>W-Br:</b> Absolutely. Since the press is here, <span class="correct-pink">[58] should we pose for a photograph in front of the wrecking ball before the work begins?</span>
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 59 - 61]</b><br>
-    <b>W-Br:</b> Hi, I'm interested in buying some new shelving units for my living room.<br>
-    <b>M-Cn:</b> We have a wide selection of wooden and metal shelves. <span class="correct-pink">[59] Did you see our catalog online?</span><br>
-    <b>W-Br:</b> Yes, <span class="correct-pink">[60] I saw an advertisement for your store in the local newspaper</span>, and then I checked your Web site.<br>
-    <b>M-Cn:</b> Excellent. Well, all our shelving units are currently on display in the back showroom. Oh, and don't worry about assembly—<span class="correct-pink">[61] our patio furniture is delivered pre-assembled, but for the shelves, we offer free home assembly</span>.
+    <b>M-Cn:</b> Welcome to Schmidt's. <span class="correct-pink">[59] Are you interested in our hanging plants?</span> I'm happy to help you choose.<br>
+    <b>W-Am:</b> Please. <span class="correct-pink">[60] I got this coupon in the mail for fifteen percent off any outdoor plants</span>, so I thought I'd see if you have some flower baskets I could hang in my back patio area.<br>
+    <b>M-Cn:</b> These plants here bloom beautifully and do best in direct sunlight.<br>
+    <b>W-Am:</b> Well, <span class="correct-pink">[61] it's a covered patio</span>.<br>
+    <b>M-Cn:</b> Okay. Just follow me. We have plenty of plants that do well in shade or partial sun.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 62 - 64: Graphic / Lịch Trình Nghiên Cứu]</b><br>
-    <b>W-Am:</b> Hi, Professor Kwon. Are we ready for today's lab work?<br>
-    <b>M-Au:</b> Almost. <span class="correct-pink">[62] We're a team of researchers</span>, and we need to make sure we follow our weekly protocol closely.<br>
-    <b>W-Am:</b> Right. Did we remember to check the chemical safety manual before handling the samples?<br>
-    <b>M-Au:</b> Yes, I reviewed it yesterday. According to our schedule, <span class="correct-pink">[64: Hôm nay là thứ Tư] today we're supposed to treat the samples</span> we collected yesterday.<br>
-    <b>W-Am:</b> Perfect. Let's get started.
+    <b>[Questions 62 - 64: Graphic / Lịch Trình Thực Tập Sinh]</b><br>
+    <b>W-Br:</b> Hey, Pablo. I missed the intern team morning update. Was there information about cleaning acrylic test tubes? I wonder whether there are specific guidelines for these, as opposed to glass tubes.<br>
+    <b>M-Cn:</b> <span class="correct-pink">[63] You should check the intern lab manual</span>. I think it was updated this week with step-by-step instructions.<br>
+    <b>W-Br:</b> Good idea. You know, what I'm enjoying most so far is learning about the practical side of the work, but I wish we could start working alongside the researchers here.<br>
+    <b>M-Cn:</b> <span class="correct-pink">[64: Thứ Tư có buổi phân tích dữ liệu] Professor Kwan is showing us how to analyze data later today</span>. She usually asks the interns to participate.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 65 - 67: Graphic / Thiết Kế Logo]</b><br>
-    <b>M-Cn:</b> Hi, Sarah. We need to finalize the new company logo today so we can <span class="correct-pink">[65] print it on our packaging before the busy holiday season starts</span>.<br>
-    <b>W-Br:</b> I agree, we shouldn't delay. Which of the four prototype designs do you like best?<br>
-    <b>M-Cn:</b> <span class="correct-pink">[66] I prefer Design 2</span>—the one with the pineapple and the beach umbrella. It's very catchy and fun.<br>
-    <b>W-Br:</b> That's my favorite one too! Let's go ahead with that. I'll notify the production team so they can prepare for next week's rollout.
+    <b>[Questions 65 - 67: Graphic / Thiết Kế Logo Kem Chống Nắng]</b><br>
+    <b>M-Au:</b> Hi, Farida. I'm excited to see the designs you created. People spend a lot of time outside during the summer, so <span class="correct-pink">[65] we want to get our sunscreen on store shelves before the summer rush</span>. We need to pick a logo design quickly.<br>
+    <b>W-Br:</b> Take a look at these logo designs. All of them will grab the attention of shoppers.<br>
+    <b>M-Au:</b> <span class="correct-pink">[66] I like this one with the palm tree in a circle</span>.<br>
+    <b>W-Br:</b> I agree. The single palm tree is a simple, clean logo.<br>
+    <b>M-Au:</b> Before we make our decision, I'd like to show it to a focus group that represents our target audience. <span class="correct-pink">[67] We have a large group coming in next week</span>.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 68 - 70: Graphic / Lịch Trồng Trọt]</b><br>
-    <b>M-Au:</b> Hi, Lisa. I'm looking at our <span class="correct-pink">[68] planting calendar</span> for the community garden, and I see we need to order more seeds soon.<br>
-    <b>W-Am:</b> Yes, we should. <span class="correct-pink">[69] What is our most popular crop?</span> According to the chart, garlic is planted in early summer, but look at cabbage—it's planted across multiple seasons, making it our top seller.<br>
-    <b>M-Au:</b> Ah, you're right. <span class="correct-pink">[70] I'll check our current inventory of cabbage seeds</span> and see how much more we need to order.
+    <b>[Questions 68 - 70: Graphic / Lịch Trồng Trọt Mùa Xuân - Hè]</b><br>
+    <b>W-Am:</b> Stefan, have you given any more thought to that parcel of <span class="correct-pink">[68] land that's available for lease</span>? If we leased it, we'd have space for a lot more crops this spring and summer.<br>
+    <b>M-Cn:</b> Yes. With the extra growing space, we'd definitely increase our yield. What crops do you think would be best?<br>
+    <b>W-Am:</b> Well, we could plant more celery, which is <span class="correct-pink">[69] our most popular crop</span>, and we could even add cabbage as a new crop in the spring.<br>
+    <b>M-Cn:</b> That makes sense. We'll need to extend our irrigation system to the new parcel though, and that could be expensive. <span class="correct-pink">[70] I can call Lyndon Ag Supply for an estimate on that</span>.<br>
+    <b>W-Am:</b> Sure, that would be great.
   </div>
 
   <h3>PART 4: TALKS (Câu 71 - 100)</h3>
   <div class="script-dialogue">
     <b>[Questions 71 - 73]</b><br>
-    <b>M-Au:</b> Good morning, team. Before we start our shift at the <span class="correct-pink">[72] hotel</span>, <span class="correct-pink">[71] I want to thank all of you for stepping in and working extra hours</span> over the past few days. We've had a lot of guests, and your hard work hasn't gone unnoticed. Now, <span class="correct-pink">[73] please take a look at this handout detailing our updated guest check-in procedures</span>, and let me know if you have any questions.
+    <b>W-Am:</b> Good morning, everyone. <span class="correct-pink">[71] Thank you for coming in a little bit early for your shift today</span>. While production was closed down for the holiday, management took the opportunity to install a new type of safety equipment on all the machines on <span class="correct-pink">[72] the assembly lines</span>. A special sensor, called a light curtain, automatically turns off the machines if an object gets too close during operation. <span class="correct-pink">[73] I'd like to show you how it works. Let's go look at a machine now</span>.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 74 - 76]</b><br>
-    <b>W-Br:</b> Congratulations, everyone! <span class="correct-pink">[74] We've sold out all the tickets for tonight's musical performance</span>. Everyone's worked so hard to make this show a success. Now, before we go on stage, a quick health reminder: <span class="correct-pink">[75] make sure to drink lots of water</span> to keep your voices strong. Also, <span class="correct-pink">[76] Erina has done an amazing job with the lighting design</span>, so be sure to hit your marks on stage. Let's have a great show!
+    <b>W-Br:</b> Good job at all the rehearsals this week as we prepare for our upcoming performance, <span class="correct-pink">[74] dancers! You did great at quickly learning the newly choreographed steps to our main piece</span>. <span class="correct-pink">[75] I recommend that you rest a lot over the weekend</span>. Please give your muscles time to recover after working so hard. When we return on Monday for our final rehearsal, Irina will be here. She's in charge of <span class="correct-pink">[76] the costumes</span> and will be making last-minute alterations to your outfits. Then we'll be ready for our first show on Tuesday night.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 77 - 79]</b><br>
-    <b>M-Cn:</b> Welcome back from lunch, <span class="correct-pink">[77] actors</span>! <span class="correct-pink">[80] I hope this meeting has helped everyone understand our vision for the upcoming play</span>. As you know, <span class="correct-pink">[78] our theater underwent a major renovation last week</span> to upgrade the seating and sound system. Now that we're back in the space, <span class="correct-pink">[79] let's take a ten-minute break</span> to get settled before we begin our rehearsal.
+    <b>M-Au:</b> Attention, everyone. <span class="correct-pink">[77] Tonight we're filming a live performance of the Edmonton Symphony Orchestra</span>, so the margin for error is zero. I know we've had a lot of adjustments to make since <span class="correct-pink">[78] we just upgraded our cameras to newer models last week</span>, but we've tested everything, and we know what we're doing. Remember, it's an important night because this is a high-profile event that will be broadcast live to viewers. If we do a great job, our services are bound to be in demand. It's noon now, so let's break for lunch. <span class="correct-pink">[79] When we come back, we'll get set up</span>.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 80 - 82]</b><br>
-    <b>M-Cn:</b> Welcome back from lunch, actors! <span class="correct-pink">[80] I hope this meeting has helped everyone understand our vision for the upcoming play</span>. As you know, our theater underwent a major renovation last week to upgrade the seating and sound system. Now that we're back in the space, let's take a ten-minute break to get settled before we begin our rehearsal. Oh, and one more thing—<span class="correct-pink">[82] our newest cast member previously worked as a professional chef</span>! Who knew?
+    <b>W-Br:</b> Hi, I'm your supervisor, Maria Gonzalez. <span class="correct-pink">[80] I'd like to extend a warm welcome to everyone here. I'm excited that you'll all be joining the customer service department</span>. I hope that the onboarding process has been going well so far. <span class="correct-pink">[81] After lunch, I'll share a video about our company's history</span>, from its founding in 1971 to the present day. Let's move on now to introductions. I'd like all of you to tell us something about yourselves. For example, I just found out that Astrid plays saxophone in a jazz ensemble. <span class="correct-pink">[82] That certainly wasn't on her résumé!</span> Klaus, would you go first?
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 83 - 85]</b><br>
-    <b>W-Am:</b> Attention passengers on the commuter train to Bruxton. <span class="correct-pink">[83] Bruxton is famous for its historical connections to the renowned artist Clara Vane</span>. If you're visiting the art museum today, <span class="correct-pink">[84] passengers in the last car should note that the exit platform is too short</span>, so please move to a car ahead of yours before we arrive at the station. Also, please be advised that <span class="correct-pink">[85] we'll be experiencing a short delay because an express train needs to pass us</span> on the track ahead.
+    <b>M-Au:</b> Good afternoon, and welcome aboard this train to Ashdale. Our next stop is Broxton, <span class="correct-pink">[83] famous for being the birthplace of renowned painter Oliver Murray</span>. As you may know, several of Mr. Murray's paintings hang in museums around the world. Please be advised that due to the short platform length, the doors of the last train car will not open. <span class="correct-pink">[84] If you are in that car, you'll need to walk forward to exit the train</span>. There will also be <span class="correct-pink">[85] a short delay at this station while our new train crew comes on</span> and gets situated. We apologize for any inconvenience.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 86 - 88]</b><br>
-    <b>M-Au:</b> Hi, everyone. Let's finalize the landscape design for the corporate headquarters building. <span class="correct-pink">[86] We decided to plant a large grassy lawn in the front courtyard</span>. However, <span class="correct-pink">[87] grass does require a lot of water</span>, which might increase our utility bills significantly. We should consider replacing some of the grass with drought-resistant native plants. <span class="correct-pink">[88] Please send me your updated supply lists and plant recommendations</span> by Friday so we can review them.
+    <b>W-Am:</b> I have good news: we've signed a contract with Lambert Technologies to plan <span class="correct-pink">[86] the gardens and landscaping around their new office building</span>. I met with them last week to present our design proposals, and they agreed on a design plan. They've decided to cover a lot of the open space with creeping thyme plantings instead of grass. Resource conservation is a priority for all of us, and I must say, <span class="correct-pink">[87] grass does require a lot of water</span>. The project will start in August. I'll need to make the work schedules soon. If you're planning to take any time off for vacation, <span class="correct-pink">[88] send me those dates today, please</span>.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 89 - 91]</b><br>
-    <b>W-Br:</b> Good morning, listeners. You're tuned in to Business World. Today <span class="correct-pink">[89] we're discussing the recent rebranding of Willoughby's department stores</span>. After years of declining sales, Willoughby's has adopted a new strategy focused on <span class="correct-pink">[90] expanding its customer base</span> by appealing to younger shoppers. As part of this effort, <span class="correct-pink">[91] the Willoughby store chain plans to renovate several of its flagship stores in July</span> to feature modern, open-concept layouts.
+    <b>M-Cn:</b> A market research firm has reported that <span class="correct-pink">[89] the department store chain Willoughby is partnering with the beauty retailer Rossi</span>. By the end of the year, Rossi stores will be in place at five hundred Willoughby locations. Currently, most of the beauty retailer's sales come from small shops in urban areas. By joining forces with Willoughby, <span class="correct-pink">[90] Rossi hopes to meet its goal of expanding its customer base</span> by entering suburban markets. To accommodate the new retail spaces for Rossi, participating Willoughby stores will <span class="correct-pink">[91] start renovations in July</span>.
   </div>
 
   <div class="script-dialogue">
     <b>[Questions 92 - 94]</b><br>
-    <b>W-Am:</b> Thanks for coming to today's meeting. <span class="correct-pink">[92] The purpose of this gathering is to discuss ways to improve our business</span> and increase customer retention. <span class="correct-pink">[93] Let's not forget that the Business Council's yearly ratings will be published soon</span>, and we want our scores to reflect our hard work. To achieve this, <span class="correct-pink">[94] I suggest we offer a special discount to new customers next month</span> to encourage them to try our services.
+    <b>M-Au:</b> Today, <span class="correct-pink">[92] I want to discuss some ways we can improve our solar panel installation business</span>. I'd like to pay for national certification for all of our installation techs, which will greatly improve our quality. <span class="correct-pink">[93] Let's not forget that the business council's yearly ratings will be published soon</span>. In addition, we can attract new customers by offering twenty-five percent off the installation charge. <span class="correct-pink">[94] I suggest we begin the promotion next month</span>.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 95 - 97: Graphic / Bản Đồ Khu Vực Thành Phố]</b><br>
-    <b>M-Cn:</b> Hello, residents of Centerville. I'm calling from the <span class="correct-pink">[96] city's parks department</span> with an update on our neighborhood revitalization project. <span class="correct-pink">[95] Last fall, we had to temporarily interrupt construction</span> due to unexpected weather, but work has resumed. I'm pleased to announce that <span class="correct-pink">[97] the Centerville neighborhood will be served first</span>, with new trees and benches being installed along Main Street starting next week.
+    <b>[Questions 95 - 97: Graphic / Bản Đồ Ghế Chờ Trạm Xe Buýt]</b><br>
+    <b>M-Cn:</b> Thank you for attending. <span class="correct-pink">[95] Last fall, the city approved more funding for transportation projects</span>. Today, my department is happy to announce that we'll use some of those funds to install covered benches at city bus stops. They will give riders a place to rest and keep out of the sun, rain, or snow while they wait. This map shows the neighborhoods where we'll construct new bus shelters. <span class="correct-pink">[97] We'll start with the neighborhood around the university</span>, since students make up a large portion of the overall ridership.
   </div>
 
   <div class="script-dialogue">
-    <b>[Questions 98 - 100: Graphic / Bảng Giá Hoa Tulip]</b><br>
-    <b>W-Br:</b> Hi, everyone. While I was on vacation in Boston last week, <span class="correct-pink">[98] I really enjoyed seeing the beautiful floral displays</span> in the public parks. As a <span class="correct-pink">[99] shop owner</span> here, I'm inspired to update our spring inventory. <span class="correct-pink">[100] I'm looking at our price list right now, and I think we should order the Triumph tulips</span>—they're priced at two hundred and eighty dollars per ten dozen, which is a great value for such a unique variety.
+    <b>[Questions 98 - 100: Graphic / Bảng Giá Đặt Mua Hoa Tulip]</b><br>
+    <b>W-Br:</b> Hi, Andrew. This is Samantha Evans. It was great running into you at the flower trade show in Boston, and thanks for recommending that <span class="correct-pink">[98] I visit the art museum</span> while I was in town. I really enjoyed seeing the modern art exhibit. I'm calling because I wanted to follow up with you right away about the tulips you're getting shipped from the Netherlands next week. I'd like to buy ten dozen tulips from you for <span class="correct-pink">[99] my flower shop</span>. However, my budget is tight, and I can't spend more than two hundred and fifty dollars, so <span class="correct-pink">[100] I'd like to order tulips in that price range</span>.
   </div>
 `;
 
