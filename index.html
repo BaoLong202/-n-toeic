@@ -67,13 +67,14 @@
   /* Top Navigation */
   header {
     height: 52px;
-    padding: 0 16px;
+    padding: 0 12px;
     background: var(--bg-surface);
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-shrink: 0;
+    gap: 8px;
   }
   .brand-title {
     font-size: 14px;
@@ -81,13 +82,14 @@
     letter-spacing: -0.01em;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     color: var(--text-primary);
+    white-space: nowrap;
   }
   .brand-badge {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
-    padding: 2px 6px;
+    padding: 2px 4px;
     border-radius: 4px;
     background: var(--brand-subtle);
     color: var(--brand);
@@ -95,19 +97,20 @@
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
   }
   .btn-outline {
     font-family: inherit;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
-    padding: 6px 12px;
+    padding: 5px 8px;
     border-radius: 6px;
     border: 1px solid var(--border);
     background: var(--bg-surface);
     color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.15s ease;
+    white-space: nowrap;
   }
   .btn-outline:hover {
     background: var(--bg-subtle);
@@ -723,7 +726,28 @@
     line-height: 1.5;
   }
 
+  /* Responsive tùy chỉnh tối ưu riêng cho điện thoại */
   @media (max-width: 768px) {
+    header {
+      padding: 0 8px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+    header::-webkit-scrollbar {
+      display: none; /* Ẩn thanh cuộn trên mobile cho gọn */
+    }
+    .brand-badge {
+      display: none; /* Ẩn huy hiệu ETS Series trên màn hình nhỏ để tiết kiệm không gian */
+    }
+    .header-actions {
+      gap: 4px;
+    }
+    .btn-outline {
+      padding: 4px 6px;
+      font-size: 11px;
+    }
     .sidebar {
       position: fixed;
       top: 52px;
@@ -748,8 +772,8 @@
 <body>
 
 <header>
-  <div style="display:flex; align-items:center; gap:10px;">
-    <button id="sidebarToggleBtn" class="btn-outline" style="padding:4px 8px;">Mục lục</button>
+  <div style="display:flex; align-items:center; gap:6px;">
+    <button id="sidebarToggleBtn" class="btn-outline" style="padding:4px 6px;">Mục lục</button>
     <div class="brand-title">
       TOEIC
       <span class="brand-badge">ETS Series</span>
@@ -778,7 +802,7 @@
   </div>
 </div>
 
-<!-- Modal Xác nhận tùy chỉnh trong web (thay thế cho confirm của trình duyệt) -->
+<!-- Modal Xác nhận tùy chỉnh (Xoá) -->
 <div class="profile-overlay" id="customConfirmModal">
   <div class="profile-card" style="max-width: 340px; text-align: center;">
     <div class="drawer-title" style="margin-bottom: 10px; font-size: 15px;">Xác nhận xoá</div>
@@ -788,6 +812,19 @@
     <div style="display: flex; gap: 10px;">
       <button id="customConfirmCancelBtn" class="btn-outline" style="flex: 1;">Huỷ</button>
       <button id="customConfirmOkBtn" class="btn-submit" style="flex: 1; background: var(--danger);">Xoá</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Thông báo tùy chỉnh (Alert) -->
+<div class="profile-overlay" id="customAlertModal">
+  <div class="profile-card" style="max-width: 340px; text-align: center;">
+    <div class="drawer-title" style="margin-bottom: 10px; font-size: 15px;">Thông báo</div>
+    <div id="customAlertMessage" class="vocab-note" style="margin-bottom: 20px; font-size: 13px; color: var(--text-primary);">
+      Nội dung thông báo...
+    </div>
+    <div style="display: flex;">
+      <button id="customAlertOkBtn" class="btn-submit" style="flex: 1;">OK</button>
     </div>
   </div>
 </div>
@@ -934,6 +971,24 @@ function showCustomConfirm(message, onOk) {
   cancelBtn.addEventListener('click', handleCancel);
 }
 
+// Hàm hiển thị Modal thông báo (Alert) tuỳ chỉnh trong web
+function showCustomAlert(message, onClose) {
+  const modal = document.getElementById('customAlertModal');
+  const msgEl = document.getElementById('customAlertMessage');
+  const okBtn = document.getElementById('customAlertOkBtn');
+
+  msgEl.textContent = message;
+  modal.classList.add('open');
+
+  const handleOk = () => {
+    modal.classList.remove('open');
+    okBtn.removeEventListener('click', handleOk);
+    if (onClose) onClose();
+  };
+
+  okBtn.addEventListener('click', handleOk);
+}
+
 const profileOverlay = document.getElementById('profileOverlay');
 const profileListEl = document.getElementById('profileListEl');
 const newProfileInput = document.getElementById('newProfileInput');
@@ -959,7 +1014,6 @@ function renderProfileOverlay() {
     const delBtn = document.createElement('button');
     delBtn.className = 'btn-outline'; delBtn.style.color = 'var(--danger)'; delBtn.textContent = 'Xoá';
     
-    // Dùng Modal tùy chỉnh thay vì window.confirm()
     delBtn.addEventListener('click', () => {
       showCustomConfirm(`Xoá hồ sơ "${name}" và toàn bộ kết quả đã lưu của hồ sơ này?`, () => {
         saveProfilesList(getProfiles().filter(p => p !== name));
@@ -1006,7 +1060,10 @@ profileBtn.addEventListener('click', () => {
 });
 
 document.getElementById('profileOverlayCloseBtn').addEventListener('click', () => {
-  if (!getCurrentProfile()) { alert('Vui lòng chọn hoặc tạo một hồ sơ để tiếp tục sử dụng.'); return; }
+  if (!getCurrentProfile()) { 
+    showCustomAlert('Vui lòng chọn hoặc tạo một hồ sơ để tiếp tục sử dụng.'); 
+    return; 
+  }
   profileOverlay.classList.remove('open');
 });
 
@@ -1066,7 +1123,7 @@ function startTimer() {
       updateTimerDisplayDOM();
     } else {
       stopTimer();
-      alert('Đã hết giờ làm bài! Hệ thống sẽ tiến hành chấm điểm.');
+      showCustomAlert('Đã hết giờ làm bài! Hệ thống sẽ tiến hành chấm điểm.');
       const t = tests.find(x => x.id === activeId);
       if (t) {
         t.isGraded = true;
