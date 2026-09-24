@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ôn luyện TOEIC - Đề thi & Script</title>
+<title>Luyện Thi TOEIC </title>
 <style>
   :root {
     --bg: #f7f7f8; --panel: #ffffff; --border: #e2e2e6; --text: #1c1c1f; --muted: #6b6b73;
@@ -21,7 +21,6 @@
   header h1 { font-size: 16px; margin: 0; display: flex; align-items: center; gap: 6px; }
   header .hint { font-size: 11px; color: var(--muted); display: none; }
   @media (min-width: 768px) { header .hint { display: block; } }
-  header button { font-size: 12px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent-soft); color: var(--accent); cursor: pointer; }
   
   .layout { flex: 1; display: flex; min-height: 0; position: relative; }
   .sidebar { width: 280px; max-width: 100%; border-right: 1px solid var(--border); padding: 12px; overflow-y: auto; flex-shrink: 0; background: var(--panel); }
@@ -30,7 +29,6 @@
   .test-card { border: 1px solid var(--border); border-radius: 10px; padding: 10px; margin-bottom: 10px; background: var(--bg); cursor: pointer; }
   .test-card.active { border-color: var(--accent); background: var(--panel); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
   .test-card .name { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
-  .test-card .name input { border: none; background: transparent; font-weight: 600; font-size: 14px; color: var(--text); width: 100%; }
   .test-card .status { font-size: 11px; color: var(--muted); display: flex; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
   .test-card .status span.ok { color: var(--good); font-weight: bold; }
   .row-btns { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -52,24 +50,23 @@
   .doc-tabs { display: flex; background: var(--bg); border-bottom: 1px solid var(--border); padding: 4px 6px; gap: 6px; }
   .doc-tab { font-size: 12px; padding: 5px 12px; border-radius: 6px; border: 1px solid transparent; background: transparent; color: var(--muted); cursor: pointer; font-weight: 500; }
   .doc-tab.active { background: var(--panel); color: var(--text); border-color: var(--border); font-weight: 600; }
-  .doc-content { flex: 1; position: relative; }
+  .doc-content { flex: 1; position: relative; overflow-y: auto; padding: 12px; }
   .doc-content iframe { width: 100%; height: 100%; border: none; }
   .no-file { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--muted); font-size: 13px; text-align: center; padding: 20px; gap: 6px; }
 
   .answer-panel { flex: 1; min-height: 0; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); display: flex; flex-direction: column; overflow: hidden; }
+  .aim-panel { background: var(--accent-soft); border-bottom: 1px solid var(--border); padding: 8px 12px; font-size: 12px; display: flex; flex-direction: column; gap: 4px; }
+  .aim-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .aim-input-wrap { display: flex; align-items: center; gap: 4px; }
+  .aim-input-wrap input { width: 55px; padding: 3px 6px; border-radius: 4px; border: 1px solid var(--accent); font-weight: bold; text-align: center; background: var(--panel); color: var(--text); }
+  .aim-feedback { font-size: 11.5px; line-height: 1.4; color: var(--text); background: var(--panel); padding: 6px 8px; border-radius: 6px; border-left: 3px solid var(--accent); }
+
   .answer-head { padding: 8px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
   .answer-head strong { font-size: 13px; }
   .answer-head .score { font-size: 12px; color: var(--muted); }
   .answer-head .score.done { color: var(--accent); font-weight: 700; }
   .answer-head-btns { display: flex; gap: 6px; }
-  .answer-head-btns button { font-size: 11px; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); cursor: pointer; }
-
-  .key-box { padding: 10px 12px; border-bottom: 1px solid var(--border); display: none; gap: 6px; flex-direction: column; flex-shrink: 0; }
-  .key-box.open { display: flex; }
-  .key-box textarea { width: 100%; min-height: 60px; font-size: 12px; padding: 6px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-family: monospace; }
-  .key-box .key-hint { font-size: 11px; color: var(--muted); }
-  .key-box .key-actions { display: flex; justify-content: flex-end; }
-  .key-box .key-actions button { font-size: 11px; padding: 5px 12px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+  .answer-head-btns button, .answer-head-btns select { font-size: 11px; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); cursor: pointer; }
 
   .scroll-area { flex: 1; overflow-y: auto; padding: 10px; -webkit-overflow-scrolling: touch; }
   .qgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 6px; align-content: start; }
@@ -82,10 +79,16 @@
   .qrow.graded .opt.right-answer:not(.selected) { border-color: var(--good); color: var(--good); font-weight: bold; background: rgba(31, 146, 84, 0.1); }
 
   .notes-section { margin-top: 14px; }
-  .notes-title { font-size: 12px; font-weight: 600; margin-bottom: 6px; color: var(--danger); }
-  .note-item { border: 1px solid var(--border); border-left: 3px solid var(--bad); border-radius: 8px; padding: 8px; margin-bottom: 8px; background: var(--bg); }
-  .note-item .note-head { font-size: 12px; margin-bottom: 6px; }
-  .note-item textarea { width: 100%; min-height: 44px; font-size: 12px; padding: 6px; border-radius: 6px; border: 1px solid var(--border); background: var(--panel); color: var(--text); resize: vertical; }
+  .notes-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--danger); display: flex; align-items: center; gap: 6px; }
+  .note-item { border: 1px solid var(--border); border-left: 4px solid var(--bad); border-radius: 8px; padding: 10px; margin-bottom: 10px; background: var(--panel); box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .note-item .note-head { font-size: 13px; margin-bottom: 6px; font-weight: 600; }
+  .note-item .explanation-box { font-size: 12px; line-height: 1.5; background: var(--bg); padding: 8px; border-radius: 6px; border: 1px dashed var(--border); color: var(--text); }
+
+  .script-container h3 { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 4px; margin-top: 20px; font-size: 14px; }
+  .script-item { margin-bottom: 10px; padding: 8px; border-radius: 6px; background: var(--bg); border-left: 3px solid var(--accent); font-size: 12.5px; }
+  .script-item .qnum { font-weight: bold; color: var(--good); }
+  .script-item .right-ans { font-weight: bold; color: var(--good); }
+  .script-dialogue { margin-bottom: 12px; padding: 10px; border-radius: 6px; background: var(--bg); font-size: 12.5px; line-height: 1.5; }
 
   @media (max-width: 768px) {
     .sidebar { position: fixed; top: 48px; left: 0; bottom: 0; z-index: 25; width: 85%; transform: translateX(-100%); transition: transform 0.25s ease; box-shadow: 2px 0 10px rgba(0,0,0,0.15); }
@@ -96,57 +99,33 @@
     .qgrid { grid-template-columns: repeat(2, 1fr); }
     .qrow .opt { width: 30px; height: 30px; font-size: 13px; }
   }
-
-  .vocab-panel { position: fixed; top: 0; right: -360px; width: min(340px, 90vw); height: 100%; background: var(--panel); border-left: 1px solid var(--border); padding: 14px; overflow-y: auto; transition: right .25s ease; z-index: 30; box-shadow: -6px 0 16px rgba(0,0,0,.1); }
-  .vocab-panel.open { right: 0; }
-  .vocab-panel h2 { font-size: 15px; margin: 0 0 10px; }
-  .vocab-panel .close-x { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 18px; color: var(--muted); cursor: pointer; }
-  .vocab-search { display: flex; gap: 6px; margin-bottom: 12px; }
-  .vocab-search input { flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 13px; }
-  .vocab-search button { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: #fff; font-size: 13px; cursor: pointer; }
-  .vocab-result .word { font-size: 18px; font-weight: 700; }
-  .vocab-result .phonetic { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
-  .vocab-result .pos { font-size: 12px; font-weight: 600; color: var(--accent); margin-top: 10px; }
-  .vocab-result .def { font-size: 13px; margin: 4px 0; line-height: 1.4; }
-  .vocab-note { font-size: 12px; color: var(--muted); margin-top: 8px; }
   .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 20; display: none; }
   .overlay.open { display: block; }
 </style>
+<!-- Tự động load dữ liệu từ các file bên ngoài -->
+<script src="data-toeic.js"></script>
 </head>
 <body>
 <div class="app">
   <header>
     <div style="display:flex; align-items:center; gap:8px;">
       <button id="sidebarToggleBtn" style="padding:4px 8px;">☰ Đề</button>
-      <h1>📘 Ôn TOEIC</h1>
-      <div class="hint">Tự động chấm & Hỗ trợ xem Transcript linh hoạt</div>
-    </div>
-    <div>
-      <button id="vocabToggleBtn">🔤 Tra từ</button>
+      <h1>📘 Luyện Thi TOEIC (10 Tests)</h1>
+      <div class="hint">Tự động nạp Script Listening & Lời giải Reading</div>
     </div>
   </header>
   <div class="layout">
     <div class="sidebar" id="sidebar">
-      <button class="add-btn" id="addTestBtn">+ Thêm bộ đề mới</button>
+      <button class="add-btn" id="addTestBtn">+ Thêm đề thi mới</button>
       <div id="testList"></div>
     </div>
     <div class="main" id="main">
       <div class="empty" id="emptyMsg">
-        Bấm <b>"+ Thêm bộ đề mới"</b>, tải lên file Đề thi, Audio nghe và file <b>Transcript (Script)</b>.<br><br>
-        Nhập Key đáp án một lần, bạn vừa làm bài vừa có thể chuyển đổi mượt mà giữa <b>Đề thi</b> và <b>Transcript</b>!
+        Bấm <b>"+ Thêm đề thi mới"</b> và chọn Test bạn muốn làm.<br><br>
+        Hệ thống tự nạp toàn bộ <b>Đáp án chuẩn, Lời thoại Listening và Lời giải thích Reading</b> cho bạn!
       </div>
     </div>
     <div class="overlay" id="overlay"></div>
-    <div class="vocab-panel" id="vocabPanel">
-      <button class="close-x" id="vocabCloseBtn">✕</button>
-      <h2>🔤 Tra từ vựng</h2>
-      <div class="vocab-search">
-        <input type="text" id="vocabInput" placeholder="Nhập từ tiếng Anh...">
-        <button id="vocabSearchBtn">Tra</button>
-      </div>
-      <div class="vocab-note">Tra cứu nghĩa tiếng Việt và từ điển quốc tế.</div>
-      <div class="vocab-result" id="vocabResult"></div>
-    </div>
   </div>
 </div>
 
@@ -154,6 +133,7 @@
 let tests = [];
 let activeId = null;
 let idCounter = 0;
+let userAimScore = parseInt(localStorage.getItem('toeic_user_aim') || '700', 10);
 const OPTS = ['A','B','C','D'];
 
 const sidebarList = document.getElementById('testList');
@@ -169,13 +149,16 @@ sidebarToggleBtn.addEventListener('click', () => {
 
 document.getElementById('addTestBtn').addEventListener('click', () => {
   idCounter++;
+  const testNum = ((idCounter - 1) % 10) + 1;
   const t = {
-    id: idCounter, name: 'Test ' + idCounter,
+    id: idCounter,
+    testNum: testNum,
+    name: 'ETS Test ' + testNum,
     pdfFile: null, pdfUrl: null,
     audioFile: null, audioUrl: null,
-    transcriptFile: null, transcriptUrl: null,
     viewMode: 'pdf',
-    numQuestions: 200, answers: {}, key: {}, notes: {}, keyOpen: false, keyText: ''
+    key: (window.TOEIC_DATA && window.TOEIC_DATA.KEYS[testNum]) ? window.TOEIC_DATA.KEYS[testNum] : {},
+    numQuestions: 200, answers: {}, notes: {}
   };
   tests.push(t);
   activeId = t.id;
@@ -193,7 +176,7 @@ function renderSidebar() {
     const card = document.createElement('div');
     card.className = 'test-card' + (t.id === activeId ? ' active' : '');
     card.addEventListener('click', (e) => {
-      if (['INPUT','BUTTON','LABEL'].includes(e.target.tagName)) return;
+      if (['INPUT','BUTTON','LABEL','SELECT'].includes(e.target.tagName)) return;
       activeId = t.id; 
       renderSidebar(); 
       renderMain();
@@ -205,10 +188,7 @@ function renderSidebar() {
 
     const nameRow = document.createElement('div');
     nameRow.className = 'name';
-    const nameInput = document.createElement('input');
-    nameInput.value = t.name;
-    nameInput.addEventListener('change', () => { t.name = nameInput.value || t.name; });
-    nameRow.appendChild(nameInput);
+    nameRow.innerHTML = `<span>${t.name}</span>`;
     card.appendChild(nameRow);
 
     const status = document.createElement('div');
@@ -216,13 +196,12 @@ function renderSidebar() {
     status.innerHTML =
       '<span class="' + (t.pdfFile ? 'ok' : '') + '">' + (t.pdfFile ? '✓ Đề' : '– Đề') + '</span>' +
       '<span class="' + (t.audioFile ? 'ok' : '') + '">' + (t.audioFile ? '✓ Audio' : '– Audio') + '</span>' +
-      '<span class="' + (t.transcriptFile ? 'ok' : '') + '">' + (t.transcriptFile ? '✓ Script' : '– Script') + '</span>';
+      '<span class="ok">✓ Sẵn sàng</span>';
     card.appendChild(status);
 
     const btnRow = document.createElement('div');
     btnRow.className = 'row-btns';
 
-    // Tải đề PDF
     const pdfLabel = document.createElement('label');
     pdfLabel.textContent = t.pdfFile ? 'Đổi Đề' : 'Tải Đề';
     const pdfInput = document.createElement('input');
@@ -236,7 +215,6 @@ function renderSidebar() {
     pdfLabel.appendChild(pdfInput);
     btnRow.appendChild(pdfLabel);
 
-    // Tải Audio
     const audioLabel = document.createElement('label');
     audioLabel.textContent = t.audioFile ? 'Đổi Audio' : 'Tải Audio';
     const audioInput = document.createElement('input');
@@ -250,28 +228,12 @@ function renderSidebar() {
     audioLabel.appendChild(audioInput);
     btnRow.appendChild(audioLabel);
 
-    // Tải Script / Transcript (Nhận cả PDF, HTML, TXT, Ảnh)
-    const trLabel = document.createElement('label');
-    trLabel.textContent = t.transcriptFile ? 'Đổi Script' : 'Tải Script';
-    const trInput = document.createElement('input');
-    trInput.type = 'file'; trInput.accept = 'application/pdf,text/html,text/plain,image/*';
-    trInput.addEventListener('change', (e) => {
-      const f = e.target.files[0]; if (!f) return;
-      if (t.transcriptUrl) URL.revokeObjectURL(t.transcriptUrl);
-      t.transcriptFile = f; t.transcriptUrl = URL.createObjectURL(f);
-      renderSidebar(); renderMain();
-    });
-    trLabel.appendChild(trInput);
-    btnRow.appendChild(trLabel);
-
-    // Xoá đề
     const delBtn = document.createElement('button');
     delBtn.className = 'del'; delBtn.textContent = 'Xoá';
     delBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       if (t.pdfUrl) URL.revokeObjectURL(t.pdfUrl);
       if (t.audioUrl) URL.revokeObjectURL(t.audioUrl);
-      if (t.transcriptUrl) URL.revokeObjectURL(t.transcriptUrl);
       tests = tests.filter(x => x.id !== t.id);
       if (activeId === t.id) activeId = tests.length ? tests[0].id : null;
       renderSidebar(); renderMain();
@@ -283,28 +245,63 @@ function renderSidebar() {
   });
 }
 
-function parseKey(text) {
-  const key = {};
-  const re = /(\d{1,3})\s*[.\-:)]?\s*([A-Da-d])/g;
-  let m;
-  while ((m = re.exec(text)) !== null) key[parseInt(m[1], 10)] = m[2].toUpperCase();
-  return key;
+function convertRawToScaled(lcCorrect, rcCorrect) {
+  let lcScore = 5;
+  if (lcCorrect > 0) {
+    lcScore = Math.min(495, Math.round(lcCorrect * 5.2 - 15));
+    if (lcCorrect >= 90) lcScore = Math.min(495, 450 + (lcCorrect - 90) * 4.5);
+    if (lcScore < 5) lcScore = 5;
+  }
+  let rcScore = 5;
+  if (rcCorrect > 0) {
+    rcScore = Math.min(495, Math.round(rcCorrect * 5.0 - 20));
+    if (rcCorrect >= 90) rcScore = Math.min(495, 440 + (rcCorrect - 90) * 5.5);
+    if (rcScore < 5) rcScore = 5;
+  }
+  return { lc: lcScore, rc: rcScore, total: lcScore + rcScore };
 }
 
-function updateScoreDisplay(t) {
+function updateScoreAndAimDisplay(t) {
   const scoreSpan = document.getElementById('scoreDisplay');
-  if (!scoreSpan) return;
+  const aimFeedback = document.getElementById('aimFeedback');
+  if (!scoreSpan || !aimFeedback) return;
+
   const gradedKeys = Object.keys(t.key);
   const gradedCount = gradedKeys.length;
   const answeredCount = Object.keys(t.answers).length;
+
   if (gradedCount > 0) {
-    let correct = 0;
-    gradedKeys.forEach(q => { if (t.answers[q] === t.key[q]) correct++; });
+    let lcCorrect = 0, rcCorrect = 0;
+    gradedKeys.forEach(qStr => {
+      const q = parseInt(qStr, 10);
+      if (t.answers[q] === t.key[q]) {
+        if (q <= 100) lcCorrect++;
+        else rcCorrect++;
+      }
+    });
+
+    const totalCorrect = lcCorrect + rcCorrect;
+    const scaled = convertRawToScaled(lcCorrect, rcCorrect);
+
     scoreSpan.className = 'score done';
-    scoreSpan.textContent = 'Điểm: ' + correct + ' / ' + gradedCount;
+    scoreSpan.innerHTML = `🎯 <b>${scaled.total}</b>/990 <small>(LC: ${scaled.lc} | RC: ${scaled.rc})</small>`;
+
+    const diff = userAimScore - scaled.total;
+    if (diff <= 0) {
+      aimFeedback.innerHTML = `🎉 <b>CHÚC MỪNG!</b> Bạn đã vượt mục tiêu <b>${userAimScore}</b> điểm TOEIC (Hiện đạt: <b>${scaled.total}</b> điểm)!`;
+      aimFeedback.style.borderLeftColor = 'var(--good)';
+    } else {
+      const neededQuestions = Math.ceil(diff / 5);
+      aimFeedback.innerHTML = `
+        ⚡ Điểm hiện tại: <b>${scaled.total}</b> / Aim <b>${userAimScore}</b> (Đúng ${totalCorrect}/${gradedCount} câu).<br>
+        👉 Bạn còn thiếu <b>${diff} điểm</b>. Cần làm <b>đúng thêm khoảng ${neededQuestions} câu</b> nữa để cán mốc ${userAimScore}!
+      `;
+      aimFeedback.style.borderLeftColor = 'var(--danger)';
+    }
   } else {
     scoreSpan.className = 'score';
-    scoreSpan.textContent = 'Đã chọn: ' + answeredCount + ' / ' + t.numQuestions;
+    scoreSpan.textContent = `Đã chọn: ${answeredCount} / ${t.numQuestions}`;
+    aimFeedback.innerHTML = `💡 Đang làm <b>${t.name}</b> (Aim: <b>${userAimScore}</b>). Chọn đáp án để chấm điểm ngay!`;
   }
 }
 
@@ -350,45 +347,50 @@ function renderNotesSection(t) {
     return;
   }
 
-  let html = `<div class="notes-title">📝 Câu sai (${wrongQs.length}) — Ghi chú đối chiếu transcript:</div>`;
+  const currentExpl = (window.TOEIC_DATA && window.TOEIC_DATA.EXPLANATIONS[t.testNum]) ? window.TOEIC_DATA.EXPLANATIONS[t.testNum] : {};
+
+  let html = `<div class="notes-title">⚠️ Danh sách câu sai (${wrongQs.length}) — Lời giải chi tiết:</div>`;
   wrongQs.forEach(q => {
+    const defaultExpl = currentExpl[q] || `<i>(Đang cập nhật lời giải cho câu ${q} của ${t.name}...)</i>`;
     html += `
       <div class="note-item">
-        <div class="note-head">Câu ${q}: Bạn chọn <b style="color:var(--bad)">${t.answers[q]}</b>, Đáp án đúng: <b style="color:var(--good)">${t.key[q]}</b></div>
-        <textarea placeholder="Ghi chú từ vựng hoặc đoạn transcript của câu này..." data-q="${q}">${t.notes[q] || ''}</textarea>
+        <div class="note-head">
+          Câu ${q}: Bạn chọn <b style="color:var(--bad)">${t.answers[q]}</b> — Đáp án đúng: <b style="color:var(--good)">${t.key[q]}</b>
+        </div>
+        <div class="explanation-box">${defaultExpl}</div>
       </div>
     `;
   });
 
   notesContainer.innerHTML = html;
-  notesContainer.querySelectorAll('textarea').forEach(ta => {
-    ta.addEventListener('input', (e) => {
-      const targetQ = e.target.getAttribute('data-q');
-      t.notes[targetQ] = e.target.value;
-    });
-  });
 }
 
 function updateDocViewer(t) {
   const contentArea = document.getElementById('docContentArea');
   if (!contentArea) return;
 
-  const url = t.viewMode === 'pdf' ? t.pdfUrl : t.transcriptUrl;
-  const isImage = t.viewMode === 'transcript' && t.transcriptFile && t.transcriptFile.type.startsWith('image/');
-
-  if (url) {
-    if (isImage) {
-      contentArea.innerHTML = `<img src="${url}" style="max-width:100%; height:auto; display:block; margin:auto; padding:10px;">`;
+  if (t.viewMode === 'pdf') {
+    if (t.pdfUrl) {
+      contentArea.innerHTML = `<iframe src="${t.pdfUrl}"></iframe>`;
     } else {
-      contentArea.innerHTML = `<iframe src="${url}"></iframe>`;
+      contentArea.innerHTML = `
+        <div class="no-file">
+          <span>Chưa có file Đề thi PDF</span>
+          <small>Tải file PDF từ danh sách đề bên trái.</small>
+        </div>
+      `;
     }
   } else {
-    contentArea.innerHTML = `
-      <div class="no-file">
-        <span>Chưa có file ${t.viewMode === 'pdf' ? 'Đề thi' : 'Transcript / Script'}</span>
-        <small>Tải file từ danh sách đề bên trái.</small>
-      </div>
-    `;
+    const scriptHtml = (window.TOEIC_DATA && window.TOEIC_DATA.SCRIPTS[t.testNum]) ? window.TOEIC_DATA.SCRIPTS[t.testNum] : null;
+    if (scriptHtml) {
+      contentArea.innerHTML = `<div class="script-container"><h2>📘 Lời thoại Listening: ${t.name}</h2>${scriptHtml}</div>`;
+    } else {
+      contentArea.innerHTML = `
+        <div class="no-file">
+          <span>Đang tải lời thoại cho ${t.name}...</span>
+        </div>
+      `;
+    }
   }
 }
 
@@ -434,8 +436,8 @@ function renderMain() {
   const docTabs = document.createElement('div');
   docTabs.className = 'doc-tabs';
   docTabs.innerHTML = `
-    <button class="doc-tab ${t.viewMode === 'pdf' ? 'active' : ''}" id="tabPdf">📄 Đề thi</button>
-    <button class="doc-tab ${t.viewMode === 'transcript' ? 'active' : ''}" id="tabTranscript">📝 Script Lời thoại</button>
+    <button class="doc-tab ${t.viewMode === 'pdf' ? 'active' : ''}" id="tabPdf">📄 Đề thi (PDF)</button>
+    <button class="doc-tab ${t.viewMode === 'transcript' ? 'active' : ''}" id="tabTranscript">📝 Script Listening (1-100)</button>
   `;
   docWrap.appendChild(docTabs);
 
@@ -448,25 +450,46 @@ function renderMain() {
   const ansPanel = document.createElement('div');
   ansPanel.className = 'answer-panel';
 
+  const aimPanel = document.createElement('div');
+  aimPanel.className = 'aim-panel';
+  aimPanel.innerHTML = `
+    <div class="aim-header">
+      <div class="aim-input-wrap">
+        <span>🎯 Mục tiêu (Aim):</span>
+        <input type="number" id="aimInput" value="${userAimScore}" step="50" min="200" max="990">
+        <span>điểm</span>
+      </div>
+      <div id="scoreDisplay" class="score"></div>
+    </div>
+    <div class="aim-feedback" id="aimFeedback"></div>
+  `;
+  ansPanel.appendChild(aimPanel);
+
   const head = document.createElement('div');
   head.className = 'answer-head';
   const title = document.createElement('strong');
-  title.textContent = 'Bảng trả lời';
+  title.textContent = 'Bảng trả lời: ' + t.name;
   head.appendChild(title);
-
-  const scoreSpan = document.createElement('span');
-  scoreSpan.id = 'scoreDisplay';
-  head.appendChild(scoreSpan);
 
   const headBtns = document.createElement('div');
   headBtns.className = 'answer-head-btns';
-  const keyBtn = document.createElement('button');
-  keyBtn.textContent = Object.keys(t.key).length ? 'Sửa Key' : 'Nhập Key';
-  keyBtn.addEventListener('click', () => { 
-    t.keyOpen = !t.keyOpen; 
-    document.getElementById('keyBoxArea').classList.toggle('open', t.keyOpen);
+
+  const selTest = document.createElement('select');
+  for (let i = 1; i <= 10; i++) {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = 'ETS Test ' + i;
+    if (t.testNum === i) opt.selected = true;
+    selTest.appendChild(opt);
+  }
+  selTest.addEventListener('change', (e) => {
+    t.testNum = parseInt(e.target.value, 10);
+    t.name = 'ETS Test ' + t.testNum;
+    t.key = (window.TOEIC_DATA && window.TOEIC_DATA.KEYS[t.testNum]) ? window.TOEIC_DATA.KEYS[t.testNum] : {};
+    renderSidebar();
+    renderMain();
   });
-  headBtns.appendChild(keyBtn);
+  headBtns.appendChild(selTest);
 
   const clearBtn = document.createElement('button');
   clearBtn.textContent = 'Xoá chọn';
@@ -477,30 +500,6 @@ function renderMain() {
   headBtns.appendChild(clearBtn);
   head.appendChild(headBtns);
   ansPanel.appendChild(head);
-
-  const keyBox = document.createElement('div');
-  keyBox.id = 'keyBoxArea';
-  keyBox.className = 'key-box' + (t.keyOpen ? ' open' : '');
-  const keyHint = document.createElement('div');
-  keyHint.className = 'key-hint';
-  keyHint.textContent = 'Dán đáp án đúng (VD: 1A 2C 3B... hoặc 1.A, 2.B):';
-  keyBox.appendChild(keyHint);
-  const keyTextarea = document.createElement('textarea');
-  keyTextarea.value = t.keyText || '';
-  keyTextarea.addEventListener('input', () => { t.keyText = keyTextarea.value; });
-  keyBox.appendChild(keyTextarea);
-  const keyActions = document.createElement('div');
-  keyActions.className = 'key-actions';
-  const saveKeyBtn = document.createElement('button');
-  saveKeyBtn.textContent = 'Lưu & Tự chấm';
-  saveKeyBtn.addEventListener('click', () => {
-    t.key = parseKey(t.keyText);
-    t.keyOpen = false;
-    renderMain();
-  });
-  keyActions.appendChild(saveKeyBtn);
-  keyBox.appendChild(keyActions);
-  ansPanel.appendChild(keyBox);
 
   const scrollArea = document.createElement('div');
   scrollArea.className = 'scroll-area';
@@ -533,7 +532,7 @@ function renderMain() {
         t.answers[q] = (t.answers[q] === letter) ? undefined : letter;
         if (t.answers[q] === undefined) delete t.answers[q];
         updateQuestionRowDOM(t, q);
-        updateScoreDisplay(t);
+        updateScoreAndAimDisplay(t);
       });
       row.appendChild(b);
     });
@@ -550,7 +549,12 @@ function renderMain() {
   split.appendChild(ansPanel);
   mainEl.appendChild(split);
 
-  // Tab chuyển đổi
+  document.getElementById('aimInput').addEventListener('change', (e) => {
+    userAimScore = parseInt(e.target.value, 10) || 700;
+    localStorage.setItem('toeic_user_aim', userAimScore);
+    updateScoreAndAimDisplay(t);
+  });
+
   document.getElementById('tabPdf').addEventListener('click', () => {
     t.viewMode = 'pdf';
     document.getElementById('tabPdf').classList.add('active');
@@ -565,85 +569,9 @@ function renderMain() {
   });
 
   updateDocViewer(t);
-  updateScoreDisplay(t);
+  updateScoreAndAimDisplay(t);
   renderNotesSection(t);
 }
-
-// Tra cứu từ vựng
-const vocabPanel = document.getElementById('vocabPanel');
-const overlay = document.getElementById('overlay');
-const vocabInput = document.getElementById('vocabInput');
-const vocabResult = document.getElementById('vocabResult');
-
-function openVocab() { vocabPanel.classList.add('open'); overlay.classList.add('open'); vocabInput.focus(); }
-function closeVocab() { 
-  vocabPanel.classList.remove('open'); 
-  sidebarEl.classList.remove('open');
-  overlay.classList.remove('open'); 
-}
-document.getElementById('vocabToggleBtn').addEventListener('click', openVocab);
-document.getElementById('vocabCloseBtn').addEventListener('click', closeVocab);
-overlay.addEventListener('click', closeVocab);
-
-async function fetchWithTimeout(url, ms) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), ms);
-  try {
-    const res = await fetch(url, { signal: controller.signal });
-    clearTimeout(timer);
-    if (!res.ok) throw new Error('bad status');
-    return await res.json();
-  } catch (err) {
-    clearTimeout(timer);
-    throw err;
-  }
-}
-
-async function tryDatamuse(word) {
-  const data = await fetchWithTimeout('https://api.datamuse.com/words?sp=' + encodeURIComponent(word.toLowerCase()) + '&md=d&max=1', 2500);
-  const entry = data && data[0];
-  if (!entry || !entry.defs || entry.defs.length === 0) throw new Error('no defs');
-  let html = '<div class="word">' + entry.word + '</div>';
-  entry.defs.slice(0, 4).forEach(d => {
-    const parts = d.split('\t');
-    const pos = parts[0];
-    const def = parts[1] || parts[0];
-    html += '<div class="pos">' + pos + '</div><div class="def">• ' + def + '</div>';
-  });
-  return html;
-}
-
-async function translateToVi(text) {
-  const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=' + encodeURIComponent(text);
-  const data = await fetchWithTimeout(url, 2500);
-  return data[0].map(seg => seg[0]).join('');
-}
-
-async function lookupWord() {
-  const word = vocabInput.value.trim();
-  if (!word) return;
-  vocabResult.innerHTML = '<div class="vocab-note">Đang tra từ...</div>';
-  const cambridgeUrl = 'https://dictionary.cambridge.org/dictionary/english/' + encodeURIComponent(word.toLowerCase());
-
-  let viHtml = '';
-  try {
-    const vi = await translateToVi(word);
-    if (vi && vi.toLowerCase() !== word.toLowerCase()) {
-      viHtml = '<div class="pos" style="color:var(--good);">🇻🇳 Nghĩa tiếng Việt</div><div class="def">• ' + vi + '</div>';
-    }
-  } catch (eVi) {}
-
-  try {
-    const html = await tryDatamuse(word);
-    vocabResult.innerHTML = html + viHtml + `<div class="vocab-note"><a href="${cambridgeUrl}" target="_blank">Xem Cambridge ↗</a></div>`;
-    return;
-  } catch (e1) {}
-
-  vocabResult.innerHTML = (viHtml || '<div class="vocab-note">Không tìm thấy định nghĩa nhanh.</div>') + `<div class="vocab-note"><a href="${cambridgeUrl}" target="_blank">Mở trên Cambridge Dictionary ↗</a></div>`;
-}
-
-document.getElementById('vocabSearchBtn').addEventListener('click', lookupWord);
-vocabInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') lookupWord(); });
 
 renderSidebar();
 renderMain();
