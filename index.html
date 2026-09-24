@@ -168,6 +168,17 @@ window.TOEIC_KEYS = window.TOEIC_KEYS || {};
 window.TOEIC_SCRIPTS = window.TOEIC_SCRIPTS || {};
 window.TOEIC_EXPLANATIONS = window.TOEIC_EXPLANATIONS || {};
 
+// Định nghĩa hàm parseKey toàn cục để mọi file testX.js gọi được ngay
+function parseKey(text) {
+  if (typeof text === 'object') return text;
+  const key = {};
+  const re = /(\d{1,3})\s*[.\-:)]?\s*([A-Da-d])/g;
+  let m;
+  while ((m = re.exec(text)) !== null) key[parseInt(m[1], 10)] = m[2].toUpperCase();
+  return key;
+}
+window.parseKey = parseKey;
+
 const loadedScripts = {};
 
 function ensureTestDataLoaded(testNum, callback) {
