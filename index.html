@@ -373,7 +373,7 @@
     background: var(--bg-subtle);
   }
 
-  /* Aim & Score Sub-bar */
+  /* Timer & Aim Sub-bar */
   .score-strip {
     background: var(--bg-subtle);
     padding: 8px 14px;
@@ -383,6 +383,12 @@
     justify-content: space-between;
     font-size: 12px;
     gap: 8px;
+    flex-wrap: wrap;
+  }
+  .strip-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
   .aim-box {
     display: flex;
@@ -401,6 +407,25 @@
     text-align: center;
     background: var(--bg-surface);
     color: var(--text-primary);
+  }
+  .timer-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .timer-display {
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  .timer-display.danger {
+    color: var(--danger);
+    border-color: var(--danger);
   }
   .score-metric {
     font-weight: 600;
@@ -542,7 +567,7 @@
     font-weight: 600;
   }
 
-  /* Vocab Drawer (Tra từ) */
+  /* Vocab Drawer */
   .drawer {
     position: fixed;
     top: 0;
@@ -610,7 +635,6 @@
     cursor: pointer;
   }
   
-  /* Cấu trúc hiển thị kết quả từ vựng cũ */
   .vocab-body {
     flex: 1;
     overflow-y: auto;
@@ -660,7 +684,6 @@
     line-height: 1.5;
   }
 
-  /* Responsive Mobile */
   @media (max-width: 768px) {
     .sidebar {
       position: fixed;
@@ -777,12 +800,65 @@ let idCounter = 0;
 let userAimScore = parseInt(localStorage.getItem('toeic_user_aim') || '700', 10);
 const OPTS = ['A','B','C','D'];
 
+// Quản lý Timer
+let timerInterval = null;
+let timerSeconds = 120 * 60;
+let isTimerRunning = false;
+let selectedTimerMode = '120';
+
+function formatTimer(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+}
+
+function updateTimerDisplayDOM() {
+  const el = document.getElementById('timerText');
+  if (!el) return;
+  if (selectedTimerMode === 'none') {
+    el.textContent = '--:--';
+    el.classList.remove('danger');
+    return;
+  }
+  el.textContent = formatTimer(timerSeconds);
+  if (timerSeconds <= 300 && timerSeconds > 0) {
+    el.classList.add('danger');
+  } else {
+    el.classList.remove('danger');
+  }
+}
+
+function stopTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = null;
+  isTimerRunning = false;
+}
+
+function startTimer() {
+  if (selectedTimerMode === 'none') return;
+  if (timerInterval) clearInterval(timerInterval);
+  isTimerRunning = true;
+  timerInterval = setInterval(() => {
+    if (timerSeconds > 0) {
+      timerSeconds--;
+      updateTimerDisplayDOM();
+    } else {
+      stopTimer();
+      alert('Đã hết giờ làm bài! Hệ thống sẽ tiến hành chấm điểm.');
+      const t = tests.find(x => x.id === activeId);
+      if (t) {
+        t.isGraded = true;
+        renderMain();
+      }
+    }
+  }, 1000);
+}
+
 const sidebarList = document.getElementById('testList');
 const sidebarEl = document.getElementById('sidebar');
 const mainStage = document.getElementById('mainStage');
 const backdrop = document.getElementById('backdrop');
 
-// Xử lý nút Mục lục cho cả Mobile và Desktop
 document.getElementById('sidebarToggleBtn').addEventListener('click', () => {
   if (window.innerWidth <= 768) {
     sidebarEl.classList.toggle('open');
@@ -943,9 +1019,23 @@ function renderMain() {
       </div>
     </div>
     <div class="score-strip">
-      <div class="aim-box">
-        <span>Mục tiêu:</span>
-        <input type="number" id="aimInput" value="${userAimScore}" step="50">
+      <div class="strip-left">
+        <div class="aim-box">
+          <span>Aim:</span>
+          <input type="number" id="aimInput" value="${userAimScore}" step="50">
+        </div>
+        <div class="timer-box">
+          <select id="timerModeSelect" class="select-native" style="padding:2px 6px;">
+            <option value="120" ${selectedTimerMode === '120' ? 'selected' : ''}>120 phút (Full)</option>
+            <option value="75" ${selectedTimerMode === '75' ? 'selected' : ''}>75 phút (Reading)</option>
+            <option value="45" ${selectedTimerMode === '45' ? 'selected' : ''}>45 phút (Listening)</option>
+            <option value="none" ${selectedTimerMode === 'none' ? 'selected' : ''}>Không giới hạn</option>
+          </select>
+          <span class="timer-display" id="timerText">${selectedTimerMode === 'none' ? '--:--' : formatTimer(timerSeconds)}</span>
+          <button id="timerToggleBtn" class="btn-outline" style="padding:2px 8px; font-size:11px;">
+            ${isTimerRunning ? 'Dừng' : 'Chạy'}
+          </button>
+        </div>
       </div>
       <div id="scoreDisplay" class="score-metric">Đã hoàn thành: ${Object.keys(t.answers).length} / 200</div>
     </div>
@@ -956,6 +1046,31 @@ function renderMain() {
   `;
   panels.appendChild(sheetPanel); 
   mainStage.appendChild(panels);
+
+  // Gắn sự kiện Timer
+  const timerSelect = document.getElementById('timerModeSelect');
+  const timerToggleBtn = document.getElementById('timerToggleBtn');
+  
+  timerSelect.addEventListener('change', (e) => {
+    selectedTimerMode = e.target.value;
+    stopTimer();
+    if (selectedTimerMode !== 'none') {
+      timerSeconds = parseInt(selectedTimerMode, 10) * 60;
+    }
+    updateTimerDisplayDOM();
+    if (timerToggleBtn) timerToggleBtn.textContent = 'Chạy';
+  });
+
+  timerToggleBtn.addEventListener('click', () => {
+    if (selectedTimerMode === 'none') return;
+    if (isTimerRunning) {
+      stopTimer();
+      timerToggleBtn.textContent = 'Tiếp tục';
+    } else {
+      startTimer();
+      timerToggleBtn.textContent = 'Dừng';
+    }
+  });
 
   // Select test
   const selTest = document.getElementById('testSelector');
@@ -975,9 +1090,27 @@ function renderMain() {
     });
   });
 
-  document.getElementById('clearBtn').addEventListener('click', () => { t.answers = {}; t.isGraded = false; renderMain(); });
-  document.getElementById('gradeBtn').addEventListener('click', () => { t.isGraded = true; renderMain(); });
-  document.getElementById('aimInput').addEventListener('change', (e) => { userAimScore = parseInt(e.target.value, 10) || 700; localStorage.setItem('toeic_user_aim', userAimScore); renderMain(); });
+  document.getElementById('clearBtn').addEventListener('click', () => { 
+    t.answers = {}; 
+    t.isGraded = false; 
+    stopTimer();
+    if (selectedTimerMode !== 'none') {
+      timerSeconds = parseInt(selectedTimerMode, 10) * 60;
+    }
+    renderMain(); 
+  });
+  
+  document.getElementById('gradeBtn').addEventListener('click', () => { 
+    t.isGraded = true; 
+    stopTimer();
+    renderMain(); 
+  });
+
+  document.getElementById('aimInput').addEventListener('change', (e) => { 
+    userAimScore = parseInt(e.target.value, 10) || 700; 
+    localStorage.setItem('toeic_user_aim', userAimScore); 
+    renderMain(); 
+  });
 
   const grid = document.getElementById('qgridArea');
   for (let q = 1; q <= t.numQuestions; q++) {
@@ -1061,7 +1194,7 @@ function renderMain() {
   }
 }
 
-// Logic Tra từ kết hợp Datamuse + Google Translate
+// Logic Tra từ
 const vocabDrawer = document.getElementById('vocabDrawer');
 const vocabInput = document.getElementById('vocabInput');
 const vocabResult = document.getElementById('vocabResult');
