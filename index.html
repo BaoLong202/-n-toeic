@@ -130,7 +130,7 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     display: none;
     flex-direction: column;
-    width: 160px;
+    width: 150px;
     z-index: 60;
     padding: 4px;
   }
@@ -831,15 +831,15 @@
     </div>
   </div>
   <div class="header-actions">
+    <!-- Tra từ được đưa thẳng ra ngoài Header -->
+    <button id="vocabToggleBtn" class="btn-outline">📖 Tra từ</button>
     <button id="profileBtn" class="btn-outline profile-btn-active">👤 Đăng nhập</button>
-    <!-- Dropdown Menu Toggle -->
-    <button id="menuToggleBtn" class="btn-outline" style="padding: 5px 10px;">☰ Menu</button>
     
-    <!-- Dropdown nội dung ẩn -->
+    <!-- Menu thả xuống chỉ còn Theme và Lịch sử -->
+    <button id="menuToggleBtn" class="btn-outline" style="padding: 5px 8px;">☰</button>
     <div class="dropdown-menu" id="dropdownMenu">
       <button class="dropdown-item" id="themeToggleBtn">🌙 Giao diện</button>
       <button class="dropdown-item" id="historyToggleBtn">📜 Lịch sử</button>
-      <button class="dropdown-item" id="vocabToggleBtn">📖 Tra từ</button>
     </div>
   </div>
 </header>
@@ -1145,7 +1145,7 @@ let activeId = null;
 let idCounter = 0;
 let userAimScore = parseInt(localStorage.getItem('toeic_user_aim') || '700', 10);
 const OPTS = ['A','B','C','D'];
-let currentReviewFilter = 'all'; // Trạng thái bộ lọc câu sai
+let currentReviewFilter = 'all';
 
 // Quản lý Timer
 let timerInterval = null;
@@ -1459,7 +1459,6 @@ function renderMain() {
         </div>
         <div id="scoreDisplay" class="score-metric">Đã hoàn thành: ${answeredCount} / 200 (${percent}%)</div>
       </div>
-      <!-- Thanh tiến trình (Progress Bar) -->
       <div class="progress-bar-container">
         <div class="progress-bar-fill" id="progressBarFill" style="width: ${percent}%;"></div>
       </div>
