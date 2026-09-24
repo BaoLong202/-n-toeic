@@ -1194,7 +1194,7 @@ function renderMain() {
   }
 }
 
-// Logic Tra từ: Giữ nguyên định nghĩa + dịch Google, bổ sung Word Family và Synonyms lọc theo độ phổ biến
+// Logic Tra từ: Giữ nguyên định nghĩa + dịch Google, lọc Word Family theo hậu tố ngữ pháp & Synonyms theo độ phổ biến
 const vocabDrawer = document.getElementById('vocabDrawer');
 const vocabInput = document.getElementById('vocabInput');
 const vocabResult = document.getElementById('vocabResult');
@@ -1305,24 +1305,75 @@ async function fetchSynonyms(word) {
   }
 }
 
-// Phân loại họ từ vựng (Word Family: Noun, Verb, Adj, Adv)
+// Phân tích họ từ vựng (Word Family) chuẩn theo gốc từ & hậu tố ngữ pháp
 async function fetchWordFamily(word) {
   const family = { n: [], v: [], adj: [], adv: [] };
+  const rawWord = word.toLowerCase().trim();
+  
+  // 1. Trích xuất tiền tố/gốc từ (Stem base)
+  let stem = rawWord;
+  const commonSuffixes = ['tion', 'sion', 'ment', 'ence', 'ance', 'able', 'ible', 'ivity', 'ity', 'ive', 'ing', 'ed', 'ly', 'er', 'or', 'al'];
+  for (const suf of commonSuffixes) {
+    if (stem.length > suf.length + 3 && stem.endsWith(suf)) {
+      stem = stem.slice(0, -suf.length);
+      break;
+    }
+  }
+
   try {
-    const [related, base] = await Promise.all([
-      fetchWithTimeout(`https://api.datamuse.com/words?rel_trg=${encodeURIComponent(word)}&md=p&max=25`, 2000).catch(() => []),
-      fetchWithTimeout(`https://api.datamuse.com/words?sp=${encodeURIComponent(word)}&md=p&max=1`, 2000).catch(() => [])
+    // 2. Tra cứu các từ cùng gốc qua Datamuse wildcard (sp=stem*)
+    const [wildcardData, baseWordData] = await Promise.all([
+      fetchWithTimeout(`https://api.datamuse.com/words?sp=${encodeURIComponent(stem)}*&md=pf&max=40`, 2500).catch(() => []),
+      fetchWithTimeout(`https://api.datamuse.com/words?sp=${encodeURIComponent(rawWord)}&md=pf&max=1`, 2500).catch(() => [])
     ]);
 
-    [...base, ...related].forEach(item => {
-      if (!item.tags) return;
+    const combined = [...baseWordData, ...wildcardData];
+    const seen = new Set();
+
+    combined.forEach(item => {
       const w = item.word.toLowerCase();
-      if (item.tags.includes('n') && !family.n.includes(w)) family.n.push(w);
-      if (item.tags.includes('v') && !family.v.includes(w)) family.v.push(w);
-      if (item.tags.includes('adj') && !family.adj.includes(w)) family.adj.push(w);
-      if (item.tags.includes('adv') && !family.adv.includes(w)) family.adv.push(w);
+      if (seen.has(w) || w.includes(' ') || w.includes('-')) return;
+      seen.add(w);
+
+      // Điều kiện: Từ phải cùng gốc (bắt đầu bằng stem)
+      if (!w.startsWith(stem)) return;
+
+      const tags = item.tags || [];
+      const isNoun = tags.includes('n');
+      const isVerb = tags.includes('v');
+      const isAdj = tags.includes('adj');
+      const isAdv = tags.includes('adv');
+
+      // Phân bổ theo hậu tố chuẩn ngữ pháp
+      // Noun
+      if (isNoun && (w.endsWith('tion') || w.endsWith('sion') || w.endsWith('ment') || w.endsWith('er') || w.endsWith('or') || w.endsWith('ity') || w.endsWith('ance') || w.endsWith('ence') || w === rawWord)) {
+        if (!family.n.includes(w)) family.n.push(w);
+      } else if (isNoun && family.n.length < 2) {
+        if (!family.n.includes(w)) family.n.push(w);
+      }
+
+      // Verb
+      if (isVerb && (w.endsWith('e') || w.endsWith('ize') || w.endsWith('ate') || w.endsWith('fy') || w.endsWith('en') || w === stem || w === stem + 'e' || w === rawWord)) {
+        if (!w.endsWith('ing') && !w.endsWith('ed') && !family.v.includes(w)) family.v.push(w);
+      }
+
+      // Adjective
+      if (isAdj && (w.endsWith('ive') || w.endsWith('able') || w.endsWith('ible') || w.endsWith('al') || w.endsWith('ic') || w.endsWith('ous') || w.endsWith('ful'))) {
+        if (!family.adj.includes(w)) family.adj.push(w);
+      }
+
+      // Adverb
+      if ((isAdv || w.endsWith('ly')) && w.endsWith('ly')) {
+        if (!family.adv.includes(w)) family.adv.push(w);
+      }
     });
+
+    // Sắp xếp ưu tiên các từ ngắn/gốc lên trước và giới hạn mỗi nhóm tối đa 3 từ
+    for (const k in family) {
+      family[k] = family[k].sort((a, b) => a.length - b.length).slice(0, 3);
+    }
   } catch (e) {}
+
   return family;
 }
 
@@ -1355,8 +1406,8 @@ async function lookupWord() {
   ];
   let familyHtml = '';
   for (const p of posLabels) {
-    const list = family[p.key].slice(0, 3);
-    if (list.length > 0) {
+    const list = family[p.key];
+    if (list && list.length > 0) {
       familyHtml += `
         <div style="margin-bottom:6px;">
           <div style="font-size:11px; font-weight:700; color:var(--brand); text-transform:uppercase;">${p.label}</div>
