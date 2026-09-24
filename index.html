@@ -1194,7 +1194,7 @@ function renderMain() {
   }
 }
 
-// Logic Tra từ: Giữ nguyên định nghĩa + dịch Google, lọc Word Family theo hậu tố ngữ pháp & Synonyms theo độ phổ biến
+// Logic Tra từ: Giữ nguyên định nghĩa + dịch Google, lọc Word Family & Synonyms loại bỏ từ cổ và typo
 const vocabDrawer = document.getElementById('vocabDrawer');
 const vocabInput = document.getElementById('vocabInput');
 const vocabResult = document.getElementById('vocabResult');
@@ -1305,14 +1305,14 @@ async function fetchSynonyms(word) {
   }
 }
 
-// Phân tích họ từ vựng (Word Family) chuẩn theo gốc từ & hậu tố ngữ pháp
+// Phân tích họ từ vựng (Word Family) chuẩn theo gốc từ, hậu tố ngữ pháp & loại bỏ từ cổ / typo
 async function fetchWordFamily(word) {
   const family = { n: [], v: [], adj: [], adv: [] };
   const rawWord = word.toLowerCase().trim();
   
-  // 1. Trích xuất tiền tố/gốc từ (Stem base)
+  // 1. Trích xuất gốc từ (Stem base)
   let stem = rawWord;
-  const commonSuffixes = ['tion', 'sion', 'ment', 'ence', 'ance', 'able', 'ible', 'ivity', 'ity', 'ive', 'ing', 'ed', 'ly', 'er', 'or', 'al'];
+  const commonSuffixes = ['tion', 'sion', 'ment', 'ence', 'ance', 'able', 'ible', 'ivity', 'ity', 'ive', 'ing', 'ed', 'ly', 'er', 'or', 'al', 'ate', 'ize'];
   for (const suf of commonSuffixes) {
     if (stem.length > suf.length + 3 && stem.endsWith(suf)) {
       stem = stem.slice(0, -suf.length);
@@ -1321,56 +1321,78 @@ async function fetchWordFamily(word) {
   }
 
   try {
-    // 2. Tra cứu các từ cùng gốc qua Datamuse wildcard (sp=stem*)
+    // 2. Tra cứu Datamuse có kèm chỉ số tần suất md=f
     const [wildcardData, baseWordData] = await Promise.all([
-      fetchWithTimeout(`https://api.datamuse.com/words?sp=${encodeURIComponent(stem)}*&md=pf&max=40`, 2500).catch(() => []),
+      fetchWithTimeout(`https://api.datamuse.com/words?sp=${encodeURIComponent(stem)}*&md=pf&max=50`, 2500).catch(() => []),
       fetchWithTimeout(`https://api.datamuse.com/words?sp=${encodeURIComponent(rawWord)}&md=pf&max=1`, 2500).catch(() => [])
     ]);
 
     const combined = [...baseWordData, ...wildcardData];
     const seen = new Set();
+    const candidateList = [];
 
     combined.forEach(item => {
       const w = item.word.toLowerCase();
       if (seen.has(w) || w.includes(' ') || w.includes('-')) return;
       seen.add(w);
 
-      // Điều kiện: Từ phải cùng gốc (bắt đầu bằng stem)
       if (!w.startsWith(stem)) return;
 
-      const tags = item.tags || [];
-      const isNoun = tags.includes('n');
-      const isVerb = tags.includes('v');
-      const isAdj = tags.includes('adj');
-      const isAdv = tags.includes('adv');
+      // Lấy chỉ số tần suất xuất hiện (frequency)
+      let freq = 0;
+      if (item.tags) {
+        const fTag = item.tags.find(t => t.startsWith('f:'));
+        if (fTag) freq = parseFloat(fTag.slice(2)) || 0;
+      }
 
-      // Phân bổ theo hậu tố chuẩn ngữ pháp
+      // Loại bỏ từ cổ / typo: Từ chuẩn dùng phổ biến phải đạt ngưỡng tần suất
+      if (w !== rawWord && freq < 0.08) return;
+
+      const tags = item.tags || [];
+      candidateList.push({
+        word: w,
+        freq: freq,
+        isNoun: tags.includes('n'),
+        isVerb: tags.includes('v'),
+        isAdj: tags.includes('adj'),
+        isAdv: tags.includes('adv')
+      });
+    });
+
+    // Ưu tiên xếp từ có độ phổ biến thực tế cao lên trước
+    candidateList.sort((a, b) => b.freq - a.freq);
+
+    candidateList.forEach(item => {
+      const w = item.word;
+
       // Noun
-      if (isNoun && (w.endsWith('tion') || w.endsWith('sion') || w.endsWith('ment') || w.endsWith('er') || w.endsWith('or') || w.endsWith('ity') || w.endsWith('ance') || w.endsWith('ence') || w === rawWord)) {
+      if (item.isNoun && (w.endsWith('tion') || w.endsWith('sion') || w.endsWith('ment') || w.endsWith('er') || w.endsWith('or') || w.endsWith('ity') || w.endsWith('ance') || w.endsWith('ence') || w === rawWord)) {
         if (!family.n.includes(w)) family.n.push(w);
-      } else if (isNoun && family.n.length < 2) {
+      } else if (item.isNoun && family.n.length < 2) {
         if (!family.n.includes(w)) family.n.push(w);
       }
 
-      // Verb
-      if (isVerb && (w.endsWith('e') || w.endsWith('ize') || w.endsWith('ate') || w.endsWith('fy') || w.endsWith('en') || w === stem || w === stem + 'e' || w === rawWord)) {
-        if (!w.endsWith('ing') && !w.endsWith('ed') && !family.v.includes(w)) family.v.push(w);
+      // Verb (Lọc bỏ các đuôi lạ như -re, chỉ nhận động từ phổ biến)
+      if (item.isVerb && (w.endsWith('e') || w.endsWith('ize') || w.endsWith('ate') || w.endsWith('fy') || w.endsWith('en') || w.endsWith('er') || w === rawWord)) {
+        if (!w.endsWith('ing') && !w.endsWith('ed') && !w.endsWith('re') && !family.v.includes(w)) {
+          family.v.push(w);
+        }
       }
 
       // Adjective
-      if (isAdj && (w.endsWith('ive') || w.endsWith('able') || w.endsWith('ible') || w.endsWith('al') || w.endsWith('ic') || w.endsWith('ous') || w.endsWith('ful'))) {
+      if (item.isAdj && (w.endsWith('ive') || w.endsWith('able') || w.endsWith('ible') || w.endsWith('al') || w.endsWith('ic') || w.endsWith('ous') || w.endsWith('ful'))) {
         if (!family.adj.includes(w)) family.adj.push(w);
       }
 
       // Adverb
-      if ((isAdv || w.endsWith('ly')) && w.endsWith('ly')) {
+      if ((item.isAdv || w.endsWith('ly')) && w.endsWith('ly')) {
         if (!family.adv.includes(w)) family.adv.push(w);
       }
     });
 
-    // Sắp xếp ưu tiên các từ ngắn/gốc lên trước và giới hạn mỗi nhóm tối đa 3 từ
+    // Giới hạn tối đa 3 từ chuẩn nhất cho mỗi mục
     for (const k in family) {
-      family[k] = family[k].sort((a, b) => a.length - b.length).slice(0, 3);
+      family[k] = family[k].slice(0, 3);
     }
   } catch (e) {}
 
