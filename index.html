@@ -59,7 +59,7 @@
   .aim-panel { background: var(--accent-soft); border-bottom: 1px solid var(--border); padding: 8px 12px; font-size: 12px; display: flex; flex-direction: column; gap: 6px; }
   .aim-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
   .aim-input-wrap { display: flex; align-items: center; gap: 4px; }
-  .aim-input-wrap input { width: 55px; padding: 3px 6px; border-radius: 4px; border: 1px solid var(--accent); font-weight: bold; text-align: center; outline: none;}
+  .aim-input-wrap input { width: 55px; padding: 3px 6px; border-radius: 4px; border: 1px solid var(--accent); font-weight: bold; text-align: center; outline: none; background: var(--panel); color: var(--text);}
   .aim-feedback { font-size: 12px; line-height: 1.4; color: var(--text); background: var(--panel); padding: 8px 10px; border-radius: 6px; border-left: 4px solid var(--accent); }
 
   .answer-head { padding: 10px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
@@ -71,7 +71,6 @@
   .btn-grade:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(31, 146, 84, 0.4); }
   .btn-clear { background: var(--bg); color: var(--text); border: 1px solid var(--border); padding: 7px 10px; border-radius: 8px; font-size: 12px; cursor: pointer; font-weight: 500;}
 
-  /* Quan trọng: Sửa lỗi thanh cuộn và đảm bảo hiển thị đủ 200 câu */
   .scroll-area { flex: 1; overflow-y: auto; padding: 12px; }
   .qgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; align-content: start; }
   .qrow { display: flex; align-items: center; justify-content: space-between; gap: 2px; border: 1px solid var(--border); border-radius: 8px; padding: 6px; background: var(--bg); }
@@ -92,7 +91,9 @@
   .script-item { margin-bottom: 10px; padding: 8px; border-radius: 6px; background: var(--panel); border-left: 3px solid var(--accent); font-size: 13px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);}
   .script-item .qnum { font-weight: bold; color: var(--accent); }
   .script-item .right-ans { font-weight: bold; color: var(--good); }
+  .script-dialogue { margin-bottom: 12px; padding: 10px; border-radius: 6px; background: var(--panel); font-size: 13px; line-height: 1.6; border: 1px solid var(--border); }
 
+  /* Bảng Tra Từ Vựng */
   .vocab-panel { position: fixed; top: 0; right: -360px; width: min(340px, 90vw); height: 100%; background: var(--panel); border-left: 1px solid var(--border); padding: 16px; overflow-y: auto; transition: right .25s ease; z-index: 30; box-shadow: -6px 0 16px rgba(0,0,0,.15); }
   .vocab-panel.open { right: 0; }
   .vocab-panel h2 { font-size: 16px; margin: 0 0 12px; color: var(--text); }
@@ -138,6 +139,7 @@
     
     <div class="main" id="main">
       <div class="empty" id="emptyMsg">
+        <!-- Đã sửa lỗi HTML tĩnh ở đây -->
         Bấm <b>"+ Thêm đề thi mới"</b> ở cột trái.<br><br>
         1. Chọn bộ đề (Test 1 - 10).<br>
         2. Tải file PDF và Audio từ máy của bạn.<br>
@@ -147,6 +149,7 @@
     
     <div class="overlay" id="overlay"></div>
     
+    <!-- Khung Tra Từ -->
     <div class="vocab-panel" id="vocabPanel">
       <button class="close-x" id="vocabCloseBtn">✕</button>
       <h2>🔤 Tra từ vựng</h2>
@@ -160,7 +163,19 @@
 </div>
 
 <script>
-// KHAI BÁO GỘP TRỰC TIẾP 10 BỘ ĐÁP ÁN VÀO TRONG HTML
+// Khởi tạo Dark Mode
+const themeToggleBtn = document.getElementById('themeToggleBtn');
+if (localStorage.getItem('toeic_theme') === 'dark') {
+  document.body.classList.add('dark-theme');
+  themeToggleBtn.textContent = '☀️';
+}
+themeToggleBtn.addEventListener('click', () => {
+  document.body.classList.toggle('dark-theme');
+  const isDark = document.body.classList.contains('dark-theme');
+  localStorage.setItem('toeic_theme', isDark ? 'dark' : 'light');
+  themeToggleBtn.textContent = isDark ? '☀️' : '🌙';
+});
+
 function parseKeyString(text) {
   const key = {};
   const re = /(\d{1,3})\s*[.\-:)]?\s*([A-Da-d])/g;
@@ -169,6 +184,7 @@ function parseKeyString(text) {
   return key;
 }
 
+// 1. DATA GỘP TRỰC TIẾP VÀO INDEX.HTML (Không cần file ngoài)
 const TOEIC_KEYS = {
   1: parseKeyString("1B 2D 3C 4A 5A 6C 7B 8C 9B 10A 11B 12B 13C 14C 15A 16B 17B 18A 19B 20C 21A 22C 23A 24A 25A 26B 27B 28A 29C 30C 31C 32B 33D 34B 35C 36A 37D 38A 39D 40A 41C 42D 43B 44C 45C 46A 47A 48D 49C 50C 51B 52A 53C 54A 55B 56B 57A 58C 59A 60C 61B 62C 63C 64D 65D 66A 67C 68B 69A 70C 71B 72C 73A 74B 75D 76A 77B 78D 79A 80D 81A 82B 83D 84A 85D 86A 87B 88C 89D 90B 91C 92B 93A 94D 95A 96C 97D 98D 99C 100A 101B 102A 103A 104B 105B 106C 107C 108D 109A 110A 111C 112C 113A 114C 115C 116D 117A 118D 119C 120B 121D 122C 123B 124C 125A 126D 127D 128D 129D 130B 131D 132C 133A 134B 135D 136C 137B 138A 139A 140C 141B 142D 143C 144C 145B 146A 147C 148D 149B 150C 151D 152C 153B 154C 155D 156C 157B 158D 159B 160C 161C 162D 163B 164B 165B 166A 167B 168C 169B 170B 171A 172D 173A 174B 175C 176A 177D 178C 179D 180C 181D 182D 183A 184C 185B 186B 187A 188B 189A 190D 191D 192B 193B 194A 195A 196B 197A 198D 199C 200A"),
   2: parseKeyString("1B 2D 3B 4A 5C 6A 7A 8B 9C 10A 11C 12C 13A 14A 15B 16C 17A 18B 19C 20C 21B 22C 23A 24A 25B 26B 27B 28A 29B 30C 31C 32D 33D 34A 35B 36B 37D 38C 39D 40B 41A 42C 43A 44A 45D 46A 47B 48D 49C 50C 51B 52B 53C 54A 55D 56D 57C 58D 59A 60D 61C 62B 63C 64A 65A 66B 67A 68D 69A 70C 71B 72D 73C 74A 75D 76B 77C 78C 79D 80A 81C 82C 83B 84D 85A 86A 87D 88B 89B 90C 91A 92B 93D 94D 95A 96B 97C 98C 99A 100D 101C 102A 103D 104B 105A 106D 107D 108C 109A 110A 111C 112D 113C 114D 115B 116C 117A 118C 119D 120C 121A 122B 123A 124C 125B 126D 127D 128C 129B 130A 131D 132B 133A 134D 135A 136A 137D 138D 139B 140C 141D 142A 143B 144D 145B 146B 147D 148C 149B 150C 151A 152B 153C 154C 155A 156B 157B 158C 159B 160B 161D 162B 163D 164D 165B 166A 167B 168C 169B 170D 171B 172C 173A 174C 175B 176A 177C 178A 179D 180B 181D 182B 183C 184D 185A 186C 187C 188A 189D 190D 191A 192C 193D 194C 195B 196B 197A 198C 199C 200D"),
@@ -182,18 +198,20 @@ const TOEIC_KEYS = {
   10: parseKeyString("1A 2C 3C 4D 5B 6B 7A 8A 9B 10B 11B 12A 13C 14C 15C 16B 17C 18A 19B 20C 21C 22A 23C 24A 25B 26B 27C 28C 29A 30A 31C 32A 33C 34B 35C 36B 37B 38B 39D 40C 41D 42B 43C 44C 45A 46B 47D 48C 49D 50A 51C 52D 53C 54B 55D 56A 57D 58B 59A 60A 61B 62B 63B 64C 65D 66C 67B 68A 69C 70A 71C 72B 73A 74C 75A 76D 77D 78C 79C 80B 81D 82C 83D 84D 85B 86D 87A 88B 89A 90D 91C 92A 93B 94C 95D 96B 97C 98B 99A 100C 101A 102D 103B 104A 105D 106B 107A 108B 109D 110B 111B 112A 113B 114D 115C 116B 117C 118A 119B 120A 121C 122D 123B 124D 125A 126A 127D 128D 129C 130B 131D 132C 133B 134A 135D 136B 137C 138B 139C 140A 141B 142D 143B 144B 145B 146D 147D 148B 149B 150D 151A 152D 153B 154D 155A 156C 157C 158C 159B 160D 161B 162D 163A 164C 165D 166A 167B 168A 169D 170B 171C 172C 173B 174A 175C 176B 177A 178B 179C 180C 181B 182A 183C 184D 185C 186A 187C 188D 189D 190B 191B 192B 193C 194D 195A 196B 197A 198B 199C 200B")
 };
 
-// Khởi tạo Dark Mode
-const themeToggleBtn = document.getElementById('themeToggleBtn');
-if (localStorage.getItem('toeic_theme') === 'dark') {
-  document.body.classList.add('dark-theme');
-  themeToggleBtn.textContent = '☀️';
-}
-themeToggleBtn.addEventListener('click', () => {
-  document.body.classList.toggle('dark-theme');
-  const isDark = document.body.classList.contains('dark-theme');
-  localStorage.setItem('toeic_theme', isDark ? 'dark' : 'light');
-  themeToggleBtn.textContent = isDark ? '☀️' : '🌙';
-});
+const TOEIC_SCRIPTS = {
+  1: `<h3>PART 1</h3><div class="script-item"><span class="qnum">1:</span> (B) <span class="right-ans">wearing a jacket</span></div><div class="script-item"><span class="qnum">2:</span> (D) <span class="right-ans">looking at a book</span></div><div class="script-item"><span class="qnum">3:</span> (C) <span class="right-ans">light fixtures hanging from ceiling</span></div><div class="script-item"><span class="qnum">4:</span> (A) <span class="right-ans">wooden crate is filled with vegetables</span></div><div class="script-item"><span class="qnum">5:</span> (A) <span class="right-ans">Painting supplies laid out on floor</span></div><div class="script-item"><span class="qnum">6:</span> (C) <span class="right-ans">water has pooled on a path</span></div>`,
+  2: `<h3>PART 1</h3><div class="script-item"><span class="qnum">1:</span> (B) <span class="right-ans">walking down a stone path</span></div><div class="script-item"><span class="qnum">2:</span> (D) <span class="right-ans">leaning against a railing</span></div><div class="script-item"><span class="qnum">3:</span> (B) <span class="right-ans">vehicle parked next to a building</span></div><div class="script-item"><span class="qnum">4:</span> (A) <span class="right-ans">holding up his phone</span></div><div class="script-item"><span class="qnum">5:</span> (C) <span class="right-ans">working at a counter</span></div><div class="script-item"><span class="qnum">6:</span> (A) <span class="right-ans">setting up a buffet</span></div>`,
+  3: `<h3>PART 1</h3><div class="script-item"><span class="qnum">1:</span> (C) <span class="right-ans">drinking from a mug</span></div><div class="script-item"><span class="qnum">2:</span> (B) <span class="right-ans">shoveling snow near a building</span></div><div class="script-item"><span class="qnum">3:</span> (A) <span class="right-ans">examining a map on the hood of a car</span></div><div class="script-item"><span class="qnum">4:</span> (D) <span class="right-ans">looking at a menu</span></div><div class="script-item"><span class="qnum">5:</span> (B) <span class="right-ans">floor lamps displayed on a shelf</span></div><div class="script-item"><span class="qnum">6:</span> (A) <span class="right-ans">riding bicycle along waterfront path</span></div>`
+};
+
+const TOEIC_EXPLANATIONS = {
+  1: {
+    101: "💡 <b>after which</b>: Mệnh đề quan hệ chỉ thời gian, 'sau sự kiện đó người tham gia có thể đặt câu hỏi'.",
+    102: "💡 <b>The last antique shop</b>: Cụm danh từ xác định, cửa hàng đồ cổ 'cuối cùng' còn tồn tại.",
+    103: "💡 <b>status update</b>: Cụm danh từ ghép chỉ 'bản cập nhật tiến độ/trạng thái dự án'.",
+    104: "💡 Cần tính từ sở hữu <b>her</b> đứng trước cụm danh từ 'newly published novel'."
+  }
+};
 
 let tests = [];
 let activeId = null;
@@ -274,21 +292,18 @@ function renderSidebar() {
 
 function convertRawToScaled(lcCorrect, rcCorrect) {
   function roundTo5(num) { return Math.round(num / 5) * 5; }
-
   let lcScore = 5;
   if (lcCorrect > 0) { 
     let raw = lcCorrect * 5.2 - 15; 
     if (lcCorrect >= 90) raw = 450 + (lcCorrect - 90) * 4.5; 
     lcScore = Math.min(495, Math.max(5, roundTo5(raw))); 
   }
-
   let rcScore = 5;
   if (rcCorrect > 0) { 
     let raw = rcCorrect * 5.0 - 20; 
     if (rcCorrect >= 90) raw = 440 + (rcCorrect - 90) * 5.5; 
     rcScore = Math.min(495, Math.max(5, roundTo5(raw))); 
   }
-
   return { lc: lcScore, rc: rcScore, total: lcScore + rcScore };
 }
 
@@ -316,7 +331,15 @@ function updateScoreText(t) {
 
 function renderMain() {
   const t = tests.find(x => x.id === activeId);
-  if (!t) { mainEl.innerHTML = ''; mainEl.appendChild(document.getElementById('emptyMsg').cloneNode(true)); return; }
+  if (!t) { 
+    mainEl.innerHTML = `<div class="empty">
+      Bấm <b>"+ Thêm đề thi mới"</b> ở cột trái.<br><br>
+      1. Chọn bộ đề (Test 1 - 10).<br>
+      2. Tải file PDF và Audio từ máy của bạn.<br>
+      3. Làm bài và bấm <b>"✔ Chấm Bài"</b> để xem điểm, số câu đúng và lời giải chi tiết.
+    </div>`; 
+    return; 
+  }
   mainEl.innerHTML = '';
 
   const playerBar = document.createElement('div'); playerBar.className = 'player-bar';
@@ -379,7 +402,7 @@ function renderMain() {
 
   // Render Grid
   const grid = document.getElementById('qgridArea');
-  for (let q = 1; q <= 200; q++) {
+  for (let q = 1; q <= t.numQuestions; q++) {
     const isGraded = !!t.key[q];
     const row = document.createElement('div'); 
     row.id = `qrow-${q}`;
@@ -415,8 +438,7 @@ function renderMain() {
   if (t.viewMode === 'pdf') {
     contentArea.innerHTML = t.pdfUrl ? `<iframe src="${t.pdfUrl}"></iframe>` : `<div class="no-file">Chưa có PDF. Tải ở cột trái.</div>`;
   } else {
-    // Dữ liệu nội bộ nếu có
-    const scriptHtml = (window.TOEIC_DATA && window.TOEIC_DATA.SCRIPTS && window.TOEIC_DATA.SCRIPTS[t.testNum]) ? window.TOEIC_DATA.SCRIPTS[t.testNum] : '';
+    const scriptHtml = TOEIC_SCRIPTS[t.testNum] || '';
     contentArea.innerHTML = scriptHtml ? `<div class="script-container">${scriptHtml}</div>` : `<div class="no-file">Chưa có Transcript cho đề này.</div>`;
   }
 
@@ -457,7 +479,7 @@ function renderMain() {
     const wrongQs = [];
     for (let q = 1; q <= 200; q++) { if (t.key[q] && t.answers[q] && t.answers[q] !== t.key[q]) wrongQs.push(q); }
     if (wrongQs.length > 0) {
-      const currentExpl = (window.TOEIC_DATA && window.TOEIC_DATA.EXPLANATIONS && window.TOEIC_DATA.EXPLANATIONS[t.testNum]) ? window.TOEIC_DATA.EXPLANATIONS[t.testNum] : {};
+      const currentExpl = TOEIC_EXPLANATIONS[t.testNum] || {};
       let html = `<div class="notes-title">⚠️ Câu sai (${wrongQs.length}) — Lời giải:</div>`;
       wrongQs.forEach(q => {
         const expl = currentExpl[q] || `<i>(Đang chờ cập nhật lời giải cho câu ${q})</i>`;
