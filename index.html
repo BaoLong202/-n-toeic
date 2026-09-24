@@ -3,172 +3,689 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Luyện Thi TOEIC</title>
+<title>TOEIC Practice Workspace</title>
 <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📘</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f7f7f8; --panel: #ffffff; --border: #e2e2e6; --text: #1c1c1f; --muted: #6b6b73;
-    --accent: #2f6fed; --accent-soft: #e8f0fe; --danger: #d9463c; --good: #1f9254; --bad: #d9463c;
-    box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+    --bg-page: #f9fafb;
+    --bg-surface: #ffffff;
+    --bg-subtle: #f3f4f6;
+    --border: #e5e7eb;
+    --border-hover: #d1d5db;
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --text-muted: #9ca3af;
+    
+    --brand: #2563eb;
+    --brand-hover: #1d4ed8;
+    --brand-subtle: #eff6ff;
+
+    --success: #059669;
+    --success-subtle: #ecfdf5;
+    --danger: #dc2626;
+    --danger-subtle: #fef2f2;
+    
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   }
   
   body.dark-theme {
-    --bg: #121212; --panel: #1e1e24; --border: #2d2d35; --text: #e1e1e6; --muted: #8b8b99;
-    --accent: #4a8cff; --accent-soft: #1a2333;
+    --bg-page: #0b0f17;
+    --bg-surface: #111827;
+    --bg-subtle: #1f2937;
+    --border: #374151;
+    --border-hover: #4b5563;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-muted: #6b7280;
+    
+    --brand: #3b82f6;
+    --brand-hover: #60a5fa;
+    --brand-subtle: #1e293b;
+
+    --success: #10b981;
+    --success-subtle: #064e3b;
+    --danger: #ef4444;
+    --danger-subtle: #450a0a;
   }
 
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; transition: background 0.3s, color 0.3s; }
-  .app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
-  
-  header { padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-shrink: 0; background: var(--panel); z-index: 10; }
-  header h1 { font-size: 16px; margin: 0; display: flex; align-items: center; gap: 6px; }
-  header .header-btns { display: flex; gap: 8px; }
-  header button { font-size: 12px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent-soft); color: var(--accent); cursor: pointer; font-weight: 600; transition: 0.2s;}
-  header button:hover { background: var(--accent); color: #fff; }
-  #themeToggleBtn { background: transparent; border: 1px solid var(--border); font-size: 14px; padding: 4px 8px; color: var(--text); }
-  
-  .layout { flex: 1; display: flex; min-height: 0; position: relative; }
-  .sidebar { width: 280px; max-width: 100%; border-right: 1px solid var(--border); padding: 12px; overflow-y: auto; flex-shrink: 0; background: var(--panel); z-index: 25;}
-  .add-btn { width: 100%; padding: 9px 10px; border-radius: 8px; border: 1px dashed var(--accent); background: var(--accent-soft); color: var(--accent); font-size: 13px; cursor: pointer; margin-bottom: 10px; font-weight: 500; }
-  .test-card { border: 1px solid var(--border); border-radius: 10px; padding: 10px; margin-bottom: 10px; background: var(--bg); cursor: pointer; transition: 0.2s; }
-  .test-card.active { border-color: var(--accent); background: var(--panel); box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-1px); }
-  .test-card .name { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
-  .test-card .status { font-size: 11px; color: var(--muted); display: flex; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
-  .test-card .status span.ok { color: var(--good); font-weight: bold; }
-  .row-btns { display: flex; gap: 6px; flex-wrap: wrap; }
-  .row-btns label, .row-btns button { font-size: 11px; padding: 5px 7px; border-radius: 6px; border: 1px solid var(--border); background: var(--panel); color: var(--text); cursor: pointer; }
-  .row-btns .del { color: var(--danger); border-color: var(--danger); margin-left: auto; }
-  input[type="file"] { display: none; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    height: 100vh;
+    height: 100dvh;
+    font-family: var(--font-sans);
+    background: var(--bg-page);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
 
-  .main { flex: 1; display: flex; flex-direction: column; min-width: 0; padding: 10px; gap: 10px; min-height: 0; }
-  .empty { margin: auto; color: var(--muted); text-align: center; font-size: 14px; max-width: 340px; line-height: 1.5; padding: 20px; }
-  
-  .player-bar { border: 1px solid var(--border); background: var(--panel); border-radius: 10px; padding: 8px 12px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; flex-shrink: 0; }
-  .player-bar audio { flex: 1; min-width: 180px; height: 36px; outline: none; }
-  
-  .center-split { flex: 1; display: flex; gap: 10px; min-height: 0; }
-  .doc-wrap { flex: 1.2; min-height: 0; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--panel); display: flex; flex-direction: column; }
-  .doc-tabs { display: flex; background: var(--bg); border-bottom: 1px solid var(--border); padding: 4px 6px; gap: 6px; }
-  .doc-tab { font-size: 12px; padding: 5px 12px; border-radius: 6px; border: 1px solid transparent; background: transparent; color: var(--muted); cursor: pointer; font-weight: 500; }
-  .doc-tab.active { background: var(--panel); color: var(--text); border-color: var(--border); font-weight: 600; }
-  .doc-content { flex: 1; position: relative; overflow-y: auto; padding: 12px; }
-  .doc-content iframe { width: 100%; height: 100%; border: none; }
-  .no-file { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--muted); font-size: 13px; text-align: center; padding: 20px; gap: 8px; }
+  /* Top Navigation */
+  header {
+    height: 52px;
+    padding: 0 16px;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .brand-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-primary);
+  }
+  .brand-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--brand-subtle);
+    color: var(--brand);
+  }
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-outline {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .btn-outline:hover {
+    background: var(--bg-subtle);
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+  }
 
-  .answer-panel { flex: 1; min-height: 0; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); display: flex; flex-direction: column; overflow: hidden; }
-  .aim-panel { background: var(--accent-soft); border-bottom: 1px solid var(--border); padding: 8px 12px; font-size: 12px; display: flex; flex-direction: column; gap: 6px; }
-  .aim-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
-  .aim-input-wrap { display: flex; align-items: center; gap: 4px; }
-  .aim-input-wrap input { width: 55px; padding: 3px 6px; border-radius: 4px; border: 1px solid var(--accent); font-weight: bold; text-align: center; outline: none; background: var(--panel); color: var(--text);}
-  .aim-feedback { font-size: 12px; line-height: 1.4; color: var(--text); background: var(--panel); padding: 8px 10px; border-radius: 6px; border-left: 4px solid var(--accent); }
+  /* Workspace Layout */
+  .workspace {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+    position: relative;
+  }
 
-  .answer-head { padding: 10px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
-  .answer-head strong { font-size: 14px; }
-  .answer-head-btns { display: flex; gap: 8px; align-items: center; }
-  .answer-head-btns select { font-size: 12px; padding: 6px 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); outline: none; }
-  
-  .btn-grade { background: linear-gradient(135deg, #1f9254, #28b86a) !important; color: #ffffff !important; border: none !important; font-weight: 700 !important; padding: 7px 14px !important; border-radius: 8px !important; box-shadow: 0 4px 10px rgba(31, 146, 84, 0.3); cursor: pointer; transition: all 0.2s ease; }
-  .btn-grade:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(31, 146, 84, 0.4); }
-  .btn-clear { background: var(--bg); color: var(--text); border: 1px solid var(--border); padding: 7px 10px; border-radius: 8px; font-size: 12px; cursor: pointer; font-weight: 500;}
+  /* Sidebar */
+  .sidebar {
+    width: 260px;
+    border-right: 1px solid var(--border);
+    background: var(--bg-surface);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+  .btn-create {
+    width: 100%;
+    padding: 8px 12px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--brand);
+    background: var(--brand-subtle);
+    border: 1px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .btn-create:hover {
+    background: #dbeafe;
+  }
+  .test-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+    background: var(--bg-surface);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .test-item:hover {
+    border-color: var(--border-hover);
+  }
+  .test-item.active {
+    border-color: var(--brand);
+    background: var(--bg-page);
+  }
+  .test-item-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .test-item-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .test-item-meta .active-flag {
+    color: var(--success);
+    font-weight: 600;
+  }
+  .test-item-actions {
+    display: flex;
+    gap: 6px;
+  }
+  .test-item-actions label, .test-item-actions button {
+    font-family: inherit;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .test-item-actions .btn-delete {
+    margin-left: auto;
+    color: var(--danger);
+    border-color: transparent;
+  }
+  .test-item-actions .btn-delete:hover {
+    background: var(--danger-subtle);
+  }
 
-  .scroll-area { flex: 1; overflow-y: auto; padding: 12px; }
-  .qgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; align-content: start; }
-  .qrow { display: flex; align-items: center; justify-content: space-between; gap: 2px; border: 1px solid var(--border); border-radius: 8px; padding: 6px; background: var(--bg); }
-  .qrow .qnum { font-size: 11px; color: var(--muted); font-weight: 700; min-width: 22px; }
-  .qrow .opt { font-size: 12px; font-weight: 600; width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--border); background: var(--panel); color: var(--text); cursor: pointer; padding: 0; display: inline-flex; align-items: center; justify-content: center; transition: 0.1s;}
-  .qrow .opt.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .qrow.graded .opt.selected.correct { background: var(--good); border-color: var(--good); color: #fff; }
-  .qrow.graded .opt.selected.wrong { background: var(--bad); border-color: var(--bad); color: #fff; }
-  .qrow.graded .opt.right-answer:not(.selected) { border-color: var(--good); color: var(--good); font-weight: bold; background: rgba(31, 146, 84, 0.15); }
+  /* Main Workspace */
+  .main-stage {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 12px;
+    gap: 12px;
+    overflow: hidden;
+  }
 
-  .notes-section { margin-top: 20px; }
-  .notes-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: var(--danger); display: flex; align-items: center; gap: 6px; }
-  .note-item { border: 1px solid var(--border); border-left: 4px solid var(--bad); border-radius: 8px; padding: 12px; margin-bottom: 12px; background: var(--panel); box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
-  .note-item .note-head { font-size: 13px; margin-bottom: 8px; font-weight: 600; }
-  .note-item .explanation-box { font-size: 12.5px; line-height: 1.5; background: var(--bg); padding: 10px; border-radius: 6px; border: 1px dashed var(--border); color: var(--text); }
+  /* Audio Bar */
+  .audio-toolbar {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .audio-toolbar audio {
+    flex: 1;
+    height: 32px;
+  }
+  .audio-empty {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
 
-  /* Format hiển thị Script chuẩn sách giải */
-  .script-container h3 { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 4px; margin-top: 20px; font-size: 14px; }
-  .script-question { margin-bottom: 14px; padding: 10px 12px; background: var(--panel); border-radius: 8px; border: 1px solid var(--border); font-size: 13px; line-height: 1.5; }
-  .script-speaker { font-weight: 700; color: var(--muted); font-size: 11.5px; margin-bottom: 4px; display: block; }
-  .script-opt { margin: 2px 0; color: var(--text); }
-  .script-opt.correct-pink { color: #d84577; font-weight: 700; }
-  .script-dialogue { margin-bottom: 12px; padding: 10px; border-radius: 8px; background: var(--panel); font-size: 13px; line-height: 1.6; border: 1px solid var(--border); }
+  /* Panels Grid */
+  .panels-split {
+    flex: 1;
+    display: flex;
+    gap: 12px;
+    min-height: 0;
+  }
 
-  .vocab-panel { position: fixed; top: 0; right: -360px; width: min(340px, 90vw); height: 100%; background: var(--panel); border-left: 1px solid var(--border); padding: 16px; overflow-y: auto; transition: right .25s ease; z-index: 30; box-shadow: -6px 0 16px rgba(0,0,0,.15); }
-  .vocab-panel.open { right: 0; }
-  .vocab-panel h2 { font-size: 16px; margin: 0 0 12px; color: var(--text); }
-  .vocab-panel .close-x { position: absolute; top: 12px; right: 14px; background: none; border: none; font-size: 20px; color: var(--muted); cursor: pointer; }
-  .vocab-search { display: flex; gap: 6px; margin-bottom: 16px; }
-  .vocab-search input { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 13px; outline: none; }
-  .vocab-search input:focus { border-color: var(--accent); }
-  .vocab-search button { padding: 8px 14px; border-radius: 8px; border: none; background: var(--accent); color: #fff; font-size: 13px; font-weight: bold; cursor: pointer; }
-  .vocab-result { margin-top: 10px; }
-  .vocab-result .word { font-size: 20px; font-weight: bold; color: var(--accent); margin-bottom: 4px; }
-  .vocab-result .pos { font-size: 12px; font-weight: 700; color: var(--good); margin-top: 12px; text-transform: uppercase; letter-spacing: 0.5px;}
-  .vocab-result .def { font-size: 13.5px; margin: 6px 0; line-height: 1.5; color: var(--text); padding-left: 8px; border-left: 2px solid var(--border);}
-  .vocab-note { font-size: 12px; color: var(--muted); margin-top: 12px; font-style: italic; }
+  /* Document Viewer */
+  .viewer-panel {
+    flex: 1.3;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .viewer-tabs {
+    display: flex;
+    background: var(--bg-subtle);
+    border-bottom: 1px solid var(--border);
+    padding: 4px 6px;
+    gap: 4px;
+  }
+  .viewer-tab {
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .viewer-tab.active {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .viewer-content {
+    flex: 1;
+    position: relative;
+    overflow-y: auto;
+  }
+  .viewer-content iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* Answer Sheet Panel */
+  .sheet-panel {
+    flex: 1;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .sheet-header {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: var(--bg-surface);
+    flex-shrink: 0;
+  }
+  .sheet-header-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sheet-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .sheet-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .select-native {
+    font-family: inherit;
+    font-size: 12px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    outline: none;
+  }
+  .btn-submit {
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 6px;
+    background: var(--brand);
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .btn-submit:hover {
+    background: var(--brand-hover);
+  }
+  .btn-reset {
+    font-family: inherit;
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .btn-reset:hover {
+    background: var(--bg-subtle);
+  }
+
+  /* Aim & Score Sub-bar */
+  .score-strip {
+    background: var(--bg-subtle);
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    gap: 8px;
+  }
+  .aim-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-secondary);
+  }
+  .aim-box input {
+    width: 52px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 12px;
+    text-align: center;
+    background: var(--bg-surface);
+    color: var(--text-primary);
+  }
+  .score-metric {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* Grid Questions */
+  .sheet-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+  }
+  .q-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
+    gap: 6px;
+  }
+  .q-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 6px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+  }
+  .q-item.graded {
+    background: var(--bg-subtle);
+  }
+  .q-number {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    min-width: 20px;
+  }
+  .q-options {
+    display: flex;
+    gap: 3px;
+  }
+  .q-bubble {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  }
+  .q-bubble:hover {
+    border-color: var(--text-muted);
+  }
+  .q-bubble.selected {
+    background: var(--brand);
+    color: #ffffff;
+    border-color: var(--brand);
+  }
+  .q-item.graded .q-bubble.selected.correct {
+    background: var(--success);
+    border-color: var(--success);
+    color: #ffffff;
+  }
+  .q-item.graded .q-bubble.selected.wrong {
+    background: var(--danger);
+    border-color: var(--danger);
+    color: #ffffff;
+  }
+  .q-item.graded .q-bubble.right-answer:not(.selected) {
+    border-color: var(--success);
+    color: var(--success);
+    background: var(--success-subtle);
+  }
+
+  /* Explanation / Notes */
+  .review-section {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .review-header {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .review-card {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    background: var(--bg-surface);
+  }
+  .review-card-title {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .review-card-body {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  /* Transcript layout */
+  .script-container {
+    padding: 16px;
+  }
+  .script-container h3 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--brand);
+    margin: 16px 0 10px 0;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  .script-question, .script-dialogue {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    background: var(--bg-subtle);
+    border-radius: 6px;
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .script-speaker {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .script-opt.correct-pink {
+    color: var(--brand);
+    font-weight: 600;
+  }
+
+  /* Vocab Drawer */
+  .drawer {
+    position: fixed;
+    top: 0;
+    right: -360px;
+    width: 340px;
+    max-width: 90vw;
+    height: 100%;
+    background: var(--bg-surface);
+    border-left: 1px solid var(--border);
+    z-index: 50;
+    transition: right 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+  }
+  .drawer.open {
+    right: 0;
+  }
+  .drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .drawer-title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .drawer-close {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--text-muted);
+  }
+  .search-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .search-row input {
+    flex: 1;
+    padding: 8px 10px;
+    font-family: inherit;
+    font-size: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    outline: none;
+  }
+  .search-row input:focus {
+    border-color: var(--brand);
+  }
+  .search-row button {
+    padding: 8px 12px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    background: var(--brand);
+    color: #ffffff;
+    cursor: pointer;
+  }
+  .vocab-body {
+    flex: 1;
+    overflow-y: auto;
+    font-size: 13px;
+  }
+
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 40;
+    display: none;
+  }
+  .backdrop.open { display: block; }
+  .empty-state {
+    margin: auto;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    max-width: 320px;
+    line-height: 1.5;
+  }
 
   @media (max-width: 768px) {
-    .sidebar { position: fixed; top: 52px; left: 0; bottom: 0; z-index: 25; width: 85%; transform: translateX(-100%); transition: transform 0.25s ease; }
+    .sidebar {
+      position: fixed;
+      top: 52px;
+      left: 0;
+      bottom: 0;
+      z-index: 45;
+      transform: translateX(-100%);
+      transition: transform 0.2s ease;
+    }
     .sidebar.open { transform: translateX(0); }
-    .center-split { flex-direction: column; }
-    .doc-wrap { height: 40vh; flex: none; }
+    .panels-split { flex-direction: column; }
+    .viewer-panel { height: 40vh; flex: none; }
   }
-  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 20; display: none; backdrop-filter: blur(2px); }
-  .overlay.open { display: block; }
 </style>
 </head>
 <body>
-<div class="app">
-  <header>
-    <div style="display:flex; align-items:center; gap:8px;">
-      <button id="sidebarToggleBtn">☰ Đề</button>
-      <h1>📘 Luyện Thi TOEIC</h1>
+
+<header>
+  <div style="display:flex; align-items:center; gap:10px;">
+    <button id="sidebarToggleBtn" class="btn-outline" style="padding:4px 8px;">Mục lục</button>
+    <div class="brand-title">
+      TOEIC Prep Hub
+      <span class="brand-badge">ETS Series</span>
     </div>
-    <div class="header-btns">
-      <button id="themeToggleBtn">🌙</button>
-      <button id="vocabToggleBtn">🔤 Tra từ</button>
+  </div>
+  <div class="header-actions">
+    <button id="themeToggleBtn" class="btn-outline">Theme</button>
+    <button id="vocabToggleBtn" class="btn-outline">Tra từ</button>
+  </div>
+</header>
+
+<div class="workspace">
+  <div class="sidebar" id="sidebar">
+    <button class="btn-create" id="addTestBtn">+ Thêm đề thi</button>
+    <div id="testList" style="display:flex; flex-direction:column; gap:8px;"></div>
+  </div>
+
+  <div class="main-stage" id="mainStage">
+    <div class="empty-state">
+      Chọn <b>+ Thêm đề thi</b> từ thanh bên trái để bắt đầu luyện tập.
     </div>
-  </header>
-  
-  <div class="layout">
-    <div class="sidebar" id="sidebar">
-      <button class="add-btn" id="addTestBtn">+ Thêm đề thi mới</button>
-      <div id="testList"></div>
+  </div>
+
+  <div class="backdrop" id="backdrop"></div>
+
+  <div class="drawer" id="vocabDrawer">
+    <div class="drawer-head">
+      <span class="drawer-title">Từ điển tra cứu</span>
+      <button class="drawer-close" id="vocabCloseBtn">&times;</button>
     </div>
-    
-    <div class="main" id="main">
-      <div class="empty">
-        Bấm <b>"+ Thêm đề thi mới"</b> ở cột trái.<br><br>
-        1. Chọn bộ đề (Test 1 - 10).<br>
-        2. Tải file PDF và Audio từ máy của bạn.<br>
-        3. Làm bài và bấm <b>"✔ Chấm Bài"</b> để xem điểm, số câu đúng và lời giải chi tiết.
-      </div>
+    <div class="search-row">
+      <input type="text" id="vocabInput" placeholder="Nhập từ cần tra...">
+      <button id="vocabSearchBtn">Tra</button>
     </div>
-    
-    <div class="overlay" id="overlay"></div>
-    
-    <div class="vocab-panel" id="vocabPanel">
-      <button class="close-x" id="vocabCloseBtn">✕</button>
-      <h2>🔤 Tra từ vựng</h2>
-      <div class="vocab-search">
-        <input type="text" id="vocabInput" placeholder="Nhập từ tiếng Anh...">
-        <button id="vocabSearchBtn">Tra</button>
-      </div>
-      <div class="vocab-result" id="vocabResult"></div>
-    </div>
+    <div class="vocab-body" id="vocabResult"></div>
   </div>
 </div>
 
 <script>
+// Toàn bộ logic lõi giữ nguyên 100%
 window.TOEIC_KEYS = window.TOEIC_KEYS || {};
 window.TOEIC_SCRIPTS = window.TOEIC_SCRIPTS || {};
 window.TOEIC_EXPLANATIONS = window.TOEIC_EXPLANATIONS || {};
 
-// Định nghĩa hàm parseKey toàn cục để mọi file testX.js gọi được ngay
 function parseKey(text) {
   if (typeof text === 'object') return text;
   const key = {};
@@ -179,43 +696,32 @@ function parseKey(text) {
 }
 window.parseKey = parseKey;
 
-const loadedScripts = {};
-
 function ensureTestDataLoaded(testNum, callback) {
-  // Nếu dữ liệu đã có trong window thì gọi callback ngay
   if (window.TOEIC_SCRIPTS && window.TOEIC_SCRIPTS[testNum]) {
     if (callback) callback();
     return;
   }
-
-  // Tải file với đường dẫn tương đối ./data/ và tham số chống lưu cache
   const script = document.createElement('script');
   script.src = `./data/test${testNum}.js?t=` + Date.now();
-
   script.onload = () => {
-    // Ép giao diện vẽ lại ngay khi file tải xong
     renderMain();
     if (callback) callback();
   };
-
   script.onerror = () => {
     console.error(`Không thể nạp dữ liệu từ: ./data/test${testNum}.js`);
     if (callback) callback();
   };
-
   document.head.appendChild(script);
 }
 
 const themeToggleBtn = document.getElementById('themeToggleBtn');
 if (localStorage.getItem('toeic_theme') === 'dark') {
   document.body.classList.add('dark-theme');
-  themeToggleBtn.textContent = '☀️';
 }
 themeToggleBtn.addEventListener('click', () => {
   document.body.classList.toggle('dark-theme');
   const isDark = document.body.classList.contains('dark-theme');
   localStorage.setItem('toeic_theme', isDark ? 'dark' : 'light');
-  themeToggleBtn.textContent = isDark ? '☀️' : '🌙';
 });
 
 let tests = [];
@@ -226,12 +732,12 @@ const OPTS = ['A','B','C','D'];
 
 const sidebarList = document.getElementById('testList');
 const sidebarEl = document.getElementById('sidebar');
-const mainEl = document.getElementById('main');
-const overlay = document.getElementById('overlay');
+const mainStage = document.getElementById('mainStage');
+const backdrop = document.getElementById('backdrop');
 
 document.getElementById('sidebarToggleBtn').addEventListener('click', () => {
   sidebarEl.classList.toggle('open');
-  overlay.classList.toggle('open', sidebarEl.classList.contains('open'));
+  backdrop.classList.toggle('open', sidebarEl.classList.contains('open'));
 });
 
 document.getElementById('addTestBtn').addEventListener('click', () => {
@@ -251,14 +757,14 @@ document.getElementById('addTestBtn').addEventListener('click', () => {
     renderMain();
   });
 
-  if (window.innerWidth <= 768) { sidebarEl.classList.remove('open'); overlay.classList.remove('open'); }
+  if (window.innerWidth <= 768) { sidebarEl.classList.remove('open'); backdrop.classList.remove('open'); }
 });
 
 function renderSidebar() {
   sidebarList.innerHTML = '';
   tests.forEach(t => {
     const card = document.createElement('div');
-    card.className = 'test-card' + (t.id === activeId ? ' active' : '');
+    card.className = 'test-item' + (t.id === activeId ? ' active' : '');
     card.addEventListener('click', (e) => {
       if (['INPUT','BUTTON','LABEL','SELECT'].includes(e.target.tagName)) return;
       activeId = t.id; 
@@ -266,33 +772,35 @@ function renderSidebar() {
         renderSidebar(); 
         renderMain();
       });
-      if (window.innerWidth <= 768) { sidebarEl.classList.remove('open'); overlay.classList.remove('open'); }
+      if (window.innerWidth <= 768) { sidebarEl.classList.remove('open'); backdrop.classList.remove('open'); }
     });
 
-    card.innerHTML = `<div class="name"><span>${t.name}</span></div>
-      <div class="status">
-        <span class="${t.pdfFile ? 'ok' : ''}">${t.pdfFile ? '✓ Đề PDF' : '– Thiếu Đề'}</span>
-        <span class="${t.audioFile ? 'ok' : ''}">${t.audioFile ? '✓ Audio' : '– Thiếu Audio'}</span>
+    card.innerHTML = `
+      <div class="test-item-title">${t.name}</div>
+      <div class="test-item-meta">
+        <span class="${t.pdfFile ? 'active-flag' : ''}">${t.pdfFile ? 'PDF đính kèm' : 'Chưa có PDF'}</span>
+        <span>•</span>
+        <span class="${t.audioFile ? 'active-flag' : ''}">${t.audioFile ? 'Audio đính kèm' : 'Chưa có Audio'}</span>
       </div>`;
 
     const btnRow = document.createElement('div');
-    btnRow.className = 'row-btns';
+    btnRow.className = 'test-item-actions';
 
-    const pdfLabel = document.createElement('label'); pdfLabel.textContent = 'Tải Đề';
-    const pdfInput = document.createElement('input'); pdfInput.type = 'file'; pdfInput.accept = 'application/pdf';
+    const pdfLabel = document.createElement('label'); pdfLabel.textContent = 'PDF';
+    const pdfInput = document.createElement('input'); pdfInput.type = 'file'; pdfInput.accept = 'application/pdf'; pdfInput.style.display = 'none';
     pdfInput.addEventListener('change', (e) => {
       if(e.target.files[0]) { t.pdfFile = e.target.files[0]; t.pdfUrl = URL.createObjectURL(t.pdfFile); renderSidebar(); renderMain(); }
     });
     pdfLabel.appendChild(pdfInput); btnRow.appendChild(pdfLabel);
 
-    const audioLabel = document.createElement('label'); audioLabel.textContent = 'Tải Audio';
-    const audioInput = document.createElement('input'); audioInput.type = 'file'; audioInput.accept = 'audio/*';
+    const audioLabel = document.createElement('label'); audioLabel.textContent = 'Audio';
+    const audioInput = document.createElement('input'); audioInput.type = 'file'; audioInput.accept = 'audio/*'; audioInput.style.display = 'none';
     audioInput.addEventListener('change', (e) => {
       if(e.target.files[0]) { t.audioFile = e.target.files[0]; t.audioUrl = URL.createObjectURL(t.audioFile); renderSidebar(); renderMain(); }
     });
     audioLabel.appendChild(audioInput); btnRow.appendChild(audioLabel);
 
-    const delBtn = document.createElement('button'); delBtn.className = 'del'; delBtn.textContent = 'Xoá';
+    const delBtn = document.createElement('button'); delBtn.className = 'btn-delete'; delBtn.textContent = 'Xoá';
     delBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       tests = tests.filter(x => x.id !== t.id);
@@ -324,7 +832,7 @@ function updateQuestionRowDOM(t, q) {
   const row = document.getElementById(`qrow-` + q);
   if (!row) return;
   const selectedLetter = t.answers[q];
-  row.querySelectorAll('.opt').forEach(b => {
+  row.querySelectorAll('.q-bubble').forEach(b => {
     const letter = b.getAttribute('data-letter');
     if (letter === selectedLetter) {
       b.classList.add('selected');
@@ -334,69 +842,64 @@ function updateQuestionRowDOM(t, q) {
   });
 }
 
-function updateScoreText(t) {
-  const scoreSpan = document.getElementById('scoreDisplay');
-  if (scoreSpan && !t.isGraded) {
-    const answeredCount = Object.keys(t.answers).length;
-    scoreSpan.textContent = `Đã chọn: ${answeredCount} / ${t.numQuestions}`;
-  }
-}
-
 function renderMain() {
   const t = tests.find(x => x.id === activeId);
   if (!t) { 
-    mainEl.innerHTML = `<div class="empty">
-      Bấm <b>"+ Thêm đề thi mới"</b> ở cột trái.<br><br>
-      1. Chọn bộ đề (Test 1 - 10).<br>
-      2. Tải file PDF và Audio từ máy của bạn.<br>
-      3. Làm bài và bấm <b>"✔ Chấm Bài"</b> để xem điểm, số câu đúng và lời giải chi tiết.
-    </div>`; 
+    mainStage.innerHTML = `<div class="empty-state">Chọn <b>+ Thêm đề thi</b> từ thanh bên trái để bắt đầu luyện tập.</div>`; 
     return; 
   }
-  mainEl.innerHTML = '';
+  mainStage.innerHTML = '';
 
   const testKey = window.TOEIC_KEYS[t.testNum] || {};
 
-  const playerBar = document.createElement('div'); playerBar.className = 'player-bar';
-  if (t.audioUrl) {
-    playerBar.innerHTML = `<audio controls src="${t.audioUrl}" style="flex:1; height:36px;"></audio>`;
-  } else {
-    playerBar.innerHTML = `<div style="color:var(--muted); font-size:12px;">Chưa tải file Audio.</div>`;
-  }
-  mainEl.appendChild(playerBar);
+  const audioBar = document.createElement('div'); 
+  audioBar.className = 'audio-toolbar';
+  audioBar.innerHTML = t.audioUrl 
+    ? `<audio controls src="${t.audioUrl}"></audio>` 
+    : `<div class="audio-empty">File âm thanh chưa được tải lên</div>`;
+  mainStage.appendChild(audioBar);
 
-  const split = document.createElement('div'); split.className = 'center-split';
+  const panels = document.createElement('div'); panels.className = 'panels-split';
 
-  const docWrap = document.createElement('div'); docWrap.className = 'doc-wrap';
-  docWrap.innerHTML = `
-    <div class="doc-tabs">
-      <button class="doc-tab ${t.viewMode === 'pdf' ? 'active' : ''}" id="tabPdf">📄 Đề thi (PDF)</button>
-      <button class="doc-tab ${t.viewMode === 'transcript' ? 'active' : ''}" id="tabTranscript">📝 Script Listening</button>
+  // Left viewer
+  const viewerPanel = document.createElement('div'); viewerPanel.className = 'viewer-panel';
+  viewerPanel.innerHTML = `
+    <div class="viewer-tabs">
+      <button class="viewer-tab ${t.viewMode === 'pdf' ? 'active' : ''}" id="tabPdf">Đề bài (PDF)</button>
+      <button class="viewer-tab ${t.viewMode === 'transcript' ? 'active' : ''}" id="tabTranscript">Listening Script</button>
     </div>
-    <div class="doc-content" id="docContentArea"></div>`;
-  split.appendChild(docWrap);
+    <div class="viewer-content" id="docArea"></div>`;
+  panels.appendChild(viewerPanel);
 
-  const ansPanel = document.createElement('div'); ansPanel.className = 'answer-panel';
-  ansPanel.innerHTML = `
-    <div class="aim-panel">
-      <div class="aim-header">
-        <div class="aim-input-wrap"><span>🎯 Aim:</span><input type="number" id="aimInput" value="${userAimScore}" step="50"></div>
-        <div id="scoreDisplay" class="score"></div>
+  // Right Sheet
+  const sheetPanel = document.createElement('div'); sheetPanel.className = 'sheet-panel';
+  sheetPanel.innerHTML = `
+    <div class="sheet-header">
+      <div class="sheet-header-info">
+        <span class="sheet-title">${t.name}</span>
       </div>
-      <div class="aim-feedback" id="aimFeedback"></div>
-    </div>
-    <div class="answer-head">
-      <strong>Bảng trả lời: ${t.name}</strong>
-      <div class="answer-head-btns">
-        <select id="testSelector"></select>
-        <button id="gradeBtn" class="btn-grade">✔ Chấm Bài</button>
-        <button id="clearBtn" class="btn-clear">Xoá</button>
+      <div class="sheet-actions">
+        <select id="testSelector" class="select-native"></select>
+        <button id="clearBtn" class="btn-reset">Làm lại</button>
+        <button id="gradeBtn" class="btn-submit">Chấm bài</button>
       </div>
     </div>
-    <div class="scroll-area"><div class="qgrid" id="qgridArea"></div><div id="notesSectionContainer" class="notes-section"></div></div>
+    <div class="score-strip">
+      <div class="aim-box">
+        <span>Mục tiêu:</span>
+        <input type="number" id="aimInput" value="${userAimScore}" step="50">
+      </div>
+      <div id="scoreDisplay" class="score-metric">Đã hoàn thành: ${Object.keys(t.answers).length} / 200</div>
+    </div>
+    <div class="sheet-body">
+      <div class="q-grid" id="qgridArea"></div>
+      <div id="notesSectionContainer" class="review-section"></div>
+    </div>
   `;
-  split.appendChild(ansPanel); mainEl.appendChild(split);
+  panels.appendChild(sheetPanel); 
+  mainStage.appendChild(panels);
 
+  // Select test
   const selTest = document.getElementById('testSelector');
   for (let i = 1; i <= 10; i++) {
     const opt = document.createElement('option'); opt.value = i; opt.textContent = 'Đề ' + i;
@@ -423,47 +926,49 @@ function renderMain() {
     const hasKey = !!testKey[q];
     const row = document.createElement('div'); 
     row.id = `qrow-${q}`;
-    row.className = 'qrow' + (t.isGraded && hasKey ? ' graded' : '');
-    row.innerHTML = `<span class="qnum">${q}</span>`;
+    row.className = 'q-item' + (t.isGraded && hasKey ? ' graded' : '');
     
+    let optsHtml = '<div class="q-options">';
     OPTS.forEach(letter => {
-      const b = document.createElement('button'); 
-      b.className = 'opt'; 
-      b.setAttribute('data-letter', letter);
-      b.textContent = letter;
-      
-      if (t.answers[q] === letter) b.classList.add('selected');
+      let cls = 'q-bubble';
+      if (t.answers[q] === letter) cls += ' selected';
       if (t.isGraded && testKey[q]) {
-        if (letter === testKey[q]) b.classList.add('right-answer');
-        if (t.answers[q] === letter) b.classList.add(letter === testKey[q] ? 'correct' : 'wrong');
+        if (letter === testKey[q]) cls += ' right-answer';
+        if (t.answers[q] === letter) cls += (letter === testKey[q] ? ' correct' : ' wrong');
       }
-      
+      optsHtml += `<button class="${cls}" data-letter="${letter}">${letter}</button>`;
+    });
+    optsHtml += '</div>';
+
+    row.innerHTML = `<span class="q-number">${q}</span>` + optsHtml;
+    
+    row.querySelectorAll('.q-bubble').forEach(b => {
       b.addEventListener('click', () => {
         if (!t.isGraded) { 
+          const letter = b.getAttribute('data-letter');
           t.answers[q] = (t.answers[q] === letter) ? undefined : letter; 
           updateQuestionRowDOM(t, q);
-          updateScoreText(t);
+          document.getElementById('scoreDisplay').textContent = `Đã chọn: ${Object.keys(t.answers).length} / 200`;
         }
       });
-      row.appendChild(b);
     });
     grid.appendChild(row);
   }
 
-  const contentArea = document.getElementById('docContentArea');
+  const docArea = document.getElementById('docArea');
   if (t.viewMode === 'pdf') {
-    contentArea.innerHTML = t.pdfUrl ? `<iframe src="${t.pdfUrl}"></iframe>` : `<div class="no-file">Chưa có PDF. Tải ở cột trái.</div>`;
+    docArea.innerHTML = t.pdfUrl 
+      ? `<iframe src="${t.pdfUrl}"></iframe>` 
+      : `<div class="empty-state" style="padding:40px 10px;">Chưa nạp tài liệu PDF cho đề thi này.</div>`;
   } else {
     const scriptHtml = window.TOEIC_SCRIPTS[t.testNum] || '';
-    contentArea.innerHTML = scriptHtml ? `<div class="script-container">${scriptHtml}</div>` : `<div class="no-file">Chưa có Transcript cho đề này.<br><small style="color:var(--muted);">Kiểm tra lại file data/test${t.testNum}.js</small></div>`;
+    docArea.innerHTML = scriptHtml 
+      ? `<div class="script-container">${scriptHtml}</div>` 
+      : `<div class="empty-state" style="padding:40px 10px;">Chưa tìm thấy Transcript cho đề này.</div>`;
   }
 
   document.getElementById('tabPdf').addEventListener('click', () => { t.viewMode = 'pdf'; renderMain(); });
   document.getElementById('tabTranscript').addEventListener('click', () => { t.viewMode = 'transcript'; renderMain(); });
-
-  const scoreSpan = document.getElementById('scoreDisplay');
-  const aimFeedback = document.getElementById('aimFeedback');
-  const answeredCount = Object.keys(t.answers).length;
 
   if (t.isGraded) {
     const gradedCount = Object.keys(testKey).length;
@@ -476,98 +981,53 @@ function renderMain() {
     const totalCorrect = lcCorrect + rcCorrect;
     const scaled = convertRawToScaled(lcCorrect, rcCorrect);
     
-    scoreSpan.className = 'score done';
-    scoreSpan.innerHTML = `✅ Đúng: <b>${totalCorrect}</b>/${gradedCount} câu &nbsp;|&nbsp; 🎯 Điểm TOEIC: <b>${scaled.total}</b>/990 <small>(LC:${scaled.lc}|RC:${scaled.rc})</small>`;
-    
-    const diff = userAimScore - scaled.total;
-    if (diff <= 0) {
-      aimFeedback.innerHTML = `🎉 <b>CHÚC MỪNG!</b> Bạn đã vượt mục tiêu <b>${userAimScore}</b> điểm TOEIC (Hiện đạt: <b>${scaled.total}</b> điểm)!`;
-      aimFeedback.style.borderLeftColor = 'var(--good)';
-    } else {
-      const neededQuestions = Math.ceil(diff / 5);
-      aimFeedback.innerHTML = `⚡ Đạt <b>${scaled.total}</b> điểm. Còn thiếu <b>${diff} điểm</b> nữa. Cần làm đúng thêm khoảng <b>${neededQuestions} câu</b> để cán mốc Aim ${userAimScore}!`;
-      aimFeedback.style.borderLeftColor = 'var(--danger)';
-    }
+    const scoreSpan = document.getElementById('scoreDisplay');
+    scoreSpan.innerHTML = `Kết quả: <b>${totalCorrect}</b>/${gradedCount} câu • Điểm dự tính: <b>${scaled.total}</b>/990 (LC ${scaled.lc} | RC ${scaled.rc})`;
 
-    let notesContainer = document.getElementById('notesSectionContainer');
     const wrongQs = [];
     for (let q = 1; q <= 200; q++) { if (testKey[q] && t.answers[q] && t.answers[q] !== testKey[q]) wrongQs.push(q); }
     if (wrongQs.length > 0) {
       const currentExpl = window.TOEIC_EXPLANATIONS[t.testNum] || {};
-      let html = `<div class="notes-title">⚠️ Câu sai (${wrongQs.length}) — Lời giải:</div>`;
+      const notesContainer = document.getElementById('notesSectionContainer');
+      let html = `<div class="review-header">Phân tích câu làm sai (${wrongQs.length})</div>`;
       wrongQs.forEach(q => {
-        const expl = currentExpl[q] || `<i>(Đang chờ cập nhật lời giải cho câu ${q})</i>`;
-        html += `<div class="note-item"><div class="note-head">Câu ${q}: Chọn <b style="color:var(--bad)">${t.answers[q]}</b> — Đúng: <b style="color:var(--good)">${testKey[q]}</b></div><div class="explanation-box">${expl}</div></div>`;
+        const expl = currentExpl[q] || 'Chưa có giải thích chi tiết.';
+        html += `
+          <div class="review-card">
+            <div class="review-card-title">Câu ${q} • Đã chọn: <span style="color:var(--danger)">${t.answers[q]}</span> | Đúng: <span style="color:var(--success)">${testKey[q]}</span></div>
+            <div class="review-card-body">${expl}</div>
+          </div>`;
       });
       notesContainer.innerHTML = html;
     }
-  } else {
-    scoreSpan.className = 'score';
-    scoreSpan.textContent = `Đã chọn: ${answeredCount} / 200`;
-    aimFeedback.innerHTML = `💡 Đang làm bài. Hãy chọn đáp án rồi bấm <b>"✔ Chấm Bài"</b> để xem điểm, số câu đúng và lời giải!`;
   }
 }
 
-// Logic Tra từ Datamuse + Google Translate
-const vocabPanel = document.getElementById('vocabPanel');
+// Logic Tra từ
+const vocabDrawer = document.getElementById('vocabDrawer');
 const vocabInput = document.getElementById('vocabInput');
 const vocabResult = document.getElementById('vocabResult');
 
-document.getElementById('vocabToggleBtn').addEventListener('click', () => { vocabPanel.classList.add('open'); overlay.classList.add('open'); vocabInput.focus(); });
-document.getElementById('vocabCloseBtn').addEventListener('click', () => { vocabPanel.classList.remove('open'); overlay.classList.remove('open'); });
-overlay.addEventListener('click', () => { vocabPanel.classList.remove('open'); overlay.classList.remove('open'); sidebarEl.classList.remove('open'); });
-
-async function fetchWithTimeout(url, ms) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), ms);
-  try {
-    const res = await fetch(url, { signal: controller.signal });
-    clearTimeout(timer);
-    if (!res.ok) throw new Error('bad status');
-    return await res.json();
-  } catch (err) { clearTimeout(timer); throw err; }
-}
-
-async function tryDatamuse(word) {
-  const data = await fetchWithTimeout('https://api.datamuse.com/words?sp=' + encodeURIComponent(word.toLowerCase()) + '&md=d&max=1', 2500);
-  const entry = data && data[0];
-  if (!entry || !entry.defs || entry.defs.length === 0) throw new Error('no defs');
-  let html = '<div class="word">' + entry.word + '</div>';
-  entry.defs.slice(0, 4).forEach(d => {
-    const parts = d.split('\t');
-    const pos = parts[0];
-    const def = parts[1] || parts[0];
-    html += '<div class="pos">' + pos + '</div><div class="def">• ' + def + '</div>';
-  });
-  return html;
-}
-
-async function translateToVi(text) {
-  const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=' + encodeURIComponent(text);
-  const data = await fetchWithTimeout(url, 2500);
-  return data[0].map(seg => seg[0]).join('');
-}
+document.getElementById('vocabToggleBtn').addEventListener('click', () => { vocabDrawer.classList.add('open'); backdrop.classList.add('open'); vocabInput.focus(); });
+document.getElementById('vocabCloseBtn').addEventListener('click', () => { vocabDrawer.classList.remove('open'); backdrop.classList.remove('open'); });
+backdrop.addEventListener('click', () => { vocabDrawer.classList.remove('open'); backdrop.classList.remove('open'); sidebarEl.classList.remove('open'); });
 
 async function lookupWord() {
   const word = vocabInput.value.trim(); if (!word) return;
-  vocabResult.innerHTML = '<div class="vocab-note">Đang tra từ...</div>';
-  const cambridgeUrl = 'https://dictionary.cambridge.org/dictionary/english/' + encodeURIComponent(word.toLowerCase());
-  
-  let viHtml = '';
+  vocabResult.innerHTML = '<div style="color:var(--text-muted); padding:10px 0;">Đang tra cứu dữ liệu...</div>';
   try {
-    const vi = await translateToVi(word);
-    if (vi && vi.toLowerCase() !== word.toLowerCase()) {
-      viHtml = '<div class="pos" style="color:var(--good);">🇻🇳 Nghĩa tiếng Việt</div><div class="def"><b>' + vi + '</b></div>';
-    }
-  } catch (eVi) {}
-
-  try {
-    const html = await tryDatamuse(word);
-    vocabResult.innerHTML = html + viHtml + `<div class="vocab-note" style="margin-top:16px;"><a href="${cambridgeUrl}" target="_blank" style="color:var(--accent); text-decoration:none;">Xem Cambridge Dictionary ↗</a></div>`;
-    return;
-  } catch (e1) {}
-
-  vocabResult.innerHTML = (viHtml || '<div class="vocab-note">Không tìm thấy định nghĩa nhanh.</div>') + `<div class="vocab-note" style="margin-top:16px;"><a href="${cambridgeUrl}" target="_blank" style="color:var(--accent); text-decoration:none;">Mở trên Cambridge Dictionary ↗</a></div>`;
+    const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=' + encodeURIComponent(word);
+    const res = await fetch(url);
+    const data = await res.json();
+    const vi = data[0].map(s => s[0]).join('');
+    vocabResult.innerHTML = `
+      <div style="font-weight:700; font-size:16px; margin-bottom:8px; color:var(--brand);">${word}</div>
+      <div style="font-size:13px; line-height:1.6; color:var(--text-secondary); background:var(--bg-subtle); padding:10px; border-radius:6px;">${vi}</div>
+      <div style="margin-top:12px;"><a href="https://dictionary.cambridge.org/dictionary/english/${encodeURIComponent(word)}" target="_blank" style="color:var(--brand); font-size:12px; text-decoration:none;">Xem thêm trên Cambridge Dictionary &rarr;</a></div>
+    `;
+  } catch (err) {
+    vocabResult.innerHTML = '<div style="color:var(--danger); font-size:12px;">Không thể tra từ vựng lúc này.</div>';
+  }
 }
 document.getElementById('vocabSearchBtn').addEventListener('click', lookupWord);
 vocabInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') lookupWord(); });
