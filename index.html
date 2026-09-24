@@ -53,7 +53,7 @@
   .doc-tab.active { background: var(--panel); color: var(--text); border-color: var(--border); font-weight: 600; }
   .doc-content { flex: 1; position: relative; overflow-y: auto; padding: 12px; }
   .doc-content iframe { width: 100%; height: 100%; border: none; }
-  .no-file { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--muted); font-size: 13px; text-align: center; padding: 20px; gap: 6px; }
+  .no-file { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--muted); font-size: 13px; text-align: center; padding: 20px; gap: 8px; }
 
   .answer-panel { flex: 1; min-height: 0; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); display: flex; flex-direction: column; overflow: hidden; }
   .aim-panel { background: var(--accent-soft); border-bottom: 1px solid var(--border); padding: 8px 12px; font-size: 12px; display: flex; flex-direction: column; gap: 6px; }
@@ -91,9 +91,7 @@
   .script-item { margin-bottom: 10px; padding: 8px; border-radius: 6px; background: var(--panel); border-left: 3px solid var(--accent); font-size: 13px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);}
   .script-item .qnum { font-weight: bold; color: var(--accent); }
   .script-item .right-ans { font-weight: bold; color: var(--good); }
-  .script-dialogue { margin-bottom: 12px; padding: 10px; border-radius: 6px; background: var(--panel); font-size: 13px; line-height: 1.6; border: 1px solid var(--border); }
 
-  /* Bảng Tra Từ Vựng */
   .vocab-panel { position: fixed; top: 0; right: -360px; width: min(340px, 90vw); height: 100%; background: var(--panel); border-left: 1px solid var(--border); padding: 16px; overflow-y: auto; transition: right .25s ease; z-index: 30; box-shadow: -6px 0 16px rgba(0,0,0,.15); }
   .vocab-panel.open { right: 0; }
   .vocab-panel h2 { font-size: 16px; margin: 0 0 12px; color: var(--text); }
@@ -117,6 +115,11 @@
   .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 20; display: none; backdrop-filter: blur(2px); }
   .overlay.open { display: block; }
 </style>
+<!-- Nhúng thư viện AI Transformers.js chạy mô hình Whisper trực tiếp trên trình duyệt -->
+<script type="module">
+  import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
+  window.pipeline = pipeline;
+</script>
 </head>
 <body>
 <div class="app">
@@ -138,8 +141,7 @@
     </div>
     
     <div class="main" id="main">
-      <div class="empty" id="emptyMsg">
-        <!-- Đã sửa lỗi HTML tĩnh ở đây -->
+      <div class="empty">
         Bấm <b>"+ Thêm đề thi mới"</b> ở cột trái.<br><br>
         1. Chọn bộ đề (Test 1 - 10).<br>
         2. Tải file PDF và Audio từ máy của bạn.<br>
@@ -149,7 +151,6 @@
     
     <div class="overlay" id="overlay"></div>
     
-    <!-- Khung Tra Từ -->
     <div class="vocab-panel" id="vocabPanel">
       <button class="close-x" id="vocabCloseBtn">✕</button>
       <h2>🔤 Tra từ vựng</h2>
@@ -163,7 +164,6 @@
 </div>
 
 <script>
-// Khởi tạo Dark Mode
 const themeToggleBtn = document.getElementById('themeToggleBtn');
 if (localStorage.getItem('toeic_theme') === 'dark') {
   document.body.classList.add('dark-theme');
@@ -184,7 +184,6 @@ function parseKeyString(text) {
   return key;
 }
 
-// 1. DATA GỘP TRỰC TIẾP VÀO INDEX.HTML (Không cần file ngoài)
 const TOEIC_KEYS = {
   1: parseKeyString("1B 2D 3C 4A 5A 6C 7B 8C 9B 10A 11B 12B 13C 14C 15A 16B 17B 18A 19B 20C 21A 22C 23A 24A 25A 26B 27B 28A 29C 30C 31C 32B 33D 34B 35C 36A 37D 38A 39D 40A 41C 42D 43B 44C 45C 46A 47A 48D 49C 50C 51B 52A 53C 54A 55B 56B 57A 58C 59A 60C 61B 62C 63C 64D 65D 66A 67C 68B 69A 70C 71B 72C 73A 74B 75D 76A 77B 78D 79A 80D 81A 82B 83D 84A 85D 86A 87B 88C 89D 90B 91C 92B 93A 94D 95A 96C 97D 98D 99C 100A 101B 102A 103A 104B 105B 106C 107C 108D 109A 110A 111C 112C 113A 114C 115C 116D 117A 118D 119C 120B 121D 122C 123B 124C 125A 126D 127D 128D 129D 130B 131D 132C 133A 134B 135D 136C 137B 138A 139A 140C 141B 142D 143C 144C 145B 146A 147C 148D 149B 150C 151D 152C 153B 154C 155D 156C 157B 158D 159B 160C 161C 162D 163B 164B 165B 166A 167B 168C 169B 170B 171A 172D 173A 174B 175C 176A 177D 178C 179D 180C 181D 182D 183A 184C 185B 186B 187A 188B 189A 190D 191D 192B 193B 194A 195A 196B 197A 198D 199C 200A"),
   2: parseKeyString("1B 2D 3B 4A 5C 6A 7A 8B 9C 10A 11C 12C 13A 14A 15B 16C 17A 18B 19C 20C 21B 22C 23A 24A 25B 26B 27B 28A 29B 30C 31C 32D 33D 34A 35B 36B 37D 38C 39D 40B 41A 42C 43A 44A 45D 46A 47B 48D 49C 50C 51B 52B 53C 54A 55D 56D 57C 58D 59A 60D 61C 62B 63C 64A 65A 66B 67A 68D 69A 70C 71B 72D 73C 74A 75D 76B 77C 78C 79D 80A 81C 82C 83B 84D 85A 86A 87D 88B 89B 90C 91A 92B 93D 94D 95A 96B 97C 98C 99A 100D 101C 102A 103D 104B 105A 106D 107D 108C 109A 110A 111C 112D 113C 114D 115B 116C 117A 118C 119D 120C 121A 122B 123A 124C 125B 126D 127D 128C 129B 130A 131D 132B 133A 134D 135A 136A 137D 138D 139B 140C 141D 142A 143B 144D 145B 146B 147D 148C 149B 150C 151A 152B 153C 154C 155A 156B 157B 158C 159B 160B 161D 162B 163D 164D 165B 166A 167B 168C 169B 170D 171B 172C 173A 174C 175B 176A 177C 178A 179D 180B 181D 182B 183C 184D 185A 186C 187C 188A 189D 190D 191A 192C 193D 194C 195B 196B 197A 198C 199C 200D"),
@@ -206,9 +205,10 @@ const TOEIC_SCRIPTS = {
 
 const TOEIC_EXPLANATIONS = {
   1: {
-    101: "💡 <b>after which</b>: Mệnh đề quan hệ chỉ thời gian, 'sau sự kiện đó người tham gia có thể đặt câu hỏi'.",
-    102: "💡 <b>The last antique shop</b>: Cụm danh từ xác định, cửa hàng đồ cổ 'cuối cùng' còn tồn tại.",
-    103: "💡 <b>status update</b>: Cụm danh từ ghép chỉ 'bản cập nhật tiến độ/trạng thái dự án'.",
+    7: "💡 <b>Hỏi vị trí (Where):</b> (B) 'Riverview Hotel' trả lời đúng trọng tâm câu hỏi nơi diễn ra sự kiện.",
+    101: "💡 <b>after which:</b> Mệnh đề quan hệ chỉ thời gian, sau sự kiện đó người tham gia có thể đặt câu hỏi.",
+    102: "💡 <b>The last antique shop:</b> Cụm danh từ xác định, cửa hàng đồ cổ cuối cùng còn tồn tại.",
+    103: "💡 <b>status update:</b> Cụm danh từ ghép chỉ bản cập nhật tiến độ công trình.",
     104: "💡 Cần tính từ sở hữu <b>her</b> đứng trước cụm danh từ 'newly published novel'."
   }
 };
@@ -237,7 +237,7 @@ document.getElementById('addTestBtn').addEventListener('click', () => {
     pdfFile: null, pdfUrl: null, audioFile: null, audioUrl: null,
     viewMode: 'pdf', isGraded: false, 
     key: TOEIC_KEYS[testNum] || {},
-    numQuestions: 200, answers: {}, notes: {}
+    numQuestions: 200, answers: {}, notes: {}, autoScript: null
   };
   tests.push(t);
   activeId = t.id;
@@ -329,6 +329,62 @@ function updateScoreText(t) {
   }
 }
 
+async function runTranscription(testObj) {
+  const statusEl = document.getElementById('transcribeStatus');
+  const btn = document.getElementById('transcribeBtn');
+  if (!window.pipeline) {
+    alert("Thư viện AI đang được tải, vui lòng thử lại sau vài giây!");
+    return;
+  }
+
+  try {
+    btn.disabled = true;
+    btn.textContent = "⏳ Đang nạp mô hình Whisper...";
+    statusEl.textContent = "Lần đầu chạy sẽ tải mô hình khoảng 40MB về máy...";
+
+    const transcriber = await window.pipeline(
+      'automatic-speech-recognition',
+      'Xenova/whisper-tiny.en'
+    );
+
+    statusEl.textContent = "Đang đọc và giải mã file audio...";
+    btn.textContent = "⏳ Đang nhận diện lời thoại...";
+
+    const arrayBuffer = await testObj.audioFile.arrayBuffer();
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+    const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+    const audioData = audioBuffer.getChannelData(0);
+
+    statusEl.textContent = "AI đang xử lý speech-to-text...";
+    const output = await transcriber(audioData, {
+      chunk_length_s: 30,
+      stride_length_s: 5,
+      return_timestamps: true
+    });
+
+    let formattedText = `<h3>📝 Transcript Tự Động (AI Whisper)</h3>`;
+    if (output.chunks && output.chunks.length > 0) {
+      output.chunks.forEach((chunk) => {
+        const start = Math.floor(chunk.timestamp[0]);
+        const m = Math.floor(start / 60).toString().padStart(2, '0');
+        const s = (start % 60).toString().padStart(2, '0');
+        formattedText += `<div class="script-item"><span class="qnum">[${m}:${s}]</span> ${chunk.text}</div>`;
+      });
+    } else {
+      formattedText += `<div class="script-item">${output.text}</div>`;
+    }
+
+    testObj.autoScript = formattedText;
+    TOEIC_SCRIPTS[testObj.testNum] = formattedText;
+    renderMain();
+  } catch (error) {
+    console.error(error);
+    statusEl.innerHTML = `<span style="color:var(--bad);">Lỗi xử lý audio: ${error.message}</span>`;
+    btn.disabled = false;
+    btn.textContent = "🎙️ Thử lại";
+  }
+}
+
 function renderMain() {
   const t = tests.find(x => x.id === activeId);
   if (!t) { 
@@ -382,7 +438,6 @@ function renderMain() {
   `;
   split.appendChild(ansPanel); mainEl.appendChild(split);
 
-  // Selector
   const selTest = document.getElementById('testSelector');
   for (let i = 1; i <= 10; i++) {
     const opt = document.createElement('option'); opt.value = i; opt.textContent = 'Đề ' + i;
@@ -395,12 +450,10 @@ function renderMain() {
     renderSidebar(); renderMain();
   });
 
-  // Buttons
   document.getElementById('clearBtn').addEventListener('click', () => { t.answers = {}; t.isGraded = false; renderMain(); });
   document.getElementById('gradeBtn').addEventListener('click', () => { t.isGraded = true; renderMain(); });
   document.getElementById('aimInput').addEventListener('change', (e) => { userAimScore = parseInt(e.target.value, 10) || 700; localStorage.setItem('toeic_user_aim', userAimScore); renderMain(); });
 
-  // Render Grid
   const grid = document.getElementById('qgridArea');
   for (let q = 1; q <= t.numQuestions; q++) {
     const isGraded = !!t.key[q];
@@ -433,19 +486,35 @@ function renderMain() {
     grid.appendChild(row);
   }
 
-  // View PDF or Transcript
   const contentArea = document.getElementById('docContentArea');
   if (t.viewMode === 'pdf') {
     contentArea.innerHTML = t.pdfUrl ? `<iframe src="${t.pdfUrl}"></iframe>` : `<div class="no-file">Chưa có PDF. Tải ở cột trái.</div>`;
   } else {
-    const scriptHtml = TOEIC_SCRIPTS[t.testNum] || '';
-    contentArea.innerHTML = scriptHtml ? `<div class="script-container">${scriptHtml}</div>` : `<div class="no-file">Chưa có Transcript cho đề này.</div>`;
+    const existingScript = TOEIC_SCRIPTS[t.testNum] || t.autoScript;
+    if (existingScript) {
+      contentArea.innerHTML = `<div class="script-container">${existingScript}</div>`;
+    } else {
+      contentArea.innerHTML = `
+        <div class="no-file">
+          <p>Chưa có Transcript cho đề này.</p>
+          ${t.audioFile ? `
+            <button id="transcribeBtn" style="padding:10px 16px; border-radius:8px; background:var(--accent); color:#fff; border:none; font-weight:600; cursor:pointer;">
+              🎙️ Chuyển Audio thành Transcript (AI Whisper)
+            </button>
+            <div id="transcribeStatus" style="margin-top:10px; font-size:12px; color:var(--muted);"></div>
+          ` : `<small>Hãy tải file Audio ở cột trái để sử dụng tính năng chuyển giọng nói thành văn bản.</small>`}
+        </div>
+      `;
+      const transcribeBtn = document.getElementById('transcribeBtn');
+      if (transcribeBtn) {
+        transcribeBtn.addEventListener('click', () => runTranscription(t));
+      }
+    }
   }
 
   document.getElementById('tabPdf').addEventListener('click', () => { t.viewMode = 'pdf'; renderMain(); });
   document.getElementById('tabTranscript').addEventListener('click', () => { t.viewMode = 'transcript'; renderMain(); });
 
-  // Update Score & Feedback
   const scoreSpan = document.getElementById('scoreDisplay');
   const aimFeedback = document.getElementById('aimFeedback');
   const answeredCount = Object.keys(t.answers).length;
@@ -474,7 +543,6 @@ function renderMain() {
       aimFeedback.style.borderLeftColor = 'var(--danger)';
     }
 
-    // Hiển thị giải thích câu sai
     let notesContainer = document.getElementById('notesSectionContainer');
     const wrongQs = [];
     for (let q = 1; q <= 200; q++) { if (t.key[q] && t.answers[q] && t.answers[q] !== t.key[q]) wrongQs.push(q); }
@@ -494,7 +562,6 @@ function renderMain() {
   }
 }
 
-// LOGIC TRA TỪ VỰNG
 const vocabPanel = document.getElementById('vocabPanel');
 const vocabInput = document.getElementById('vocabInput');
 const vocabResult = document.getElementById('vocabResult');
@@ -558,7 +625,6 @@ async function lookupWord() {
 document.getElementById('vocabSearchBtn').addEventListener('click', lookupWord);
 vocabInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') lookupWord(); });
 
-// Khởi tạo
 renderSidebar(); 
 renderMain();
 </script>
