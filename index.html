@@ -639,6 +639,33 @@
     flex: 1;
     overflow-y: auto;
   }
+  .vocab-result .word {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--brand);
+    margin-bottom: 4px;
+  }
+  .vocab-result .pos {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--success);
+    margin-top: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .vocab-result .def {
+    font-size: 13px;
+    margin: 6px 0;
+    line-height: 1.5;
+    color: var(--text-primary);
+    padding-left: 8px;
+    border-left: 2px solid var(--border);
+  }
+  .vocab-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 12px;
+  }
 
   .backdrop {
     position: fixed;
@@ -1167,65 +1194,91 @@ function renderMain() {
   }
 }
 
-// Logic Tra từ & Word Family (Hỗ trợ tốt trên cả Mobile)
+// Logic Tra từ: Giữ nguyên định nghĩa + dịch Google, bổ sung Word Family và Synonyms
 const vocabDrawer = document.getElementById('vocabDrawer');
 const vocabInput = document.getElementById('vocabInput');
 const vocabResult = document.getElementById('vocabResult');
 
-document.getElementById('vocabToggleBtn').addEventListener('click', () => {
-  vocabDrawer.classList.add('open');
-  backdrop.classList.add('open');
-  vocabInput.focus();
+document.getElementById('vocabToggleBtn').addEventListener('click', () => { 
+  vocabDrawer.classList.add('open'); 
+  backdrop.classList.add('open'); 
+  vocabInput.focus(); 
 });
-document.getElementById('vocabCloseBtn').addEventListener('click', () => {
-  vocabDrawer.classList.remove('open');
-  backdrop.classList.remove('open');
+document.getElementById('vocabCloseBtn').addEventListener('click', () => { 
+  vocabDrawer.classList.remove('open'); 
+  backdrop.classList.remove('open'); 
 });
-backdrop.addEventListener('click', () => {
-  vocabDrawer.classList.remove('open');
-  backdrop.classList.remove('open');
-  sidebarEl.classList.remove('open');
+backdrop.addEventListener('click', () => { 
+  vocabDrawer.classList.remove('open'); 
+  backdrop.classList.remove('open'); 
+  sidebarEl.classList.remove('open'); 
 });
 
-// Dịch tiếng Việt qua MyMemory (CORS an toàn cho Mobile) kết hợp fallback Google
-async function fetchVietnamese(text) {
+async function fetchWithTimeout(url, ms) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), ms);
   try {
-    const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|vi`);
-    if (res.ok) {
-      const data = await res.json();
-      if (data && data.responseData && data.responseData.translatedText) {
-        const trans = data.responseData.translatedText;
-        if (!trans.toLowerCase().includes('mymemory') && trans.toLowerCase() !== text.toLowerCase()) {
-          return trans;
-        }
-      }
-    }
-  } catch (e) {}
-
-  try {
-    const gUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=${encodeURIComponent(text)}`;
-    const res = await fetch(gUrl);
-    if (res.ok) {
-      const data = await res.json();
-      return data[0].map(s => s[0]).join('');
-    }
-  } catch (e) {}
-
-  return null;
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error('bad status');
+    return await res.json();
+  } catch (err) { clearTimeout(timer); throw err; }
 }
 
-// Tìm họ từ vựng (Word Family: Noun, Verb, Adj, Adv) qua Datamuse API
+// Logic Datamuse định nghĩa chi tiết nguyên bản
+async function tryDatamuse(word) {
+  const data = await fetchWithTimeout('https://api.datamuse.com/words?sp=' + encodeURIComponent(word.toLowerCase()) + '&md=d&max=1', 2500);
+  const entry = data && data[0];
+  if (!entry || !entry.defs || entry.defs.length === 0) throw new Error('no defs');
+  let html = '<div class="word">' + entry.word + '</div>';
+  entry.defs.slice(0, 4).forEach(d => {
+    const parts = d.split('\t');
+    const pos = parts[0];
+    const def = parts[1] || parts[0];
+    html += '<div class="pos">' + pos + '</div><div class="def">• ' + def + '</div>';
+  });
+  return html;
+}
+
+// Logic dịch tiếng Việt nguyên bản (có fallback để chạy mượt cả trên Mobile)
+async function translateToVi(text) {
+  try {
+    const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=' + encodeURIComponent(text);
+    const data = await fetchWithTimeout(url, 2500);
+    const res = data[0].map(seg => seg[0]).join('');
+    if (res) return res;
+  } catch (e) {}
+
+  try {
+    const res = await fetchWithTimeout(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|vi`, 2500);
+    if (res && res.responseData && res.responseData.translatedText) {
+      return res.responseData.translatedText;
+    }
+  } catch (e2) {}
+
+  return '';
+}
+
+// Lấy từ đồng nghĩa (Synonyms)
+async function fetchSynonyms(word) {
+  try {
+    const data = await fetchWithTimeout(`https://api.datamuse.com/words?rel_syn=${encodeURIComponent(word)}&max=6`, 2000);
+    return data.map(item => item.word);
+  } catch (e) {
+    return [];
+  }
+}
+
+// Phân loại họ từ vựng (Word Family: Noun, Verb, Adj, Adv)
 async function fetchWordFamily(word) {
   const family = { n: [], v: [], adj: [], adv: [] };
   try {
-    const res = await fetch(`https://api.datamuse.com/words?rel_trg=${encodeURIComponent(word)}&md=p&max=25`);
-    const data = res.ok ? await res.json() : [];
+    const [related, base] = await Promise.all([
+      fetchWithTimeout(`https://api.datamuse.com/words?rel_trg=${encodeURIComponent(word)}&md=p&max=25`, 2000).catch(() => []),
+      fetchWithTimeout(`https://api.datamuse.com/words?sp=${encodeURIComponent(word)}&md=p&max=1`, 2000).catch(() => [])
+    ]);
 
-    const baseRes = await fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(word)}&md=p&max=1`);
-    const baseData = baseRes.ok ? await baseRes.json() : [];
-
-    const all = [...baseData, ...data];
-    all.forEach(item => {
+    [...base, ...related].forEach(item => {
       if (!item.tags) return;
       const w = item.word.toLowerCase();
       if (item.tags.includes('n') && !family.n.includes(w)) family.n.push(w);
@@ -1238,61 +1291,72 @@ async function fetchWordFamily(word) {
 }
 
 async function lookupWord() {
-  const word = vocabInput.value.trim().toLowerCase();
+  const word = vocabInput.value.trim().toLowerCase(); 
   if (!word) return;
-
-  vocabResult.innerHTML = '<div style="color:var(--text-muted); padding:12px 0;">Đang tra cứu từ vựng và họ từ (Word Family)...</div>';
-
-  const [viTranslation, family] = await Promise.all([
-    fetchVietnamese(word),
+  
+  vocabResult.innerHTML = '<div class="vocab-note">Đang tra từ...</div>';
+  const cambridgeUrl = 'https://dictionary.cambridge.org/dictionary/english/' + encodeURIComponent(word);
+  
+  // Chạy song song: Dịch nghĩa, Định nghĩa Datamuse, Đồng nghĩa, Word Family
+  const [viResult, datamuseHtml, syns, family] = await Promise.all([
+    translateToVi(word).catch(() => ''),
+    tryDatamuse(word).catch(() => ''),
+    fetchSynonyms(word),
     fetchWordFamily(word)
   ]);
 
-  const cambridgeUrl = `https://dictionary.cambridge.org/dictionary/english/${encodeURIComponent(word)}`;
+  let viHtml = '';
+  if (viResult && viResult.toLowerCase() !== word) {
+    viHtml = '<div class="pos" style="color:var(--success);">🇻🇳 Nghĩa tiếng Việt</div><div class="def"><b>' + viResult + '</b></div>';
+  }
 
+  // Khối HTML cho họ từ vựng (Word Family)
   const posLabels = [
     { key: 'n', label: 'Noun (Danh từ)' },
     { key: 'v', label: 'Verb (Động từ)' },
     { key: 'adj', label: 'Adjective (Tính từ)' },
     { key: 'adv', label: 'Adverb (Trạng từ)' }
   ];
-
   let familyHtml = '';
   for (const p of posLabels) {
-    const words = family[p.key].slice(0, 3);
-    if (words.length > 0) {
+    const list = family[p.key].slice(0, 3);
+    if (list.length > 0) {
       familyHtml += `
-        <div style="margin-bottom:8px;">
+        <div style="margin-bottom:6px;">
           <div style="font-size:11px; font-weight:700; color:var(--brand); text-transform:uppercase;">${p.label}</div>
-          <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:3px;">
-            ${words.map(w => `<span style="background:var(--bg-subtle); padding:2px 7px; border-radius:4px; font-size:12px; font-weight:500;">${w}</span>`).join('')}
+          <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:2px;">
+            ${list.map(w => `<span style="background:var(--bg-subtle); padding:2px 6px; border-radius:4px; font-size:11.5px; font-weight:500;">${w}</span>`).join('')}
           </div>
-        </div>
-      `;
+        </div>`;
     }
   }
 
-  vocabResult.innerHTML = `
-    <div style="font-size:18px; font-weight:700; color:var(--brand); margin-bottom:6px;">${word}</div>
-    
-    <div style="margin-bottom:12px; background:var(--bg-subtle); padding:8px 10px; border-radius:6px; border-left:3px solid var(--success);">
-      <div style="font-size:11px; font-weight:700; color:var(--success); text-transform:uppercase;">🇻🇳 Nghĩa tiếng Việt</div>
-      <div style="font-size:13.5px; font-weight:600; color:var(--text-primary); margin-top:2px;">
-        ${viTranslation || 'Không thể tải bản dịch tiếng Việt.'}
-      </div>
-    </div>
+  // Khối HTML cho từ đồng nghĩa (Synonyms)
+  let synHtml = '';
+  if (syns && syns.length > 0) {
+    synHtml = `
+      <div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">
+        <div style="font-size:11px; font-weight:700; color:var(--brand); text-transform:uppercase; margin-bottom:4px;">Từ đồng nghĩa (Synonyms)</div>
+        <div style="display:flex; flex-wrap:wrap; gap:4px;">
+          ${syns.map(s => `<span style="background:var(--bg-subtle); padding:2px 6px; border-radius:4px; font-size:11.5px; font-weight:500;">${s}</span>`).join('')}
+        </div>
+      </div>`;
+  }
 
-    ${familyHtml ? `
-      <div style="border-top:1px solid var(--border); padding-top:10px; margin-top:10px;">
-        <div style="font-size:12px; font-weight:700; margin-bottom:8px; color:var(--text-primary);">Họ từ vựng (Word Family):</div>
+  let finalHtml = (datamuseHtml || `<div class="word">${word}</div>`) + viHtml;
+
+  if (familyHtml) {
+    finalHtml += `
+      <div style="margin-top:12px; padding-top:10px; border-top:1px solid var(--border);">
+        <div style="font-size:12px; font-weight:700; margin-bottom:6px; color:var(--text-primary);">Họ từ vựng (Word Family):</div>
         ${familyHtml}
-      </div>
-    ` : ''}
+      </div>`;
+  }
 
-    <div style="margin-top:14px; font-size:12px;">
-      <a href="${cambridgeUrl}" target="_blank" style="color:var(--brand); text-decoration:none;">Xem phát âm & ví dụ trên Cambridge ↗</a>
-    </div>
-  `;
+  finalHtml += synHtml;
+  finalHtml += `<div class="vocab-note" style="margin-top:14px;"><a href="${cambridgeUrl}" target="_blank" style="color:var(--brand); text-decoration:none;">Mở trên Cambridge Dictionary ↗</a></div>`;
+
+  vocabResult.innerHTML = finalHtml;
 }
 
 document.getElementById('vocabSearchBtn').addEventListener('click', lookupWord);
