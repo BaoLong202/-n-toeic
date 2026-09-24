@@ -14,75 +14,91 @@
     :root:not([data-theme="light"]) { --bg:#17181b; --panel:#1f2024; --border:#303136; --text:#eceef1; --muted:#96979e; --accent:#6c9bff; --accent-soft:#23324f; }
   }
   :root[data-theme="dark"] { --bg:#17181b; --panel:#1f2024; --border:#303136; --text:#eceef1; --muted:#96979e; --accent:#6c9bff; --accent-soft:#23324f; }
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-  .app { display: flex; flex-direction: column; height: 100%; min-height: 100vh; }
-  header { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
-  header h1 { font-size: 17px; margin: 0; }
-  header .hint { font-size: 11px; color: var(--muted); }
-  header .head-actions { display: flex; gap: 8px; }
-  header .head-actions button { font-size: 12px; padding: 7px 10px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent-soft); color: var(--accent); cursor: pointer; }
-  .layout { flex: 1; display: flex; min-height: 0; flex-wrap: wrap; position: relative; }
-  .sidebar { width: 280px; max-width: 100%; border-right: 1px solid var(--border); padding: 12px; overflow-y: auto; flex-shrink: 0; }
-  @media (max-width: 900px) {
-    .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); max-height: 32vh; }
-    .layout { flex-direction: column; }
-    .center-split { flex-direction: column !important; }
-    .vocab-panel { width: 100% !important; }
-  }
-  .add-btn { width: 100%; padding: 9px 10px; border-radius: 8px; border: 1px dashed var(--accent); background: var(--accent-soft); color: var(--accent); font-size: 13px; cursor: pointer; margin-bottom: 10px; }
-  .test-card { border: 1px solid var(--border); border-radius: 10px; padding: 10px; margin-bottom: 10px; background: var(--panel); cursor: pointer; }
-  .test-card.active { border-color: var(--accent); }
+  .app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
+  header { padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-shrink: 0; }
+  header h1 { font-size: 16px; margin: 0; display: flex; align-items: center; gap: 6px; }
+  header .hint { font-size: 11px; color: var(--muted); display: none; }
+  @media (min-width: 768px) { header .hint { display: block; } }
+  header .head-actions { display: flex; gap: 6px; }
+  header button { font-size: 12px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent-soft); color: var(--accent); cursor: pointer; }
+  
+  .layout { flex: 1; display: flex; min-height: 0; position: relative; }
+  .sidebar { width: 280px; max-width: 100%; border-right: 1px solid var(--border); padding: 12px; overflow-y: auto; flex-shrink: 0; background: var(--panel); }
+  
+  .add-btn { width: 100%; padding: 9px 10px; border-radius: 8px; border: 1px dashed var(--accent); background: var(--accent-soft); color: var(--accent); font-size: 13px; cursor: pointer; margin-bottom: 10px; font-weight: 500; }
+  .test-card { border: 1px solid var(--border); border-radius: 10px; padding: 10px; margin-bottom: 10px; background: var(--bg); cursor: pointer; transition: 0.2s; }
+  .test-card.active { border-color: var(--accent); background: var(--panel); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
   .test-card .name { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
   .test-card .name input { border: none; background: transparent; font-weight: 600; font-size: 14px; color: var(--text); width: 100%; }
   .test-card .status { font-size: 11px; color: var(--muted); display: flex; gap: 10px; margin-bottom: 6px; }
-  .test-card .status span.ok { color: var(--good); }
+  .test-card .status span.ok { color: var(--good); font-weight: bold; }
   .row-btns { display: flex; gap: 6px; flex-wrap: wrap; }
-  .row-btns label, .row-btns button { font-size: 11px; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); cursor: pointer; }
+  .row-btns label, .row-btns button { font-size: 11px; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--panel); color: var(--text); cursor: pointer; }
   .row-btns .del { color: var(--danger); border-color: var(--danger); margin-left: auto; }
   input[type="file"] { display: none; }
-  .main { flex: 1; display: flex; flex-direction: column; min-width: 0; padding: 12px; gap: 10px; min-height: 0; }
-  .empty { margin: auto; color: var(--muted); text-align: center; font-size: 14px; max-width: 320px; line-height: 1.5; }
-  .player-bar { border: 1px solid var(--border); background: var(--panel); border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .player-bar audio { flex: 1; min-width: 200px; }
+
+  .main { flex: 1; display: flex; flex-direction: column; min-width: 0; padding: 10px; gap: 10px; min-height: 0; }
+  .empty { margin: auto; color: var(--muted); text-align: center; font-size: 14px; max-width: 320px; line-height: 1.5; padding: 20px; }
+  
+  .player-bar { border: 1px solid var(--border); background: var(--panel); border-radius: 10px; padding: 8px 12px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; flex-shrink: 0; }
+  .player-bar audio { flex: 1; min-width: 180px; height: 36px; }
   .player-bar .speed { display: flex; gap: 4px; }
-  .player-bar .speed button { font-size: 11px; padding: 4px 7px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); cursor: pointer; }
+  .player-bar .speed button { font-size: 11px; padding: 4px 6px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); cursor: pointer; }
   .player-bar .speed button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+
   .center-split { flex: 1; display: flex; gap: 10px; min-height: 0; }
-  .pdf-wrap { flex: 1.3; min-height: 0; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--panel); }
-  .pdf-wrap iframe { width: 100%; height: 100%; border: none; }
-  .no-file { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--muted); font-size: 13px; text-align: center; padding: 20px; }
+  .pdf-wrap { flex: 1.2; min-height: 0; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--panel); display: flex; flex-direction: column; }
+  .pdf-wrap iframe { width: 100%; height: 100%; border: none; flex: 1; }
+  .no-file { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--muted); font-size: 13px; text-align: center; padding: 20px; gap: 8px; }
+
   .answer-panel { flex: 1; min-height: 0; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); display: flex; flex-direction: column; overflow: hidden; }
-  .answer-head { padding: 10px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; }
+  .answer-head { padding: 8px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
   .answer-head strong { font-size: 13px; }
   .answer-head .score { font-size: 12px; color: var(--muted); }
-  .answer-head .score.done { color: var(--accent); font-weight: 600; }
-  .answer-head-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+  .answer-head .score.done { color: var(--accent); font-weight: 700; }
+  .answer-head-btns { display: flex; gap: 6px; }
   .answer-head-btns button { font-size: 11px; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); cursor: pointer; }
-  .key-box { padding: 10px 12px; border-bottom: 1px solid var(--border); display: none; gap: 6px; flex-direction: column; }
+
+  .key-box { padding: 10px 12px; border-bottom: 1px solid var(--border); display: none; gap: 6px; flex-direction: column; flex-shrink: 0; }
   .key-box.open { display: flex; }
   .key-box textarea { width: 100%; min-height: 60px; font-size: 12px; padding: 6px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-family: monospace; }
   .key-box .key-hint { font-size: 11px; color: var(--muted); }
-  .key-box .key-actions button { font-size: 11px; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
-  .scroll-area { overflow-y: auto; padding: 10px 12px; }
-  .qgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; align-content: start; }
-  .qrow { display: flex; align-items: center; gap: 4px; border: 1px solid var(--border); border-radius: 8px; padding: 4px 6px; }
-  .qrow .qnum { font-size: 11px; color: var(--muted); width: 24px; flex-shrink: 0; }
-  .qrow .opt { font-size: 11px; width: 22px; height: 22px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); cursor: pointer; padding: 0; }
+  .key-box .key-actions { display: flex; justify-content: flex-end; }
+  .key-box .key-actions button { font-size: 11px; padding: 5px 12px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+
+  .scroll-area { flex: 1; overflow-y: auto; padding: 10px; -webkit-overflow-scrolling: touch; }
+  .qgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 6px; align-content: start; }
+  .qrow { display: flex; align-items: center; justify-content: space-between; gap: 2px; border: 1px solid var(--border); border-radius: 8px; padding: 4px 6px; }
+  .qrow .qnum { font-size: 11px; color: var(--muted); font-weight: 600; min-width: 22px; }
+  .qrow .opt { font-size: 12px; font-weight: 600; width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); cursor: pointer; padding: 0; display: inline-flex; align-items: center; justify-content: center; }
   .qrow .opt.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
   .qrow.graded .opt.selected.correct { background: var(--good); border-color: var(--good); }
   .qrow.graded .opt.selected.wrong { background: var(--bad); border-color: var(--bad); }
-  .qrow.graded .opt.right-answer:not(.selected) { border-color: var(--good); color: var(--good); }
-  .notes-title { font-size: 12px; font-weight: 600; margin: 14px 0 6px; color: var(--muted); }
-  .note-item { border: 1px solid var(--bad); border-radius: 8px; padding: 8px; margin-bottom: 8px; background: var(--bg); }
+  .qrow.graded .opt.right-answer:not(.selected) { border-color: var(--good); color: var(--good); font-weight: bold; background: rgba(31, 146, 84, 0.1); }
+
+  .notes-section { margin-top: 14px; }
+  .notes-title { font-size: 12px; font-weight: 600; margin-bottom: 6px; color: var(--danger); }
+  .note-item { border: 1px solid var(--border); border-left: 3px solid var(--bad); border-radius: 8px; padding: 8px; margin-bottom: 8px; background: var(--bg); }
   .note-item .note-head { font-size: 12px; margin-bottom: 4px; }
-  .note-item .note-head b { color: var(--bad); }
-  .note-item textarea { width: 100%; min-height: 44px; font-size: 12px; padding: 6px; border-radius: 6px; border: 1px solid var(--border); background: var(--panel); color: var(--text); }
-  .vocab-panel { position: fixed; top: 0; right: -360px; width: 340px; height: 100%; background: var(--panel); border-left: 1px solid var(--border);
-    padding: 14px; overflow-y: auto; transition: right .2s; z-index: 20; box-shadow: -6px 0 16px rgba(0,0,0,.08); }
+  .note-item textarea { width: 100%; min-height: 40px; font-size: 12px; padding: 6px; border-radius: 6px; border: 1px solid var(--border); background: var(--panel); color: var(--text); resize: vertical; }
+
+  /* Responsive Mobile */
+  @media (max-width: 768px) {
+    .sidebar { position: fixed; top: 48px; left: 0; bottom: 0; z-index: 25; width: 85%; transform: translateX(-100%); transition: transform 0.25s ease; box-shadow: 2px 0 10px rgba(0,0,0,0.15); }
+    .sidebar.open { transform: translateX(0); }
+    .center-split { flex-direction: column; }
+    .pdf-wrap { height: 40vh; flex: none; }
+    .answer-panel { flex: 1; }
+    .qgrid { grid-template-columns: repeat(2, 1fr); }
+    .qrow .opt { width: 30px; height: 30px; font-size: 13px; }
+  }
+
+  .vocab-panel { position: fixed; top: 0; right: -360px; width: min(340px, 90vw); height: 100%; background: var(--panel); border-left: 1px solid var(--border); padding: 14px; overflow-y: auto; transition: right .25s ease; z-index: 30; box-shadow: -6px 0 16px rgba(0,0,0,.1); }
   .vocab-panel.open { right: 0; }
   .vocab-panel h2 { font-size: 15px; margin: 0 0 10px; }
-  .vocab-panel .close-x { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 16px; color: var(--muted); cursor: pointer; }
+  .vocab-panel .close-x { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 18px; color: var(--muted); cursor: pointer; }
   .vocab-search { display: flex; gap: 6px; margin-bottom: 12px; }
   .vocab-search input { flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 13px; }
   .vocab-search button { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: #fff; font-size: 13px; cursor: pointer; }
@@ -90,21 +106,21 @@
   .vocab-result .phonetic { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
   .vocab-result .pos { font-size: 12px; font-weight: 600; color: var(--accent); margin-top: 10px; }
   .vocab-result .def { font-size: 13px; margin: 4px 0; line-height: 1.4; }
-  .vocab-result .ex { font-size: 12px; color: var(--muted); font-style: italic; margin-left: 8px; }
-  .vocab-note { font-size: 12px; color: var(--muted); }
-  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.25); z-index: 15; display: none; }
+  .vocab-note { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 20; display: none; }
   .overlay.open { display: block; }
 </style>
 </head>
 <body>
 <div class="app">
   <header>
-    <div>
-      <h1>📘 Ôn luyện TOEIC</h1>
-      <div class="hint">Toàn bộ dữ liệu chỉ nằm trong phiên trình duyệt hiện tại, không gửi lên máy chủ nào.</div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <button id="sidebarToggleBtn" style="padding:4px 8px;">☰ Đề</button>
+      <h1>📘 Ôn TOEIC</h1>
+      <div class="hint">Tự động chấm điểm & tối ưu luyện tập</div>
     </div>
     <div class="head-actions">
-      <button id="vocabToggleBtn">🔤 Tra từ vựng</button>
+      <button id="vocabToggleBtn">🔤 Tra từ</button>
     </div>
   </header>
   <div class="layout">
@@ -114,8 +130,8 @@
     </div>
     <div class="main" id="main">
       <div class="empty" id="emptyMsg">
-        Bấm "+ Thêm bộ đề mới", đặt tên (VD: Test 1), rồi tải lên file PDF đề thi và file audio nghe.<br><br>
-        Mở bộ đề để xem đề, nghe audio, chọn đáp án A/B/C/D, nhập đáp án đúng để tự chấm — câu sai sẽ có ô để bạn tự ghi giải thích/ghi nhớ.
+        Bấm <b>"+ Thêm bộ đề mới"</b>, đặt tên, rồi tải lên file PDF đề thi và file audio nghe.<br><br>
+        Nhập đáp án đúng một lần duy nhất, sau đó mỗi lần bạn bấm chọn câu nào hệ thống sẽ <b>tự động chấm điểm ngay câu đó</b> mà không bị nhảy trang!
       </div>
     </div>
     <div class="overlay" id="overlay"></div>
@@ -126,7 +142,7 @@
         <input type="text" id="vocabInput" placeholder="Nhập từ tiếng Anh...">
         <button id="vocabSearchBtn">Tra</button>
       </div>
-      <div class="vocab-note">Cần có kết nối Internet để tra cứu (dùng từ điển công khai dictionaryapi.dev).</div>
+      <div class="vocab-note">Tra cứu trực tiếp qua từ điển quốc tế & dịch nghĩa tiếng Việt.</div>
       <div class="vocab-result" id="vocabResult"></div>
     </div>
   </div>
@@ -139,8 +155,15 @@ let idCounter = 0;
 const OPTS = ['A','B','C','D'];
 
 const sidebarList = document.getElementById('testList');
+const sidebarEl = document.getElementById('sidebar');
 const mainEl = document.getElementById('main');
 const emptyMsg = document.getElementById('emptyMsg');
+const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+
+sidebarToggleBtn.addEventListener('click', () => {
+  sidebarEl.classList.toggle('open');
+  overlay.classList.toggle('open', sidebarEl.classList.contains('open'));
+});
 
 document.getElementById('addTestBtn').addEventListener('click', () => {
   idCounter++;
@@ -153,6 +176,10 @@ document.getElementById('addTestBtn').addEventListener('click', () => {
   activeId = t.id;
   renderSidebar();
   renderMain();
+  if (window.innerWidth <= 768) {
+    sidebarEl.classList.remove('open');
+    overlay.classList.remove('open');
+  }
 });
 
 function renderSidebar() {
@@ -162,7 +189,13 @@ function renderSidebar() {
     card.className = 'test-card' + (t.id === activeId ? ' active' : '');
     card.addEventListener('click', (e) => {
       if (['INPUT','BUTTON','LABEL'].includes(e.target.tagName)) return;
-      activeId = t.id; renderSidebar(); renderMain();
+      activeId = t.id; 
+      renderSidebar(); 
+      renderMain();
+      if (window.innerWidth <= 768) {
+        sidebarEl.classList.remove('open');
+        overlay.classList.remove('open');
+      }
     });
 
     const nameRow = document.createElement('div');
@@ -191,7 +224,7 @@ function renderSidebar() {
       const f = e.target.files[0]; if (!f) return;
       if (t.pdfUrl) URL.revokeObjectURL(t.pdfUrl);
       t.pdfFile = f; t.pdfUrl = URL.createObjectURL(f);
-      activeId = t.id; renderSidebar(); renderMain();
+      renderSidebar(); renderMain();
     });
     pdfLabel.appendChild(pdfInput);
     btnRow.appendChild(pdfLabel);
@@ -204,14 +237,15 @@ function renderSidebar() {
       const f = e.target.files[0]; if (!f) return;
       if (t.audioUrl) URL.revokeObjectURL(t.audioUrl);
       t.audioFile = f; t.audioUrl = URL.createObjectURL(f);
-      activeId = t.id; renderSidebar(); renderMain();
+      renderSidebar(); renderMain();
     });
     audioLabel.appendChild(audioInput);
     btnRow.appendChild(audioLabel);
 
     const delBtn = document.createElement('button');
     delBtn.className = 'del'; delBtn.textContent = 'Xoá';
-    delBtn.addEventListener('click', () => {
+    delBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       if (t.pdfUrl) URL.revokeObjectURL(t.pdfUrl);
       if (t.audioUrl) URL.revokeObjectURL(t.audioUrl);
       tests = tests.filter(x => x.id !== t.id);
@@ -231,6 +265,86 @@ function parseKey(text) {
   let m;
   while ((m = re.exec(text)) !== null) key[parseInt(m[1], 10)] = m[2].toUpperCase();
   return key;
+}
+
+// Cập nhật điểm số thời gian thực mà không làm cuộn trang
+function updateScoreDisplay(t) {
+  const scoreSpan = document.getElementById('scoreDisplay');
+  if (!scoreSpan) return;
+  const gradedKeys = Object.keys(t.key);
+  const gradedCount = gradedKeys.length;
+  const answeredCount = Object.keys(t.answers).length;
+  if (gradedCount > 0) {
+    let correct = 0;
+    gradedKeys.forEach(q => { if (t.answers[q] === t.key[q]) correct++; });
+    scoreSpan.className = 'score done';
+    scoreSpan.textContent = 'Điểm: ' + correct + ' / ' + gradedCount;
+  } else {
+    scoreSpan.className = 'score';
+    scoreSpan.textContent = 'Đã chọn: ' + answeredCount + ' / ' + t.numQuestions;
+  }
+}
+
+// Cập nhật DOM của 1 dòng câu hỏi duy nhất (chấm bài tức thì + giữ nguyên vị trí cuộn)
+function updateQuestionRowDOM(t, q) {
+  const row = document.getElementById(`qrow-${q}`);
+  if (!row) return;
+
+  const isGraded = !!t.key[q];
+  if (isGraded) row.classList.add('graded');
+  else row.classList.remove('graded');
+
+  const selectedLetter = t.answers[q];
+  const correctLetter = t.key[q];
+
+  const btns = row.querySelectorAll('.opt');
+  btns.forEach(b => {
+    const letter = b.getAttribute('data-letter');
+    b.className = 'opt';
+    if (selectedLetter === letter) b.classList.add('selected');
+    if (isGraded) {
+      if (letter === correctLetter) b.classList.add('right-answer');
+      if (selectedLetter === letter && letter === correctLetter) b.classList.add('correct');
+      if (selectedLetter === letter && letter !== correctLetter) b.classList.add('wrong');
+    }
+  });
+
+  renderNotesSection(t);
+}
+
+function renderNotesSection(t) {
+  let notesContainer = document.getElementById('notesSectionContainer');
+  if (!notesContainer) return;
+
+  const wrongQs = [];
+  for (let q = 1; q <= t.numQuestions; q++) {
+    if (t.key[q] && t.answers[q] && t.answers[q] !== t.key[q]) {
+      wrongQs.push(q);
+    }
+  }
+
+  if (wrongQs.length === 0) {
+    notesContainer.innerHTML = '';
+    return;
+  }
+
+  let html = `<div class="notes-title">📝 Câu sai (${wrongQs.length}) — tự ghi chú lỗi sai để ghi nhớ:</div>`;
+  wrongQs.forEach(q => {
+    html += `
+      <div class="note-item">
+        <div class="note-head">Câu ${q}: Bạn chọn <b style="color:var(--bad)">${t.answers[q]}</b>, đáp án đúng là <b style="color:var(--good)">${t.key[q]}</b></div>
+        <textarea placeholder="Lý do sai hoặc từ vựng cần nhớ..." data-q="${q}">${t.notes[q] || ''}</textarea>
+      </div>
+    `;
+  });
+
+  notesContainer.innerHTML = html;
+  notesContainer.querySelectorAll('textarea').forEach(ta => {
+    ta.addEventListener('input', (e) => {
+      const targetQ = e.target.getAttribute('data-q');
+      t.notes[targetQ] = e.target.value;
+    });
+  });
 }
 
 function renderMain() {
@@ -260,8 +374,8 @@ function renderMain() {
     playerBar.appendChild(speedWrap);
   } else {
     const msg = document.createElement('div');
-    msg.style.color = 'var(--muted)'; msg.style.fontSize = '13px';
-    msg.textContent = 'Chưa có file audio cho bộ đề này — tải lên ở thanh bên trái.';
+    msg.style.color = 'var(--muted)'; msg.style.fontSize = '12px';
+    msg.textContent = 'Chưa tải file audio — hãy tải ở danh sách đề.';
     playerBar.appendChild(msg);
   }
   mainEl.appendChild(playerBar);
@@ -278,7 +392,7 @@ function renderMain() {
   } else {
     const nf = document.createElement('div');
     nf.className = 'no-file';
-    nf.textContent = 'Chưa có file PDF đề thi cho bộ đề này — tải lên ở thanh bên trái.';
+    nf.innerHTML = `<span>Chưa có file PDF đề thi.</span><small>Tải file PDF từ danh sách đề bên trái.</small>`;
     pdfWrap.appendChild(nf);
   }
   split.appendChild(pdfWrap);
@@ -293,37 +407,35 @@ function renderMain() {
   head.appendChild(title);
 
   const scoreSpan = document.createElement('span');
-  const gradedCount = Object.keys(t.key).length;
-  const answeredCount = Object.keys(t.answers).length;
-  if (gradedCount > 0) {
-    let correct = 0;
-    Object.keys(t.key).forEach(q => { if (t.answers[q] === t.key[q]) correct++; });
-    scoreSpan.className = 'score done';
-    scoreSpan.textContent = 'Điểm: ' + correct + ' / ' + gradedCount;
-  } else {
-    scoreSpan.className = 'score';
-    scoreSpan.textContent = 'Đã chọn: ' + answeredCount + ' / ' + t.numQuestions;
-  }
+  scoreSpan.id = 'scoreDisplay';
   head.appendChild(scoreSpan);
 
   const headBtns = document.createElement('div');
   headBtns.className = 'answer-head-btns';
   const keyBtn = document.createElement('button');
-  keyBtn.textContent = Object.keys(t.key).length ? 'Sửa đáp án đúng' : 'Nhập đáp án đúng';
-  keyBtn.addEventListener('click', () => { t.keyOpen = !t.keyOpen; renderMain(); });
+  keyBtn.textContent = Object.keys(t.key).length ? 'Sửa Key' : 'Nhập Key';
+  keyBtn.addEventListener('click', () => { 
+    t.keyOpen = !t.keyOpen; 
+    document.getElementById('keyBoxArea').classList.toggle('open', t.keyOpen);
+  });
   headBtns.appendChild(keyBtn);
+
   const clearBtn = document.createElement('button');
-  clearBtn.textContent = 'Xoá lựa chọn';
-  clearBtn.addEventListener('click', () => { t.answers = {}; renderMain(); });
+  clearBtn.textContent = 'Xoá chọn';
+  clearBtn.addEventListener('click', () => { 
+    t.answers = {}; 
+    renderMain(); 
+  });
   headBtns.appendChild(clearBtn);
   head.appendChild(headBtns);
   ansPanel.appendChild(head);
 
   const keyBox = document.createElement('div');
+  keyBox.id = 'keyBoxArea';
   keyBox.className = 'key-box' + (t.keyOpen ? ' open' : '');
   const keyHint = document.createElement('div');
   keyHint.className = 'key-hint';
-  keyHint.textContent = 'Dán đáp án đúng, ví dụ: 1A 2C 3B 4D ... hoặc mỗi dòng "1. A"';
+  keyHint.textContent = 'Dán đáp án đúng (VD: 1A 2C 3B... hoặc 1.A, 2.B):';
   keyBox.appendChild(keyHint);
   const keyTextarea = document.createElement('textarea');
   keyTextarea.value = t.keyText || '';
@@ -332,7 +444,7 @@ function renderMain() {
   const keyActions = document.createElement('div');
   keyActions.className = 'key-actions';
   const saveKeyBtn = document.createElement('button');
-  saveKeyBtn.textContent = 'Lưu & chấm điểm';
+  saveKeyBtn.textContent = 'Lưu & Tự chấm';
   saveKeyBtn.addEventListener('click', () => {
     t.key = parseKey(t.keyText);
     t.keyOpen = false;
@@ -347,31 +459,36 @@ function renderMain() {
 
   const grid = document.createElement('div');
   grid.className = 'qgrid';
-  const wrongQs = [];
   for (let q = 1; q <= t.numQuestions; q++) {
     const isGraded = !!t.key[q];
-    const isWrong = isGraded && t.answers[q] && t.answers[q] !== t.key[q];
-    if (isWrong) wrongQs.push(q);
     const row = document.createElement('div');
+    row.id = `qrow-${q}`;
     row.className = 'qrow' + (isGraded ? ' graded' : '');
+
     const num = document.createElement('span');
     num.className = 'qnum';
     num.textContent = q;
     row.appendChild(num);
+
     OPTS.forEach(letter => {
       const b = document.createElement('button');
       b.className = 'opt';
+      b.setAttribute('data-letter', letter);
       b.textContent = letter;
       if (t.answers[q] === letter) b.classList.add('selected');
-      if (t.key[q]) {
+      if (isGraded) {
         if (letter === t.key[q]) b.classList.add('right-answer');
         if (t.answers[q] === letter && letter === t.key[q]) b.classList.add('correct');
         if (t.answers[q] === letter && letter !== t.key[q]) b.classList.add('wrong');
       }
       b.addEventListener('click', () => {
+        // Tự động chấm điểm & toggle lựa chọn
         t.answers[q] = (t.answers[q] === letter) ? undefined : letter;
         if (t.answers[q] === undefined) delete t.answers[q];
-        renderMain();
+        
+        // Cập nhật DOM trực tiếp để KHÔNG bị cuộn lên đầu
+        updateQuestionRowDOM(t, q);
+        updateScoreDisplay(t);
       });
       row.appendChild(b);
     });
@@ -379,40 +496,31 @@ function renderMain() {
   }
   scrollArea.appendChild(grid);
 
-  if (wrongQs.length > 0) {
-    const notesTitle = document.createElement('div');
-    notesTitle.className = 'notes-title';
-    notesTitle.textContent = '📝 Câu sai (' + wrongQs.length + ') — tự ghi giải thích / ghi nhớ để lần sau không sai lại:';
-    scrollArea.appendChild(notesTitle);
-    wrongQs.forEach(q => {
-      const item = document.createElement('div');
-      item.className = 'note-item';
-      const headLine = document.createElement('div');
-      headLine.className = 'note-head';
-      headLine.innerHTML = 'Câu ' + q + ': bạn chọn <b>' + t.answers[q] + '</b>, đáp án đúng là <b style="color:var(--good)">' + t.key[q] + '</b>';
-      item.appendChild(headLine);
-      const ta = document.createElement('textarea');
-      ta.placeholder = 'Vì sao mình chọn sai? Ghi chú để nhớ...';
-      ta.value = t.notes[q] || '';
-      ta.addEventListener('input', () => { t.notes[q] = ta.value; });
-      item.appendChild(ta);
-      scrollArea.appendChild(item);
-    });
-  }
+  const notesSection = document.createElement('div');
+  notesSection.id = 'notesSectionContainer';
+  notesSection.className = 'notes-section';
+  scrollArea.appendChild(notesSection);
 
   ansPanel.appendChild(scrollArea);
   split.appendChild(ansPanel);
   mainEl.appendChild(split);
+
+  updateScoreDisplay(t);
+  renderNotesSection(t);
 }
 
-// vocabulary lookup
+// Tra cứu từ vựng
 const vocabPanel = document.getElementById('vocabPanel');
 const overlay = document.getElementById('overlay');
 const vocabInput = document.getElementById('vocabInput');
 const vocabResult = document.getElementById('vocabResult');
 
 function openVocab() { vocabPanel.classList.add('open'); overlay.classList.add('open'); vocabInput.focus(); }
-function closeVocab() { vocabPanel.classList.remove('open'); overlay.classList.remove('open'); }
+function closeVocab() { 
+  vocabPanel.classList.remove('open'); 
+  sidebarEl.classList.remove('open');
+  overlay.classList.remove('open'); 
+}
 document.getElementById('vocabToggleBtn').addEventListener('click', openVocab);
 document.getElementById('vocabCloseBtn').addEventListener('click', closeVocab);
 overlay.addEventListener('click', closeVocab);
@@ -436,32 +544,11 @@ async function tryDatamuse(word) {
   const entry = data && data[0];
   if (!entry || !entry.defs || entry.defs.length === 0) throw new Error('no defs');
   let html = '<div class="word">' + entry.word + '</div>';
-  entry.defs.slice(0, 5).forEach(d => {
+  entry.defs.slice(0, 4).forEach(d => {
     const parts = d.split('\t');
     const pos = parts[0];
     const def = parts[1] || parts[0];
-    html += '<div class="pos">' + posLabel(pos) + '</div><div class="def">• ' + def + '</div>';
-  });
-  return html;
-}
-
-function posLabel(code) {
-  const map = { n: 'noun', v: 'verb', adj: 'adjective', adv: 'adverb' };
-  return map[code] || code;
-}
-
-async function tryFreeDictionary(word) {
-  const data = await fetchWithTimeout('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word.toLowerCase()), 3000);
-  const entry = data[0];
-  let html = '<div class="word">' + entry.word + '</div>';
-  const phon = entry.phonetic || (entry.phonetics && entry.phonetics.find(p => p.text) && entry.phonetics.find(p => p.text).text) || '';
-  if (phon) html += '<div class="phonetic">' + phon + '</div>';
-  (entry.meanings || []).forEach(m => {
-    html += '<div class="pos">' + m.partOfSpeech + '</div>';
-    (m.definitions || []).slice(0, 3).forEach(d => {
-      html += '<div class="def">• ' + d.definition + '</div>';
-      if (d.example) html += '<div class="ex">"' + d.example + '"</div>';
-    });
+    html += '<div class="pos">' + pos + '</div><div class="def">• ' + def + '</div>';
   });
   return html;
 }
@@ -475,9 +562,8 @@ async function translateToVi(text) {
 async function lookupWord() {
   const word = vocabInput.value.trim();
   if (!word) return;
-  vocabResult.innerHTML = '<div class="vocab-note">Đang tra...</div>';
+  vocabResult.innerHTML = '<div class="vocab-note">Đang tra từ...</div>';
   const cambridgeUrl = 'https://dictionary.cambridge.org/dictionary/english/' + encodeURIComponent(word.toLowerCase());
-  const cambridgeLink = '<div class="vocab-note" style="margin-top:10px;">Đối chiếu thêm: <a href="' + cambridgeUrl + '" target="_blank">Cambridge Dictionary ↗</a></div>';
 
   let viHtml = '';
   try {
@@ -485,30 +571,17 @@ async function lookupWord() {
     if (vi && vi.toLowerCase() !== word.toLowerCase()) {
       viHtml = '<div class="pos" style="color:var(--good);">🇻🇳 Nghĩa tiếng Việt</div><div class="def">• ' + vi + '</div>';
     }
-  } catch (eVi) { /* bỏ qua nếu dịch lỗi, vẫn hiện định nghĩa tiếng Anh */ }
+  } catch (eVi) {}
 
   try {
     const html = await tryDatamuse(word);
-    vocabResult.innerHTML = insertAfterWord(html, viHtml) + cambridgeLink;
+    vocabResult.innerHTML = html + viHtml + `<div class="vocab-note"><a href="${cambridgeUrl}" target="_blank">Xem Cambridge ↗</a></div>`;
     return;
-  } catch (e1) { /* thử nguồn kế tiếp */ }
+  } catch (e1) {}
 
-  try {
-    const html = await tryFreeDictionary(word);
-    vocabResult.innerHTML = insertAfterWord(html, viHtml) + cambridgeLink;
-    return;
-  } catch (e2) { /* thử nguồn cuối */ }
-
-  vocabResult.innerHTML = '<div class="vocab-note">Cả hai từ điển nhanh đều không phản hồi kịp — đã mở "' + word + '" trên Cambridge Dictionary ở tab mới. <a href="' + cambridgeUrl + '" target="_blank">Mở lại ↗</a></div>';
-  window.open(cambridgeUrl, '_blank');
+  vocabResult.innerHTML = (viHtml || '<div class="vocab-note">Không tìm thấy định nghĩa nhanh.</div>') + `<div class="vocab-note"><a href="${cambridgeUrl}" target="_blank">Mở trên Cambridge Dictionary ↗</a></div>`;
 }
 
-function insertAfterWord(html, viHtml) {
-  if (!viHtml) return html;
-  const idx = html.indexOf('</div>');
-  if (idx === -1) return viHtml + html;
-  return html.slice(0, idx + 6) + viHtml + html.slice(idx + 6);
-}
 document.getElementById('vocabSearchBtn').addEventListener('click', lookupWord);
 vocabInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') lookupWord(); });
 
