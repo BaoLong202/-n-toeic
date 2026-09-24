@@ -675,6 +675,45 @@
     display: none;
   }
   .backdrop.open { display: block; }
+
+  /* Hồ sơ đăng nhập (Profile) */
+  .profile-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .profile-overlay.open { display: flex; }
+  .profile-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  }
+  .profile-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .profile-btn-active {
+    font-weight: 700 !important;
+    color: var(--brand) !important;
+    border-color: var(--brand-subtle) !important;
+    background: var(--brand-subtle) !important;
+  }
   .empty-state {
     margin: auto;
     text-align: center;
@@ -718,9 +757,26 @@
   </div>
   <div class="header-actions">
     <button id="themeToggleBtn" class="btn-outline">Theme</button>
+    <button id="historyToggleBtn" class="btn-outline">Lịch sử</button>
     <button id="vocabToggleBtn" class="btn-outline">Tra từ</button>
+    <button id="profileBtn" class="btn-outline profile-btn-active">👤 Đăng nhập</button>
   </div>
 </header>
+
+<div class="profile-overlay" id="profileOverlay">
+  <div class="profile-card">
+    <div class="drawer-head">
+      <span class="drawer-title">Chọn hồ sơ luyện thi</span>
+      <button class="drawer-close" id="profileOverlayCloseBtn">&times;</button>
+    </div>
+    <div id="profileListEl" style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px; max-height:240px; overflow-y:auto;"></div>
+    <div class="search-row">
+      <input type="text" id="newProfileInput" placeholder="Tên hồ sơ mới...">
+      <button id="createProfileBtn">Tạo & Vào học</button>
+    </div>
+    <div class="vocab-note">Kết quả làm bài sẽ được lưu riêng theo từng hồ sơ, ngay trên trình duyệt này (không cần mật khẩu, không đồng bộ giữa các thiết bị/trình duyệt khác).</div>
+  </div>
+</div>
 
 <div class="workspace">
   <div class="sidebar" id="sidebar">
@@ -747,6 +803,16 @@
     </div>
     <div class="vocab-body">
       <div class="vocab-result" id="vocabResult"></div>
+    </div>
+  </div>
+
+  <div class="drawer" id="historyDrawer">
+    <div class="drawer-head">
+      <span class="drawer-title">Lịch sử kết quả</span>
+      <button class="drawer-close" id="historyCloseBtn">&times;</button>
+    </div>
+    <div class="vocab-body">
+      <div id="historyListEl" style="display:flex; flex-direction:column; gap:10px;"></div>
     </div>
   </div>
 </div>
@@ -793,6 +859,115 @@ themeToggleBtn.addEventListener('click', () => {
   const isDark = document.body.classList.contains('dark-theme');
   localStorage.setItem('toeic_theme', isDark ? 'dark' : 'light');
 });
+
+// ============ Hồ sơ người dùng (Profile) & Lịch sử kết quả ============
+// Lưu hoàn toàn trên trình duyệt (localStorage), không cần mật khẩu, không cần server.
+function getProfiles() {
+  try { return JSON.parse(localStorage.getItem('toeic_profiles') || '[]'); } catch (e) { return []; }
+}
+function saveProfilesList(list) {
+  localStorage.setItem('toeic_profiles', JSON.stringify(list));
+}
+function getCurrentProfile() {
+  return localStorage.getItem('toeic_current_profile') || '';
+}
+function setCurrentProfile(name) {
+  localStorage.setItem('toeic_current_profile', name);
+}
+function getResultsKey(profile) {
+  return 'toeic_results_' + profile;
+}
+function getResults(profile) {
+  try { return JSON.parse(localStorage.getItem(getResultsKey(profile)) || '[]'); } catch (e) { return []; }
+}
+function saveResults(profile, list) {
+  localStorage.setItem(getResultsKey(profile), JSON.stringify(list));
+}
+function addResultRecord(record) {
+  const profile = getCurrentProfile();
+  if (!profile) return;
+  const list = getResults(profile);
+  list.unshift(record);
+  saveResults(profile, list);
+}
+
+const profileOverlay = document.getElementById('profileOverlay');
+const profileListEl = document.getElementById('profileListEl');
+const newProfileInput = document.getElementById('newProfileInput');
+const profileBtn = document.getElementById('profileBtn');
+
+function renderProfileOverlay() {
+  const profiles = getProfiles();
+  profileListEl.innerHTML = '';
+  if (profiles.length === 0) {
+    profileListEl.innerHTML = '<div class="empty-state" style="margin:0; padding:4px 0;">Chưa có hồ sơ nào. Hãy tạo hồ sơ mới bên dưới.</div>';
+  }
+  profiles.forEach(name => {
+    const row = document.createElement('div');
+    row.className = 'profile-row';
+    const isCurrent = getCurrentProfile() === name;
+    row.innerHTML = `<span>${name}${isCurrent ? ' <span style="color:var(--brand); font-weight:700;">(đang dùng)</span>' : ''}</span>`;
+    const btnRow = document.createElement('div');
+    btnRow.style.display = 'flex'; btnRow.style.gap = '6px';
+    const chooseBtn = document.createElement('button');
+    chooseBtn.className = 'btn-outline'; chooseBtn.textContent = 'Chọn';
+    chooseBtn.addEventListener('click', () => selectProfile(name));
+    const delBtn = document.createElement('button');
+    delBtn.className = 'btn-outline'; delBtn.style.color = 'var(--danger)'; delBtn.textContent = 'Xoá';
+    delBtn.addEventListener('click', () => {
+      if (!confirm('Xoá hồ sơ "' + name + '" và toàn bộ kết quả đã lưu của hồ sơ này?')) return;
+      saveProfilesList(getProfiles().filter(p => p !== name));
+      localStorage.removeItem(getResultsKey(name));
+      if (getCurrentProfile() === name) setCurrentProfile('');
+      renderProfileOverlay();
+      updateProfileBtnLabel();
+    });
+    btnRow.appendChild(chooseBtn); btnRow.appendChild(delBtn);
+    row.appendChild(btnRow);
+    profileListEl.appendChild(row);
+  });
+}
+
+function selectProfile(name) {
+  setCurrentProfile(name);
+  profileOverlay.classList.remove('open');
+  updateProfileBtnLabel();
+}
+
+document.getElementById('createProfileBtn').addEventListener('click', () => {
+  const name = newProfileInput.value.trim();
+  if (!name) return;
+  const profiles = getProfiles();
+  if (!profiles.includes(name)) {
+    profiles.push(name);
+    saveProfilesList(profiles);
+  }
+  newProfileInput.value = '';
+  selectProfile(name);
+});
+newProfileInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') document.getElementById('createProfileBtn').click(); });
+
+function updateProfileBtnLabel() {
+  const cur = getCurrentProfile();
+  profileBtn.textContent = cur ? ('👤 ' + cur) : '👤 Đăng nhập';
+}
+
+profileBtn.addEventListener('click', () => {
+  renderProfileOverlay();
+  profileOverlay.classList.add('open');
+});
+
+document.getElementById('profileOverlayCloseBtn').addEventListener('click', () => {
+  if (!getCurrentProfile()) { alert('Vui lòng chọn hoặc tạo một hồ sơ để tiếp tục sử dụng.'); return; }
+  profileOverlay.classList.remove('open');
+});
+
+// Bắt buộc chọn/tạo hồ sơ trước khi dùng app (nếu chưa có hồ sơ nào đang dùng)
+updateProfileBtnLabel();
+if (!getCurrentProfile()) {
+  renderProfileOverlay();
+  profileOverlay.classList.add('open');
+}
 
 let tests = [];
 let activeId = null;
@@ -962,6 +1137,18 @@ function convertRawToScaled(lcCorrect, rcCorrect) {
   return { lc: lcScore, rc: rcScore, total: lcScore + rcScore };
 }
 
+function computeScore(t, testKey) {
+  const gradedCount = Object.keys(testKey).length;
+  let lcCorrect = 0, rcCorrect = 0;
+  Object.keys(testKey).forEach(qStr => {
+    const q = parseInt(qStr, 10);
+    if (t.answers[q] === testKey[q]) { q <= 100 ? lcCorrect++ : rcCorrect++; }
+  });
+  const totalCorrect = lcCorrect + rcCorrect;
+  const scaled = convertRawToScaled(lcCorrect, rcCorrect);
+  return { gradedCount, lcCorrect, rcCorrect, totalCorrect, scaled };
+}
+
 function updateQuestionRowDOM(t, q) {
   const row = document.getElementById(`qrow-` + q);
   if (!row) return;
@@ -1103,6 +1290,20 @@ function renderMain() {
   document.getElementById('gradeBtn').addEventListener('click', () => { 
     t.isGraded = true; 
     stopTimer();
+
+    // Lưu kết quả vào lịch sử của hồ sơ đang đăng nhập
+    const scoreResult = computeScore(t, testKey);
+    addResultRecord({
+      testName: t.name,
+      testNum: t.testNum,
+      date: new Date().toISOString(),
+      gradedCount: scoreResult.gradedCount,
+      lcCorrect: scoreResult.lcCorrect,
+      rcCorrect: scoreResult.rcCorrect,
+      totalCorrect: scoreResult.totalCorrect,
+      scaled: scoreResult.scaled
+    });
+
     renderMain(); 
   });
 
@@ -1162,16 +1363,8 @@ function renderMain() {
   document.getElementById('tabTranscript').addEventListener('click', () => { t.viewMode = 'transcript'; renderMain(); });
 
   if (t.isGraded) {
-    const gradedCount = Object.keys(testKey).length;
-    let lcCorrect = 0, rcCorrect = 0;
-    Object.keys(testKey).forEach(qStr => {
-      const q = parseInt(qStr, 10);
-      if (t.answers[q] === testKey[q]) { q <= 100 ? lcCorrect++ : rcCorrect++; }
-    });
-    
-    const totalCorrect = lcCorrect + rcCorrect;
-    const scaled = convertRawToScaled(lcCorrect, rcCorrect);
-    
+    const { gradedCount, totalCorrect, scaled } = computeScore(t, testKey);
+
     const scoreSpan = document.getElementById('scoreDisplay');
     scoreSpan.innerHTML = `Kết quả: <b>${totalCorrect}</b>/${gradedCount} câu • Điểm dự tính: <b>${scaled.total}</b>/990 (LC ${scaled.lc} | RC ${scaled.rc})`;
 
@@ -1200,6 +1393,7 @@ const vocabInput = document.getElementById('vocabInput');
 const vocabResult = document.getElementById('vocabResult');
 
 document.getElementById('vocabToggleBtn').addEventListener('click', () => { 
+  historyDrawer.classList.remove('open');
   vocabDrawer.classList.add('open'); 
   backdrop.classList.add('open'); 
   vocabInput.focus(); 
@@ -1210,8 +1404,58 @@ document.getElementById('vocabCloseBtn').addEventListener('click', () => {
 });
 backdrop.addEventListener('click', () => { 
   vocabDrawer.classList.remove('open'); 
+  historyDrawer.classList.remove('open');
   backdrop.classList.remove('open'); 
   sidebarEl.classList.remove('open'); 
+});
+
+// ============ Lịch sử kết quả ============
+const historyDrawer = document.getElementById('historyDrawer');
+const historyListEl = document.getElementById('historyListEl');
+
+function renderHistoryDrawer() {
+  const profile = getCurrentProfile();
+  if (!profile) {
+    historyListEl.innerHTML = '<div class="empty-state">Chưa chọn hồ sơ. Bấm nút "👤 Đăng nhập" ở trên để chọn hoặc tạo hồ sơ.</div>';
+    return;
+  }
+  const list = getResults(profile);
+  if (list.length === 0) {
+    historyListEl.innerHTML = '<div class="empty-state">Chưa có kết quả nào được lưu cho hồ sơ <b>' + profile + '</b>. Hãy làm bài rồi bấm "Chấm bài" để lưu kết quả.</div>';
+    return;
+  }
+  historyListEl.innerHTML = '';
+  list.forEach((r, idx) => {
+    const card = document.createElement('div');
+    card.className = 'review-card';
+    let dateStr = r.date;
+    try { dateStr = new Date(r.date).toLocaleString('vi-VN'); } catch (e) {}
+    card.innerHTML = `
+      <div class="review-card-title">${r.testName} <span style="color:var(--text-muted); font-weight:500;">• ${dateStr}</span></div>
+      <div class="review-card-body">Đúng <b>${r.totalCorrect}</b>/${r.gradedCount} câu • Điểm dự tính: <b>${r.scaled.total}</b>/990 (LC ${r.scaled.lc} | RC ${r.scaled.rc})</div>`;
+    const delBtn = document.createElement('button');
+    delBtn.className = 'btn-outline';
+    delBtn.style.marginTop = '8px'; delBtn.style.color = 'var(--danger)';
+    delBtn.textContent = 'Xoá kết quả này';
+    delBtn.addEventListener('click', () => {
+      const updated = getResults(profile).filter((_, i) => i !== idx);
+      saveResults(profile, updated);
+      renderHistoryDrawer();
+    });
+    card.appendChild(delBtn);
+    historyListEl.appendChild(card);
+  });
+}
+
+document.getElementById('historyToggleBtn').addEventListener('click', () => {
+  vocabDrawer.classList.remove('open');
+  renderHistoryDrawer();
+  historyDrawer.classList.add('open');
+  backdrop.classList.add('open');
+});
+document.getElementById('historyCloseBtn').addEventListener('click', () => {
+  historyDrawer.classList.remove('open');
+  backdrop.classList.remove('open');
 });
 
 async function fetchWithTimeout(url, ms) {
