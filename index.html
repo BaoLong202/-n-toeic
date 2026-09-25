@@ -1683,10 +1683,10 @@ function renderMain() {
 
   renderQuestionsGridOnly();
 
-  const docArea = document.getElementById('docArea');
+ const docArea = document.getElementById('docArea');
   if (t.viewMode === 'pdf') {
     docArea.innerHTML = t.pdfUrl 
-      ? `<iframe src="${t.pdfUrl}#toolbar=0&navpanes=0&scrollbar=0&view=FitH"></iframe>`
+      ? `<embed src="${t.pdfUrl}#navpanes=0&view=FitH" type="application/pdf" width="100%" height="100%">`
       : `<div class="empty-state" style="padding:40px 10px;">Chưa nạp tài liệu PDF cho đề thi này.</div>`;
   } else {
     const scriptHtml = window.TOEIC_SCRIPTS[t.testNum] || '';
