@@ -285,8 +285,22 @@
     color: var(--text-primary);
     box-shadow: 0 1px 2px rgba(0,0,0,0.08);
   }
-  .viewer-content { flex: 1; position: relative; overflow-y: auto; }
-  .viewer-content iframe { width: 100%; height: 100%; border: none; }
+  
+  /* Hỗ trợ cuộn cảm ứng đa điểm trên điện thoại */
+  .viewer-content { 
+    flex: 1; 
+    position: relative; 
+    overflow-y: auto; 
+    -webkit-overflow-scrolling: touch;
+  }
+  .viewer-content iframe,
+  .viewer-content embed,
+  .viewer-content object { 
+    width: 100%; 
+    height: 100%; 
+    border: none; 
+    touch-action: pan-y;
+  }
 
   /* LISTENING SCRIPT */
   .script-container { padding: 18px 20px; line-height: 1.65; }
@@ -388,7 +402,6 @@
   .strip-left { display: flex; align-items: center; gap: 12px; }
   .aim-box { display: flex; align-items: center; gap: 6px; font-weight: 600; }
   
-  /* Ô NHẬP AIM ĐỒNG BỘ DARK MODE & KHÔNG BỊ GIẬT CUỘN */
   .aim-box input {
     width: 58px;
     padding: 3px 6px;
@@ -1233,9 +1246,7 @@ function renderSidebar() {
   });
 }
 
-// ========================================================
-// BẢNG TRA QUY ĐỔI ĐIỂM CHUẨN ETS (TỪ 0 ĐẾN 100 CÂU ĐÚNG)
-// ========================================================
+// BẢNG TRA QUY ĐỔI ĐIỂM CHUẨN ETS
 const ETS_LC_TABLE = [
   5, 5, 5, 5, 5, 5, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70,
   75, 80, 85, 90, 95, 100, 110, 115, 120, 125, 130, 135, 140, 145, 150, 160, 165, 170, 175, 180,
@@ -1380,7 +1391,6 @@ window.switchPartTab = function(partKey) {
   activePartFilter = partKey;
   renderQuestionsGridOnly();
   
-  // Tự động cuộn mượt lên đầu bảng làm bài khi chuyển Part
   const bodyEl = document.querySelector('.sheet-body');
   if (bodyEl) {
     bodyEl.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1411,7 +1421,6 @@ function renderQuestionsGridOnly() {
     row.id = `qrow-${q}`;
     row.className = 'q-item' + (t.isGraded && hasKey ? ' graded' : '');
     
-    // Part 2 (câu 7 - 31) TOEIC chỉ có 3 đáp án A, B, C
     const availableOpts = (q >= 7 && q <= 31) ? ['A','B','C'] : ['A','B','C','D'];
 
     let optsHtml = '<div class="q-options">';
@@ -1459,7 +1468,6 @@ function renderQuestionsGridOnly() {
     grid.appendChild(wrapper);
   }
 
-  // NÚT ĐIỀU HƯỚNG CHỦ ĐỘNG: "< Part 1" và "Part 3 >"
   const currentIdx = PART_ORDER.indexOf(activePartFilter);
   if (activePartFilter !== 'all' && currentIdx !== -1) {
     const footerDiv = document.createElement('div');
@@ -1684,11 +1692,15 @@ function renderMain() {
 
   renderQuestionsGridOnly();
 
- const docArea = document.getElementById('docArea');
+  // Nhúng PDF tối ưu hóa qua PDF.js, cuộn mượt toàn bộ trang trên điện thoại
+  const docArea = document.getElementById('docArea');
   if (t.viewMode === 'pdf') {
-    docArea.innerHTML = t.pdfUrl 
-      ? `<embed src="${t.pdfUrl}#navpanes=0&view=FitH" type="application/pdf" width="100%" height="100%">`
-      : `<div class="empty-state" style="padding:40px 10px;">Chưa nạp tài liệu PDF cho đề thi này.</div>`;
+    if (t.pdfUrl) {
+      const fullPdfUrl = new URL(t.pdfUrl, window.location.href).href;
+      docArea.innerHTML = `<iframe src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(fullPdfUrl)}" width="100%" height="100%" style="border:none;"></iframe>`;
+    } else {
+      docArea.innerHTML = `<div class="empty-state" style="padding:40px 10px;">Chưa nạp tài liệu PDF cho đề thi này.</div>`;
+    }
   } else {
     const scriptHtml = window.TOEIC_SCRIPTS[t.testNum] || '';
     docArea.innerHTML = scriptHtml 
