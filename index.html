@@ -286,7 +286,6 @@
     box-shadow: 0 1px 2px rgba(0,0,0,0.08);
   }
   
-  /* Hỗ trợ cuộn cảm ứng đa điểm trên điện thoại */
   .viewer-content { 
     flex: 1; 
     position: relative; 
@@ -1692,12 +1691,18 @@ function renderMain() {
 
   renderQuestionsGridOnly();
 
-  // Nhúng PDF tối ưu hóa qua PDF.js, cuộn mượt toàn bộ trang trên điện thoại
+  // Nhúng PDF: Máy tính dùng trực tiếp file nội bộ, điện thoại dùng Google Docs Viewer chống kẹt trang 1
   const docArea = document.getElementById('docArea');
   if (t.viewMode === 'pdf') {
     if (t.pdfUrl) {
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       const fullPdfUrl = new URL(t.pdfUrl, window.location.href).href;
-      docArea.innerHTML = `<iframe src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(fullPdfUrl)}" width="100%" height="100%" style="border:none;"></iframe>`;
+
+      if (isMobile) {
+        docArea.innerHTML = `<iframe src="https://docs.google.com/viewer?embedded=true&url=${encodeURIComponent(fullPdfUrl)}" width="100%" height="100%" style="border:none;"></iframe>`;
+      } else {
+        docArea.innerHTML = `<iframe src="${t.pdfUrl}#navpanes=0&view=FitH" width="100%" height="100%" style="border:none;"></iframe>`;
+      }
     } else {
       docArea.innerHTML = `<div class="empty-state" style="padding:40px 10px;">Chưa nạp tài liệu PDF cho đề thi này.</div>`;
     }
