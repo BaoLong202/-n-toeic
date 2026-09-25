@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Tích hợp thư viện PDF.js giải mã PDF trực tiếp trên trình duyệt -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 <style>
   :root {
     --bg-page: #f9fafb;
@@ -286,23 +288,26 @@
     box-shadow: 0 1px 2px rgba(0,0,0,0.08);
   }
   
+  /* Khung xem PDF cuộn mượt và chứa các trang Canvas */
   .viewer-content { 
     flex: 1; 
     position: relative; 
     overflow-y: auto; 
     -webkit-overflow-scrolling: touch;
+    background: #404040;
+    padding: 10px;
   }
-  .viewer-content iframe,
-  .viewer-content embed,
-  .viewer-content object { 
-    width: 100%; 
-    height: 100%; 
-    border: none; 
-    touch-action: pan-y;
+  .pdf-page-canvas {
+    display: block;
+    margin: 0 auto 12px auto;
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    background: #ffffff;
   }
 
   /* LISTENING SCRIPT */
-  .script-container { padding: 18px 20px; line-height: 1.65; }
+  .script-container { padding: 18px 20px; line-height: 1.65; background: var(--bg-surface); min-height: 100%; }
   .script-container h3 {
     color: var(--brand);
     font-size: 14px;
@@ -1245,7 +1250,7 @@ function renderSidebar() {
   });
 }
 
-// BẢNG TRA QUY ĐỔI ĐIỂM CHUẨN ETS
+// BẢNG TRA QUY ĐỔI ĐIỂM CHUẨN ETS (TỪ 0 ĐẾN 100 CÂU ĐÚNG)
 const ETS_LC_TABLE = [
   5, 5, 5, 5, 5, 5, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70,
   75, 80, 85, 90, 95, 100, 110, 115, 120, 125, 130, 135, 140, 145, 150, 160, 165, 170, 175, 180,
@@ -1691,20 +1696,47 @@ function renderMain() {
 
   renderQuestionsGridOnly();
 
-  // Nhúng PDF: Máy tính dùng trực tiếp file nội bộ, điện thoại dùng Google Docs Viewer chống kẹt trang 1
+  // Nhúng PDF: Vẽ toàn bộ trang ra Canvas bằng PDF.js (chấm dứt hoàn toàn lỗi CORS / lỗi 400 / kẹt trang)
   const docArea = document.getElementById('docArea');
   if (t.viewMode === 'pdf') {
     if (t.pdfUrl) {
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      const fullPdfUrl = new URL(t.pdfUrl, window.location.href).href;
+      docArea.innerHTML = '<div style="color:#ffffff; text-align:center; padding:35px 10px; font-size:13px; font-weight:600;">Đang nạp dữ liệu đề thi...</div>';
+      
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
-      if (isMobile) {
-        docArea.innerHTML = `<iframe src="https://docs.google.com/viewer?embedded=true&url=${encodeURIComponent(fullPdfUrl)}" width="100%" height="100%" style="border:none;"></iframe>`;
-      } else {
-        docArea.innerHTML = `<iframe src="${t.pdfUrl}#navpanes=0&view=FitH" width="100%" height="100%" style="border:none;"></iframe>`;
-      }
+      pdfjsLib.getDocument(t.pdfUrl).promise.then(pdf => {
+        docArea.innerHTML = '';
+        
+        // Vẽ toàn bộ các trang ra màn hình, lướt liên tục từ trang 1 đến hết
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+          const canvas = document.createElement('canvas');
+          canvas.className = 'pdf-page-canvas';
+          docArea.appendChild(canvas);
+
+          pdf.getPage(pageNum).then(page => {
+            const viewport = page.getViewport({ scale: 1.5 });
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            page.render({
+              canvasContext: context,
+              viewport: viewport
+            });
+          });
+        }
+      }).catch(err => {
+        console.error(err);
+        docArea.innerHTML = `
+          <div class="empty-state" style="padding:40px 10px; color:#ffffff;">
+            Không thể tải trực tiếp file PDF.<br><br>
+            <a href="${t.pdfUrl}" target="_blank" style="color:var(--brand); font-weight:700; background:#ffffff; padding:8px 14px; border-radius:6px; text-decoration:none;">
+              Bấm vào đây để mở PDF
+            </a>
+          </div>`;
+      });
     } else {
-      docArea.innerHTML = `<div class="empty-state" style="padding:40px 10px;">Chưa nạp tài liệu PDF cho đề thi này.</div>`;
+      docArea.innerHTML = `<div class="empty-state" style="padding:40px 10px; color:#ffffff;">Chưa nạp tài liệu PDF cho đề thi này.</div>`;
     }
   } else {
     const scriptHtml = window.TOEIC_SCRIPTS[t.testNum] || '';
