@@ -1524,6 +1524,7 @@ function renderMain() {
     <div class="viewer-tabs">
       <button class="viewer-tab ${t.viewMode === 'pdf' ? 'active' : ''}" id="tabPdf">Đề bài (PDF)</button>
       <button class="viewer-tab ${t.viewMode === 'transcript' ? 'active' : ''}" id="tabTranscript">Listening Script</button>
+      ${t.pdfUrl ? `<a href="${t.pdfUrl}" target="_blank" class="viewer-tab" style="text-decoration:none; margin-left:auto; color:var(--brand); font-weight:700;">↗ Mở tab mới</a>` : ''}
     </div>
     <div class="viewer-content" id="docArea"></div>`;
   panels.appendChild(viewerPanel);
