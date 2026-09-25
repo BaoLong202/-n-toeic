@@ -28,7 +28,7 @@
     --danger: #dc2626;
     --danger-subtle: #fef2f2;
     
-    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
   
   body.dark-theme {
@@ -335,6 +335,96 @@
     border: none;
   }
 
+  /* ========================================================
+     CSS ĐỊNH DẠNG LISTENING SCRIPT (CHỐNG LỖI FONT & XẤU)
+     ======================================================== */
+  .script-container {
+    padding: 18px 20px;
+    font-family: var(--font-sans);
+    line-height: 1.65;
+    color: var(--text-primary);
+  }
+
+  .script-container h3 {
+    color: var(--brand);
+    font-size: 14px;
+    font-weight: 700;
+    margin: 22px 0 12px 0;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--border);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+  }
+
+  .script-container h3:first-child {
+    margin-top: 4px;
+  }
+
+  .script-question {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  }
+
+  .script-speaker {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--brand);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .script-opt {
+    font-size: 13px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    margin: 3px 0;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Làm nổi bật đáp án đúng */
+  .script-opt.correct-pink,
+  .script-dialogue span.correct-pink,
+  span.correct-pink {
+    color: #e11d48 !important;
+    font-weight: 600;
+    background: rgba(225, 29, 72, 0.08) !important;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border-left: 2px solid #e11d48;
+    display: inline-block;
+  }
+
+  body.dark-theme .script-opt.correct-pink,
+  body.dark-theme .script-dialogue span.correct-pink,
+  body.dark-theme span.correct-pink {
+    color: #fb7185 !important;
+    background: rgba(251, 113, 133, 0.15) !important;
+  }
+
+  .script-dialogue {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--brand);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .script-dialogue b {
+    color: var(--text-primary);
+  }
+
+  /* Sheet Panel & Grid */
   .sheet-panel {
     flex: 1;
     background: var(--bg-surface);
@@ -473,7 +563,6 @@
     color: var(--text-primary);
   }
 
-  /* Progress Bar UI */
   .progress-bar-container {
     width: 100%;
     height: 6px;
@@ -560,7 +649,7 @@
     background: var(--success-subtle);
   }
 
-  /* Review Section & Accordion / Filters */
+  /* Review Section & Accordion */
   .review-section {
     margin-top: 16px;
     display: flex;
@@ -603,7 +692,6 @@
     border-color: var(--brand);
   }
 
-  /* Accordion Review Card */
   .review-card {
     border: 1px solid var(--border);
     border-radius: 6px;
@@ -624,9 +712,9 @@
     background: var(--bg-subtle);
   }
   .review-card-body {
-    padding: 10px 12px;
-    font-size: 12px;
-    line-height: 1.6;
+    padding: 12px 14px;
+    font-size: 12.5px;
+    line-height: 1.65;
     color: var(--text-secondary);
     border-top: 1px solid var(--border);
     background: var(--bg-page);
@@ -831,11 +919,9 @@
     </div>
   </div>
   <div class="header-actions">
-    <!-- Tra từ được đưa thẳng ra ngoài Header -->
     <button id="vocabToggleBtn" class="btn-outline">📖 Tra từ</button>
     <button id="profileBtn" class="btn-outline profile-btn-active">👤 Đăng nhập</button>
     
-    <!-- Menu thả xuống chỉ còn Theme và Lịch sử -->
     <button id="menuToggleBtn" class="btn-outline" style="padding: 5px 8px;">☰</button>
     <div class="dropdown-menu" id="dropdownMenu">
       <button class="dropdown-item" id="themeToggleBtn">🌙 Giao diện</button>
@@ -855,11 +941,10 @@
       <input type="text" id="newProfileInput" placeholder="Tên hồ sơ mới...">
       <button id="createProfileBtn">Tạo & Vào học</button>
     </div>
-    <div class="vocab-note">Kết quả làm bài sẽ được lưu riêng theo từng hồ sơ, ngay trên trình duyệt này (không cần mật khẩu, không đồng bộ giữa các thiết bị/trình duyệt khác).</div>
+    <div class="vocab-note">Kết quả làm bài sẽ được lưu riêng theo từng hồ sơ, ngay trên trình duyệt này.</div>
   </div>
 </div>
 
-<!-- Modal Xác nhận tùy chỉnh (Xoá) -->
 <div class="profile-overlay" id="customConfirmModal">
   <div class="profile-card" style="max-width: 340px; text-align: center;">
     <div class="drawer-title" style="margin-bottom: 10px; font-size: 15px;">Xác nhận xoá</div>
@@ -873,7 +958,6 @@
   </div>
 </div>
 
-<!-- Modal Thông báo tùy chỉnh (Alert) -->
 <div class="profile-overlay" id="customAlertModal">
   <div class="profile-card" style="max-width: 340px; text-align: center;">
     <div class="drawer-title" style="margin-bottom: 10px; font-size: 15px;">Thông báo</div>
@@ -958,7 +1042,6 @@ function ensureTestDataLoaded(testNum, callback) {
   document.head.appendChild(script);
 }
 
-// Xử lý Dropdown menu trên header
 const menuToggleBtn = document.getElementById('menuToggleBtn');
 const dropdownMenu = document.getElementById('dropdownMenu');
 
@@ -980,7 +1063,6 @@ themeToggleBtn.addEventListener('click', () => {
   localStorage.setItem('toeic_theme', isDark ? 'dark' : 'light');
 });
 
-// ============ Hồ sơ người dùng (Profile) & Lịch sử kết quả ============
 function getProfiles() {
   try { return JSON.parse(localStorage.getItem('toeic_profiles') || '[]'); } catch (e) { return []; }
 }
@@ -1147,7 +1229,6 @@ let userAimScore = parseInt(localStorage.getItem('toeic_user_aim') || '700', 10)
 const OPTS = ['A','B','C','D'];
 let currentReviewFilter = 'all';
 
-// Quản lý Timer
 let timerInterval = null;
 let timerSeconds = 120 * 60;
 let isTimerRunning = false;
@@ -1624,7 +1705,6 @@ backdrop.addEventListener('click', () => {
   sidebarEl.classList.remove('open'); 
 });
 
-// ============ Lịch sử kết quả ============
 const historyDrawer = document.getElementById('historyDrawer');
 const historyListEl = document.getElementById('historyListEl');
 
