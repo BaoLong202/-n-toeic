@@ -9,8 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- CSS & JS của PDF.js -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf_viewer.min.css">
+<!-- Chỉ cần nạp thư viện lõi PDF.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
 <style>
@@ -291,7 +290,7 @@
     box-shadow: 0 1px 2px rgba(0,0,0,0.08);
   }
   
-  /* Khung cuộn và cấu trúc canh chỉnh vừa khít không tràn mép */
+  /* Khung xem PDF tự co giãn vừa khít, không giật lag */
   .viewer-content { 
     flex: 1; 
     position: relative; 
@@ -299,50 +298,18 @@
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     background: #374151;
-    padding: 10px;
+    padding: 12px 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .pdf-page-wrapper {
-    position: relative;
+  .pdf-canvas-item {
+    display: block;
     margin-bottom: 14px;
     box-shadow: 0 4px 14px rgba(0,0,0,0.35);
     background: #ffffff;
-    overflow: hidden;
     max-width: 100%;
-    user-select: text !important;
-    -webkit-user-select: text !important;
-  }
-  .pdf-page-wrapper canvas {
-    display: block;
-    width: 100% !important;
-    height: auto !important;
-  }
-  .pdf-page-wrapper .textLayer {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-    opacity: 1 !important;
-    line-height: 1.0;
-    z-index: 5 !important;
-    pointer-events: auto !important;
-    transform-origin: 0 0;
-  }
-  .pdf-page-wrapper .textLayer span {
-    color: transparent !important;
-    position: absolute;
-    white-space: pre;
-    cursor: text !important;
-    user-select: text !important;
-    -webkit-user-select: text !important;
-    transform-origin: 0% 0%;
-  }
-  .pdf-page-wrapper .textLayer ::selection {
-    background: rgba(37, 99, 235, 0.45) !important;
+    height: auto;
   }
 
   /* LISTENING SCRIPT */
@@ -1735,7 +1702,7 @@ function renderMain() {
 
   renderQuestionsGridOnly();
 
-  // Tự động tính toán scale vừa khít khung nhìn, đồng bộ Canvas và TextLayer
+  // Cơ chế Render tuần tự từng trang canvas: Không bị tràn mép và không bị trắng trang
   const docArea = document.getElementById('docArea');
   if (t.viewMode === 'pdf') {
     if (t.pdfUrl) {
@@ -1743,64 +1710,39 @@ function renderMain() {
       
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
-      pdfjsLib.getDocument(t.pdfUrl).promise.then(pdf => {
+      pdfjsLib.getDocument(t.pdfUrl).promise.then(async (pdf) => {
         docArea.innerHTML = '';
-        
-        // Đo đạc chiều rộng thực tế của khung để co giãn vừa khít 100%
-        const containerWidth = docArea.clientWidth - 24; 
+        const containerWidth = docArea.clientWidth - 20;
 
         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-          const pageWrapper = document.createElement('div');
-          pageWrapper.className = 'pdf-page-wrapper';
-          docArea.appendChild(pageWrapper);
+          const page = await pdf.getPage(pageNum);
+          const unscaledViewport = page.getViewport({ scale: 1.0 });
+          
+          // Tính toán tỷ lệ để hình ảnh luôn co vừa khít chiều ngang khung
+          const targetWidth = containerWidth > 0 ? containerWidth : 750;
+          const scale = targetWidth / unscaledViewport.width;
+          const viewport = page.getViewport({ scale: scale });
 
           const canvas = document.createElement('canvas');
-          pageWrapper.appendChild(canvas);
+          canvas.className = 'pdf-canvas-item';
+          
+          const outputScale = window.devicePixelRatio || 1;
+          canvas.width = Math.floor(viewport.width * outputScale);
+          canvas.height = Math.floor(viewport.height * outputScale);
+          canvas.style.width = Math.floor(viewport.width) + "px";
+          canvas.style.height = Math.floor(viewport.height) + "px";
 
-          const textLayerDiv = document.createElement('div');
-          textLayerDiv.className = 'textLayer';
-          pageWrapper.appendChild(textLayerDiv);
+          docArea.appendChild(canvas);
 
-          pdf.getPage(pageNum).then(page => {
-            const unscaledViewport = page.getViewport({ scale: 1.0 });
-            // Tỷ lệ scale tự động theo khung hiển thị (không bị tràn mép ngang)
-            const targetWidth = Math.min(containerWidth > 0 ? containerWidth : 750, unscaledViewport.width * 1.5);
-            const scale = targetWidth / unscaledViewport.width;
-            const viewport = page.getViewport({ scale: scale });
+          const context = canvas.getContext('2d');
+          const transform = outputScale !== 1 ? [outputScale, 0, 0, outputScale, 0, 0] : null;
 
-            const outputScale = window.devicePixelRatio || 1;
-            canvas.width = Math.floor(viewport.width * outputScale);
-            canvas.height = Math.floor(viewport.height * outputScale);
-            canvas.style.width = Math.floor(viewport.width) + "px";
-            canvas.style.height = Math.floor(viewport.height) + "px";
-
-            pageWrapper.style.width = Math.floor(viewport.width) + 'px';
-            pageWrapper.style.height = Math.floor(viewport.height) + 'px';
-
-            const context = canvas.getContext('2d');
-            const transform = outputScale !== 1 ? [outputScale, 0, 0, outputScale, 0, 0] : null;
-
-            // 1. Vẽ trang hình ảnh Canvas
-            page.render({
-              canvasContext: context,
-              transform: transform,
-              viewport: viewport
-            });
-
-            // 2. Tạo TextLayer đồng bộ vị trí
-            page.getTextContent().then(textContent => {
-              textLayerDiv.innerHTML = '';
-              textLayerDiv.style.width = Math.floor(viewport.width) + 'px';
-              textLayerDiv.style.height = Math.floor(viewport.height) + 'px';
-
-              pdfjsLib.renderTextLayer({
-                textContent: textContent,
-                container: textLayerDiv,
-                viewport: viewport,
-                textDivs: []
-              });
-            });
-          });
+          // Đợi render xong trang hiện tại mới chuyển tiếp sang trang sau
+          await page.render({
+            canvasContext: context,
+            transform: transform,
+            viewport: viewport
+          }).promise;
         }
       }).catch(err => {
         console.error(err);
