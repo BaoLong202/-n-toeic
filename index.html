@@ -342,7 +342,7 @@
             border-radius: 4px;
         }
 
-        /* Transcript */
+        /* Transcript Layout */
         .script-container {
             padding: 16px 20px;
             line-height: 1.7;
@@ -882,7 +882,7 @@
             overflow-y: auto;
         }
 
-        /* Giao diện Từ điển Card */
+        /* Giao diện Từ điển Card Chuẩn */
         .vocab-card {
             background: var(--bg-subtle);
             border: 1px solid var(--border);
@@ -898,18 +898,36 @@
             letter-spacing: -0.01em;
         }
 
+        /* Khung hiển thị Nghĩa Tiếng Việt Mới */
         .vocab-vi-box {
-            background: rgba(35, 134, 54, 0.15);
-            border-left: 3px solid #238636;
-            border-radius: 6px;
-            padding: 10px 12px;
-            margin: 10px 0 14px 0;
-            font-size: 14px;
-            color: var(--text-primary);
-            font-weight: 700;
+            background: linear-gradient(135deg, rgba(35, 134, 54, 0.12) 0%, rgba(35, 134, 54, 0.04) 100%);
+            border: 1px solid rgba(46, 160, 67, 0.35);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin: 10px 0 16px 0;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .vocab-vi-badge {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            padding: 3px 8px;
+            border-radius: 5px;
+            background: #238636;
+            color: #ffffff;
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+
+        .vocab-vi-text {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
         }
 
         .vocab-section-title {
@@ -1312,7 +1330,7 @@
             document.head.appendChild(script);
         }
 
-        // Menu & Theme
+        // Menu & Dark mode
         const menuToggleBtn = document.getElementById('menuToggleBtn');
         const dropdownMenu = document.getElementById('dropdownMenu');
         menuToggleBtn.addEventListener('click', (e) => {
@@ -1328,7 +1346,7 @@
             localStorage.setItem('toeic_theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
         });
 
-        // Sidebar
+        // Sidebar Mục Lục
         const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
         const sidebarEl = document.getElementById('sidebar');
         const backdrop = document.getElementById('backdrop');
@@ -1558,7 +1576,12 @@
       `;
 
             if (vietnameseMeaning) {
-                html += `<div class="vocab-vi-box">🇻🇳 <b>Nghĩa tiếng Việt:</b> ${vietnameseMeaning}</div>`;
+                html += `
+          <div class="vocab-vi-box">
+            <span class="vocab-vi-badge">Tiếng Việt</span>
+            <span class="vocab-vi-text">${vietnameseMeaning}</span>
+          </div>
+        `;
             }
 
             const hasFamily = Object.values(family).some(arr => arr.length > 0);
