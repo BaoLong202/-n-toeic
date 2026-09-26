@@ -435,7 +435,6 @@
     color: var(--text-muted);
   }
 
-  /* Ẩn mũi tên mặc định của input type=number */
   .aim-control-group input::-webkit-outer-spin-button,
   .aim-control-group input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -623,11 +622,28 @@
   }
   .inline-expl-box.show { display: block; }
 
+  /* Review Section */
+  .review-section { margin-top: 18px; display: flex; flex-direction: column; gap: 8px; }
+  .review-header-row { display: flex; align-items: center; justify-content: space-between; }
+  .review-header { font-size: 12.5px; font-weight: 800; text-transform: uppercase; color: var(--text-primary); }
+  .filter-tabs { display: flex; gap: 4px; }
+  .filter-tab {
+    font-family: inherit; font-size: 11px; font-weight: 700; padding: 4px 8px;
+    border-radius: 4px; border: 1px solid var(--border); background: var(--bg-surface);
+    color: var(--text-secondary); cursor: pointer;
+  }
+  .filter-tab.active { background: var(--brand-subtle); color: var(--brand); border-color: var(--brand); }
+  .review-card { border: 1px solid var(--border); border-radius: 6px; background: var(--bg-surface); overflow: hidden; }
+  .review-card-header { padding: 10px 12px; font-size: 12.5px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; }
+  .review-card-body { padding: 12px 14px; font-size: 12.5px; line-height: 1.65; border-top: 1px solid var(--border); display: none; background: var(--bg-page); }
+  .review-card.open .review-card-body { display: block; }
+
   /* Drawer & Overlays */
   .drawer {
     position: fixed; top: 0; right: -380px; width: 360px; max-width: 90vw; height: 100%;
     background: var(--bg-surface); border-left: 1px solid var(--border); z-index: 50;
     transition: right 0.22s ease; display: flex; flex-direction: column; padding: 16px;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.3);
   }
   .drawer.open { right: 0; }
   .drawer-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
@@ -636,17 +652,44 @@
   .search-row { display: flex; gap: 6px; margin-bottom: 16px; }
   .search-row input {
     flex: 1; padding: 8px 10px; font-family: inherit; font-size: 13px;
-    border-radius: 6px; border: 1px solid var(--border); background: var(--bg-surface); color: var(--text-primary);
+    border-radius: 6px; border: 1px solid var(--border); background: var(--bg-subtle); color: var(--text-primary);
+    outline: none;
   }
   .search-row button {
     padding: 8px 14px; font-family: inherit; font-size: 13px; font-weight: 700;
     border-radius: 6px; border: none; background: var(--brand); color: #ffffff; cursor: pointer;
   }
   .vocab-body { flex: 1; overflow-y: auto; }
-  .backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4); z-index: 40; display: none; }
+  .vocab-result .word { font-size: 18px; font-weight: 800; color: var(--brand); margin-bottom: 4px; }
+  .vocab-result .pos { font-size: 11px; font-weight: 800; color: var(--success); margin-top: 12px; text-transform: uppercase; }
+  .vocab-result .def { font-size: 13px; margin: 6px 0; line-height: 1.5; padding-left: 8px; border-left: 2px solid var(--border); }
+  .vocab-note { font-size: 12px; color: var(--text-muted); margin-top: 12px; }
+
+  .backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: 40; display: none; }
   .backdrop.open { display: block; }
 
+  .profile-overlay {
+    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 100;
+    display: none; align-items: center; justify-content: center; padding: 16px;
+  }
+  .profile-overlay.open { display: flex; }
+  .profile-card {
+    background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px; width: 100%; max-width: 380px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+  .profile-row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 8px; border: 1px solid var(--border); border-radius: 6px;
+    padding: 8px 10px; font-size: 13px; font-weight: 700;
+  }
+
   @media (max-width: 768px) {
+    .sidebar {
+      position: fixed; top: 52px; left: 0; bottom: 0; z-index: 45;
+      width: 85%; transform: translateX(-100%);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar.collapsed { width: 85%; padding: 12px; }
     .panels-split { flex-direction: column; }
     .viewer-panel { height: 42vh; flex: none; }
     .q-grid { grid-template-columns: repeat(auto-fill, minmax(138px, 1fr)); }
@@ -673,6 +716,22 @@
     </div>
   </div>
 </header>
+
+<!-- Modal Profile -->
+<div class="profile-overlay" id="profileOverlay">
+  <div class="profile-card">
+    <div class="drawer-head">
+      <span class="drawer-title">Chọn hồ sơ luyện thi</span>
+      <button class="drawer-close" id="profileOverlayCloseBtn">&times;</button>
+    </div>
+    <div id="profileListEl" style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px; max-height:240px; overflow-y:auto;"></div>
+    <div class="search-row">
+      <input type="text" id="newProfileInput" placeholder="Tên hồ sơ mới...">
+      <button id="createProfileBtn">Tạo & Vào</button>
+    </div>
+    <div class="vocab-note">Kết quả thi sẽ được lưu riêng theo hồ sơ trên trình duyệt này.</div>
+  </div>
+</div>
 
 <div class="workspace">
   <div class="sidebar" id="sidebar">
@@ -745,7 +804,210 @@ themeToggleBtn.addEventListener('click', () => {
   localStorage.setItem('toeic_theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
 });
 
-// Khởi tạo danh sách 10 đề thi ETS
+// Sidebar Mục Lục
+const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebarEl = document.getElementById('sidebar');
+const backdrop = document.getElementById('backdrop');
+
+sidebarToggleBtn.addEventListener('click', () => {
+  if (window.innerWidth <= 768) {
+    sidebarEl.classList.toggle('open');
+    backdrop.classList.toggle('open', sidebarEl.classList.contains('open'));
+  } else {
+    sidebarEl.classList.toggle('collapsed');
+  }
+});
+
+// Quản lý Hồ sơ Đăng nhập
+function getProfiles() {
+  try { return JSON.parse(localStorage.getItem('toeic_profiles') || '[]'); } catch (e) { return []; }
+}
+function saveProfilesList(list) { localStorage.setItem('toeic_profiles', JSON.stringify(list)); }
+function getCurrentProfile() { return localStorage.getItem('toeic_current_profile') || ''; }
+function setCurrentProfile(name) { localStorage.setItem('toeic_current_profile', name); }
+function getResultsKey(profile) { return 'toeic_results_' + profile; }
+function getResults(profile) {
+  try { return JSON.parse(localStorage.getItem(getResultsKey(profile)) || '[]'); } catch (e) { return []; }
+}
+function saveResults(profile, list) { localStorage.setItem(getResultsKey(profile), JSON.stringify(list)); }
+function addResultRecord(record) {
+  const profile = getCurrentProfile();
+  if (!profile) return;
+  const list = getResults(profile);
+  list.unshift(record);
+  saveResults(profile, list);
+}
+
+const profileOverlay = document.getElementById('profileOverlay');
+const profileListEl = document.getElementById('profileListEl');
+const newProfileInput = document.getElementById('newProfileInput');
+const profileBtn = document.getElementById('profileBtn');
+
+function updateProfileBtnLabel() {
+  const cur = getCurrentProfile();
+  profileBtn.textContent = cur ? ('👤 ' + cur) : '👤 Đăng nhập';
+}
+
+function renderProfileOverlay() {
+  const profiles = getProfiles();
+  profileListEl.innerHTML = '';
+  if (profiles.length === 0) {
+    profileListEl.innerHTML = '<div style="color:var(--text-muted); font-size:12.5px; text-align:center;">Chưa có hồ sơ nào. Hãy tạo bên dưới.</div>';
+  }
+  profiles.forEach(name => {
+    const row = document.createElement('div');
+    row.className = 'profile-row';
+    const isCur = getCurrentProfile() === name;
+    row.innerHTML = `<span>${name}${isCur ? ' <span style="color:var(--brand); font-weight:800;">(đang chọn)</span>' : ''}</span>`;
+    const btnRow = document.createElement('div');
+    btnRow.style.display = 'flex'; btnRow.style.gap = '6px';
+
+    const chooseBtn = document.createElement('button');
+    chooseBtn.className = 'btn-outline'; chooseBtn.textContent = 'Chọn';
+    chooseBtn.onclick = () => {
+      setCurrentProfile(name);
+      profileOverlay.classList.remove('open');
+      updateProfileBtnLabel();
+    };
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'btn-outline'; delBtn.style.color = 'var(--danger)'; delBtn.textContent = 'Xoá';
+    delBtn.onclick = () => {
+      if (confirm(`Xoá hồ sơ "${name}" và toàn bộ kết quả?`)) {
+        saveProfilesList(getProfiles().filter(p => p !== name));
+        localStorage.removeItem(getResultsKey(name));
+        if (getCurrentProfile() === name) setCurrentProfile('');
+        renderProfileOverlay();
+        updateProfileBtnLabel();
+      }
+    };
+    btnRow.appendChild(chooseBtn); btnRow.appendChild(delBtn);
+    row.appendChild(btnRow);
+    profileListEl.appendChild(row);
+  });
+}
+
+profileBtn.addEventListener('click', () => {
+  renderProfileOverlay();
+  profileOverlay.classList.add('open');
+});
+document.getElementById('profileOverlayCloseBtn').addEventListener('click', () => {
+  profileOverlay.classList.remove('open');
+});
+document.getElementById('createProfileBtn').addEventListener('click', () => {
+  const name = newProfileInput.value.trim();
+  if (!name) return;
+  const profiles = getProfiles();
+  if (!profiles.includes(name)) {
+    profiles.push(name);
+    saveProfilesList(profiles);
+  }
+  newProfileInput.value = '';
+  setCurrentProfile(name);
+  profileOverlay.classList.remove('open');
+  updateProfileBtnLabel();
+});
+
+updateProfileBtnLabel();
+
+// Tra từ vựng
+const vocabDrawer = document.getElementById('vocabDrawer');
+const vocabInput = document.getElementById('vocabInput');
+const vocabResult = document.getElementById('vocabResult');
+
+document.getElementById('vocabToggleBtn').addEventListener('click', () => {
+  historyDrawer.classList.remove('open');
+  vocabDrawer.classList.add('open');
+  backdrop.classList.add('open');
+  vocabInput.focus();
+});
+document.getElementById('vocabCloseBtn').addEventListener('click', () => {
+  vocabDrawer.classList.remove('open');
+  backdrop.classList.remove('open');
+});
+
+async function lookupWord() {
+  const word = vocabInput.value.trim().toLowerCase();
+  if (!word) return;
+  vocabResult.innerHTML = '<div class="vocab-note">Đang tra từ...</div>';
+  try {
+    const res = await fetch('https://api.datamuse.com/words?sp=' + encodeURIComponent(word) + '&md=d&max=1');
+    const data = await res.json();
+    let defsHtml = '';
+    if (data && data[0] && data[0].defs) {
+      data[0].defs.slice(0, 4).forEach(d => {
+        const parts = d.split('\t');
+        defsHtml += `<div class="pos">${parts[0]}</div><div class="def">• ${parts[1] || parts[0]}</div>`;
+      });
+    }
+    const cambridgeUrl = 'https://dictionary.cambridge.org/dictionary/english/' + encodeURIComponent(word);
+    vocabResult.innerHTML = `
+      <div class="word">${word}</div>
+      ${defsHtml || '<div class="vocab-note">Không tìm thấy định nghĩa nhanh.</div>'}
+      <div class="vocab-note" style="margin-top:14px;"><a href="${cambridgeUrl}" target="_blank" style="color:var(--brand); text-decoration:none;">Xem trên Cambridge Dictionary ↗</a></div>
+    `;
+  } catch (e) {
+    vocabResult.innerHTML = '<div class="vocab-note">Lỗi khi kết nối từ điển. Vui lòng thử lại.</div>';
+  }
+}
+document.getElementById('vocabSearchBtn').addEventListener('click', lookupWord);
+vocabInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') lookupWord(); });
+
+// Lịch sử kết quả
+const historyDrawer = document.getElementById('historyDrawer');
+const historyListEl = document.getElementById('historyListEl');
+
+function renderHistoryDrawer() {
+  const profile = getCurrentProfile();
+  if (!profile) {
+    historyListEl.innerHTML = '<div class="vocab-note" style="text-align:center;">Vui lòng bấm nút "👤 Đăng nhập" ở trên để chọn hồ sơ xem lịch sử.</div>';
+    return;
+  }
+  const list = getResults(profile);
+  if (list.length === 0) {
+    historyListEl.innerHTML = `<div class="vocab-note" style="text-align:center;">Chưa có kết quả làm bài nào cho hồ sơ <b>${profile}</b>.</div>`;
+    return;
+  }
+  historyListEl.innerHTML = '';
+  list.forEach((r, idx) => {
+    const card = document.createElement('div');
+    card.className = 'review-card';
+    card.style.padding = '10px 12px';
+    let dateStr = r.date;
+    try { dateStr = new Date(r.date).toLocaleString('vi-VN'); } catch (e) {}
+    card.innerHTML = `
+      <div style="font-weight:700; font-size:13px; color:var(--text-primary);">${r.testName} <span style="color:var(--text-muted); font-size:11px;">• ${dateStr}</span></div>
+      <div style="margin-top:4px; font-size:12.5px; color:var(--text-secondary);">Đúng <b>${r.totalCorrect}</b>/${r.gradedCount} câu • Điểm: <b style="color:var(--brand);">${r.scaled.total}</b>/990 (LC ${r.scaled.lc} | RC ${r.scaled.rc})</div>
+    `;
+    const delBtn = document.createElement('button');
+    delBtn.className = 'btn-outline'; delBtn.style.marginTop = '8px'; delBtn.style.color = 'var(--danger)'; delBtn.textContent = 'Xoá kết quả này';
+    delBtn.onclick = () => {
+      saveResults(profile, getResults(profile).filter((_, i) => i !== idx));
+      renderHistoryDrawer();
+    };
+    card.appendChild(delBtn);
+    historyListEl.appendChild(card);
+  });
+}
+
+document.getElementById('historyToggleBtn').addEventListener('click', () => {
+  vocabDrawer.classList.remove('open');
+  renderHistoryDrawer();
+  historyDrawer.classList.add('open');
+  backdrop.classList.add('open');
+});
+document.getElementById('historyCloseBtn').addEventListener('click', () => {
+  historyDrawer.classList.remove('open');
+  backdrop.classList.remove('open');
+});
+backdrop.addEventListener('click', () => {
+  vocabDrawer.classList.remove('open');
+  historyDrawer.classList.remove('open');
+  backdrop.classList.remove('open');
+  sidebarEl.classList.remove('open');
+});
+
+// Khởi tạo 10 đề thi ETS
 let tests = [];
 for (let i = 1; i <= 10; i++) {
   tests.push({
@@ -803,14 +1065,14 @@ function startTimer() {
       updateTimerDisplayDOM();
     } else {
       stopTimer();
-      alert('Đã hết giờ làm bài!');
+      alert('Đã hết giờ làm bài! Hệ thống sẽ tiến hành chấm điểm.');
       const t = tests.find(x => x.id === activeId);
       if (t) { t.isGraded = true; renderMain(); }
     }
   }, 1000);
 }
 
-// Xử lý tăng giảm điểm Aim bằng 2 nút - và +
+// Xử lý tăng giảm Aim [-] 450 [+]
 window.changeAim = function(delta) {
   const input = document.getElementById('aimInput');
   if (!input) return;
@@ -834,6 +1096,10 @@ function renderSidebar() {
         renderSidebar();
         renderMain();
       });
+      if (window.innerWidth <= 768) {
+        sidebarEl.classList.remove('open');
+        backdrop.classList.remove('open');
+      }
     });
     list.appendChild(card);
   });
@@ -1044,7 +1310,7 @@ function renderMain() {
   panels.appendChild(sheetPanel);
   mainStage.appendChild(panels);
 
-  // Xử lý chọn đề
+  // Chọn đề từ Dropdown
   document.getElementById('testSelector').addEventListener('change', (e) => {
     const nextNum = parseInt(e.target.value, 10);
     const targetTest = tests.find(x => x.testNum === nextNum);
@@ -1057,7 +1323,7 @@ function renderMain() {
     }
   });
 
-  // Xử lý Timer
+  // Timer
   const timerSelect = document.getElementById('timerModeSelect');
   timerSelect.addEventListener('change', (e) => {
     selectedTimerMode = e.target.value;
@@ -1082,7 +1348,17 @@ function renderMain() {
   });
 
   document.getElementById('gradeBtn').addEventListener('click', () => {
-    t.isGraded = true; stopTimer(); renderMain();
+    t.isGraded = true; stopTimer();
+    const res = computeScore(t, testKey);
+    addResultRecord({
+      testName: t.name,
+      testNum: t.testNum,
+      date: new Date().toISOString(),
+      gradedCount: res.gradedCount,
+      totalCorrect: res.totalCorrect,
+      scaled: res.scaled
+    });
+    renderMain();
   });
 
   renderQuestionsGridOnly();
