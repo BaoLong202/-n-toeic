@@ -28,8 +28,8 @@
             --success-subtle: rgba(46, 160, 67, 0.15);
             --danger: #da3633;
             --danger-subtle: rgba(248, 81, 73, 0.15);
-            --warning: #d29922;
-            --warning-subtle: rgba(210, 153, 34, 0.15);
+            --warning: #f59e0b;
+            --warning-subtle: rgba(245, 158, 11, 0.15);
             --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
@@ -49,7 +49,7 @@
             --success-subtle: #ecfdf5;
             --danger: #dc2626;
             --danger-subtle: #fef2f2;
-            --warning: #b45309;
+            --warning: #d97706;
             --warning-subtle: #fffbeb;
         }
 
@@ -742,7 +742,7 @@
             border: 1px solid var(--border);
             background: var(--bg-surface);
             box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-            transition: border-color 0.15s ease;
+            transition: border-color 0.15s ease, background 0.15s ease;
         }
 
             .q-item.flagged {
@@ -767,27 +767,34 @@
             color: var(--text-primary);
         }
 
-        /* Nút Cờ Đánh Dấu */
+        /* CỜ ĐÁNH DẤU TINH GỌN (ẨN MẶC ĐỊNH - CHỈ HIỆN KHI RÊ HOẶC ACTIVE) */
         .btn-flag {
             background: transparent;
             border: none;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
+            opacity: 0;
+            transition: opacity 0.15s ease, transform 0.1s ease;
             padding: 0 2px;
             line-height: 1;
-            transition: transform 0.1s ease, color 0.15s ease;
         }
 
-            .btn-flag:hover {
-                transform: scale(1.2);
-                color: var(--warning);
-            }
+        .q-item:hover .btn-flag {
+            opacity: 0.6;
+        }
 
-            .btn-flag.active {
-                color: var(--warning) !important;
-                text-shadow: 0 0 8px rgba(210, 153, 34, 0.6);
-            }
+        .btn-flag:hover {
+            transform: scale(1.2);
+            color: var(--warning);
+            opacity: 1 !important;
+        }
+
+        .btn-flag.active {
+            opacity: 1 !important;
+            color: var(--warning) !important;
+            text-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+        }
 
         .q-options {
             display: flex;
@@ -965,6 +972,7 @@
             letter-spacing: -0.01em;
         }
 
+        /* Khung hiển thị Nghĩa Tiếng Việt Mới */
         .vocab-vi-box {
             background: linear-gradient(135deg, rgba(35, 134, 54, 0.12) 0%, rgba(35, 134, 54, 0.04) 100%);
             border: 1px solid rgba(46, 160, 67, 0.35);
@@ -1779,7 +1787,7 @@
                 viewMode: 'pdfL',
                 isGraded: false,
                 answers: {},
-                flags: {} // Lưu trạng thái gắn cờ phân vân
+                flags: {}
             });
         }
         let activeId = 1;
@@ -1867,7 +1875,6 @@
 
         // Bắt phím mũi tên <- / -> để tua âm thanh nhanh 5s
         window.addEventListener('keydown', (e) => {
-            // Không nhận phím khi đang nhập từ ở ô tra cứu hoặc tên hồ sơ
             if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
             if (e.key === 'ArrowLeft') {
                 e.preventDefault();
