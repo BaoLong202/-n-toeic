@@ -250,7 +250,7 @@
             overflow: hidden;
         }
 
-        /* Audio Toolbar Chuyên Dụng */
+        /* Audio Toolbar Mở ra / Đóng vào */
         .audio-toolbar {
             background: var(--bg-surface);
             border: 1px solid var(--border);
@@ -261,9 +261,29 @@
             gap: 10px;
             flex-shrink: 0;
             flex-wrap: wrap;
+            transition: all 0.2s ease;
         }
 
-            .audio-toolbar audio {
+            .audio-toolbar.collapsed {
+                padding: 4px 10px;
+                background: transparent;
+                border: none;
+                justify-content: flex-end;
+            }
+
+                .audio-toolbar.collapsed .audio-full-box {
+                    display: none;
+                }
+
+        .audio-full-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            flex-wrap: wrap;
+        }
+
+            .audio-full-box audio {
                 flex: 1;
                 height: 34px;
                 min-width: 220px;
@@ -293,6 +313,29 @@
             .audio-btn:hover {
                 background: var(--border);
                 color: var(--text-primary);
+            }
+
+        .audio-toggle-view-btn {
+            font-family: inherit;
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 4px 9px;
+            height: 28px;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+            background: var(--bg-subtle);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.15s ease;
+        }
+
+            .audio-toggle-view-btn:hover {
+                background: var(--brand-subtle);
+                color: var(--brand);
+                border-color: var(--brand);
             }
 
         .panels-split {
@@ -767,7 +810,7 @@
             color: var(--text-primary);
         }
 
-        /* CỜ ĐÁNH DẤU TINH GỌN (ẨN MẶC ĐỊNH - CHỈ HIỆN KHI RÊ HOẶC ACTIVE) */
+        /* Cờ đánh dấu ẩn mặc định, chỉ hiện khi rê chuột hoặc đã gắn */
         .btn-flag {
             background: transparent;
             border: none;
@@ -972,7 +1015,6 @@
             letter-spacing: -0.01em;
         }
 
-        /* Khung hiển thị Nghĩa Tiếng Việt Mới */
         .vocab-vi-box {
             background: linear-gradient(135deg, rgba(35, 134, 54, 0.12) 0%, rgba(35, 134, 54, 0.04) 100%);
             border: 1px solid rgba(46, 160, 67, 0.35);
@@ -1359,6 +1401,9 @@
         window.TOEIC_KEYS = window.TOEIC_KEYS || {};
         window.TOEIC_SCRIPTS = window.TOEIC_SCRIPTS || {};
         window.TOEIC_EXPLANATIONS = window.TOEIC_EXPLANATIONS || {};
+
+        // Biến lưu trạng thái đóng/mở thanh Audio
+        let isAudioToolbarOpen = true;
 
         function showCustomDialog({ title = 'Thông báo', message = '', isConfirm = false, onConfirm = null }) {
             const overlay = document.getElementById('customModalOverlay');
@@ -1873,6 +1918,24 @@
             }
         };
 
+        // Hàm bật tắt hiển thị thanh Audio
+        window.toggleAudioToolbar = function () {
+            isAudioToolbarOpen = !isAudioToolbarOpen;
+            const bar = document.getElementById('audioBarContainer');
+            const toggleBtn = document.getElementById('audioToggleViewBtn');
+            if (!bar || !toggleBtn) return;
+
+            if (isAudioToolbarOpen) {
+                bar.classList.remove('collapsed');
+                toggleBtn.innerHTML = '▲ Thu gọn';
+                toggleBtn.title = 'Thu gọn thanh phát âm thanh để rộng chỗ đọc đề';
+            } else {
+                bar.classList.add('collapsed');
+                toggleBtn.innerHTML = '🔊 Mở Audio';
+                toggleBtn.title = 'Mở lại thanh điều khiển âm thanh';
+            }
+        };
+
         // Bắt phím mũi tên <- / -> để tua âm thanh nhanh 5s
         window.addEventListener('keydown', (e) => {
             if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
@@ -2049,25 +2112,31 @@
 
             const testKey = window.TOEIC_KEYS[t.testNum] || {};
 
-            // Audio Player với bộ phím tua và tốc độ
+            // Audio Player với khả năng mở ra / đóng vô linh hoạt
             const audioBar = document.createElement('div');
-            audioBar.className = 'audio-toolbar';
+            audioBar.id = 'audioBarContainer';
+            audioBar.className = 'audio-toolbar' + (isAudioToolbarOpen ? '' : ' collapsed');
             audioBar.innerHTML = `
-        <audio id="mainAudioPlayer" controls src="${t.audioUrl}"></audio>
-        <div class="audio-ctrl-group">
-          <button class="audio-btn" onclick="skipAudio(-10)" title="Lùi 10s">↺ 10s</button>
-          <button class="audio-btn" onclick="skipAudio(-5)" title="Lùi 5s (hoặc bấm phím ←)">↺ 5s</button>
-          <button class="audio-btn" onclick="skipAudio(5)" title="Tiến 5s (hoặc bấm phím →)">5s ↻</button>
-          <button class="audio-btn" onclick="skipAudio(10)" title="Tiến 10s">10s ↻</button>
-          <select class="select-native" onchange="changeAudioSpeed(this.value)" title="Tốc độ phát">
-            <option value="0.75">0.75x</option>
-            <option value="1.0" selected>1.0x</option>
-            <option value="1.1">1.1x</option>
-            <option value="1.2">1.2x</option>
-            <option value="1.25">1.25x</option>
-            <option value="1.5">1.5x</option>
-          </select>
+        <div class="audio-full-box">
+          <audio id="mainAudioPlayer" controls src="${t.audioUrl}"></audio>
+          <div class="audio-ctrl-group">
+            <button class="audio-btn" onclick="skipAudio(-10)" title="Lùi 10s">↺ 10s</button>
+            <button class="audio-btn" onclick="skipAudio(-5)" title="Lùi 5s (hoặc bấm phím ←)">↺ 5s</button>
+            <button class="audio-btn" onclick="skipAudio(5)" title="Tiến 5s (hoặc bấm phím →)">5s ↻</button>
+            <button class="audio-btn" onclick="skipAudio(10)" title="Tiến 10s">10s ↻</button>
+            <select class="select-native" onchange="changeAudioSpeed(this.value)" title="Tốc độ phát">
+              <option value="0.75">0.75x</option>
+              <option value="1.0" selected>1.0x</option>
+              <option value="1.1">1.1x</option>
+              <option value="1.2">1.2x</option>
+              <option value="1.25">1.25x</option>
+              <option value="1.5">1.5x</option>
+            </select>
+          </div>
         </div>
+        <button class="audio-toggle-view-btn" id="audioToggleViewBtn" onclick="toggleAudioToolbar()">
+          ${isAudioToolbarOpen ? '▲ Thu gọn' : '🔊 Mở Audio'}
+        </button>
       `;
             mainStage.appendChild(audioBar);
 
@@ -2260,9 +2329,21 @@
                     : `<div style="padding:40px; color:var(--text-muted); text-align:center;">Chưa có transcript cho đề này.</div>`;
             }
 
-            document.getElementById('tabPdfL').addEventListener('click', () => { t.viewMode = 'pdfL'; renderMain(); });
-            document.getElementById('tabPdfR').addEventListener('click', () => { t.viewMode = 'pdfR'; renderMain(); });
-            document.getElementById('tabTranscript').addEventListener('click', () => { t.viewMode = 'transcript'; renderMain(); });
+            // Tự động thu gọn thanh Audio khi bấm sang đề Reading để màn hình rộng rãi nhất
+            document.getElementById('tabPdfL').addEventListener('click', () => {
+                t.viewMode = 'pdfL';
+                isAudioToolbarOpen = true;
+                renderMain();
+            });
+            document.getElementById('tabPdfR').addEventListener('click', () => {
+                t.viewMode = 'pdfR';
+                isAudioToolbarOpen = false; // Thu gọn audio khi qua Reading
+                renderMain();
+            });
+            document.getElementById('tabTranscript').addEventListener('click', () => {
+                t.viewMode = 'transcript';
+                renderMain();
+            });
 
             if (t.isGraded) {
                 const res = computeScore(t, testKey);
