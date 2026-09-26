@@ -73,7 +73,7 @@
 
         /* Header */
         header {
-            height: 52px;
+            height: 50px;
             padding: 0 16px;
             background: var(--bg-surface);
             border-bottom: 1px solid var(--border);
@@ -245,17 +245,17 @@
             display: flex;
             flex-direction: column;
             min-width: 0;
-            padding: 12px;
-            gap: 12px;
+            padding: 10px;
+            gap: 10px;
             overflow: hidden;
         }
 
-        /* Audio Toolbar Mở ra / Đóng vào */
+        /* Audio Toolbar Khi mở / Đóng */
         .audio-toolbar {
             background: var(--bg-surface);
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 8px 14px;
+            padding: 6px 12px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -264,28 +264,21 @@
             transition: all 0.2s ease;
         }
 
-            .audio-toolbar.collapsed {
-                padding: 4px 10px;
-                background: transparent;
-                border: none;
-                justify-content: flex-end;
+            .audio-toolbar.hidden {
+                display: none !important;
             }
-
-                .audio-toolbar.collapsed .audio-full-box {
-                    display: none;
-                }
 
         .audio-full-box {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex: 1;
             flex-wrap: wrap;
         }
 
             .audio-full-box audio {
                 flex: 1;
-                height: 34px;
+                height: 32px;
                 min-width: 220px;
             }
 
@@ -299,7 +292,7 @@
             font-family: inherit;
             font-size: 11px;
             font-weight: 700;
-            padding: 4px 8px;
+            padding: 3px 8px;
             height: 28px;
             border-radius: 5px;
             border: 1px solid var(--border);
@@ -315,60 +308,68 @@
                 color: var(--text-primary);
             }
 
-        .audio-toggle-view-btn {
+        .btn-hide-audio {
             font-family: inherit;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 700;
-            padding: 4px 9px;
+            padding: 3px 8px;
             height: 28px;
             border-radius: 5px;
             border: 1px solid var(--border);
-            background: var(--bg-subtle);
-            color: var(--text-secondary);
+            background: transparent;
+            color: var(--text-muted);
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
             transition: all 0.15s ease;
         }
 
-            .audio-toggle-view-btn:hover {
-                background: var(--brand-subtle);
-                color: var(--brand);
-                border-color: var(--brand);
+            .btn-hide-audio:hover {
+                background: var(--bg-subtle);
+                color: var(--danger);
             }
 
         .panels-split {
             flex: 1;
             display: flex;
-            gap: 12px;
+            gap: 10px;
             min-height: 0;
         }
 
+        /* Cấu trúc chia đôi linh hoạt */
         .viewer-panel {
-            flex: 1.15;
+            flex: 1.35;
             background: var(--bg-surface);
             border: 1px solid var(--border);
             border-radius: 8px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            transition: flex 0.2s ease;
+        }
+
+        .panels-split.focus-mode .viewer-panel {
+            flex: 3.5; /* Mở rộng tối đa khi bật chế độ đọc rộng */
+        }
+
+        .panels-split.focus-mode .sheet-panel {
+            flex: 1;
+            min-width: 290px;
         }
 
         .viewer-tabs {
             display: flex;
             background: var(--bg-subtle);
             border-bottom: 1px solid var(--border);
-            padding: 6px 10px;
+            padding: 5px 8px;
             gap: 6px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .viewer-tab {
             font-family: inherit;
             font-size: 12px;
             font-weight: 700;
-            padding: 6px 14px;
+            padding: 5px 12px;
             border-radius: 6px;
             border: 1px solid transparent;
             background: transparent;
@@ -389,6 +390,28 @@
                 box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             }
 
+        .tab-action-btn {
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+            background: var(--bg-surface);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+        }
+
+            .tab-action-btn:hover {
+                color: var(--brand);
+                border-color: var(--brand);
+            }
+
         .viewer-content {
             flex: 1;
             position: relative;
@@ -396,7 +419,7 @@
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
             background: var(--bg-page);
-            padding: 16px 14px;
+            padding: 14px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -494,10 +517,11 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            transition: flex 0.2s ease;
         }
 
         .sheet-header {
-            padding: 10px 14px;
+            padding: 8px 12px;
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
@@ -507,7 +531,7 @@
         }
 
         .sheet-title {
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 800;
             color: var(--text-primary);
         }
@@ -515,14 +539,14 @@
         .sheet-actions {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .select-native {
             font-family: inherit;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 700;
-            padding: 5px 8px;
+            padding: 4px 7px;
             border-radius: 6px;
             border: 1px solid var(--border);
             background: var(--bg-subtle);
@@ -533,9 +557,9 @@
 
         .btn-submit {
             font-family: inherit;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 700;
-            padding: 6px 14px;
+            padding: 5px 12px;
             border-radius: 6px;
             background: var(--brand);
             color: #ffffff;
@@ -550,9 +574,9 @@
 
         .btn-reset {
             font-family: inherit;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 600;
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 6px;
             background: transparent;
             color: var(--text-secondary);
@@ -568,11 +592,11 @@
         /* Score Strip & Aim */
         .score-strip {
             background: var(--bg-subtle);
-            padding: 10px 14px;
+            padding: 8px 12px;
             border-bottom: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             font-size: 12px;
             flex-shrink: 0;
         }
@@ -581,14 +605,14 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
         .strip-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
@@ -623,10 +647,10 @@
             background: transparent;
             border: none;
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 800;
-            width: 24px;
-            height: 28px;
+            width: 22px;
+            height: 26px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -640,8 +664,8 @@
             }
 
         .aim-control-group input {
-            width: 44px;
-            height: 28px;
+            width: 40px;
+            height: 26px;
             border: none;
             border-left: 1px solid var(--border);
             border-right: 1px solid var(--border);
@@ -649,7 +673,7 @@
             color: var(--brand);
             font-family: inherit;
             font-weight: 800;
-            font-size: 12.5px;
+            font-size: 12px;
             text-align: center;
             outline: none;
         }
@@ -657,17 +681,17 @@
         .timer-box {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         .timer-display {
             font-family: monospace;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 800;
             color: var(--text-primary);
             background: var(--bg-surface);
-            padding: 3px 8px;
-            border-radius: 6px;
+            padding: 2px 6px;
+            border-radius: 5px;
             border: 1px solid var(--border);
             letter-spacing: 0.05em;
         }
@@ -680,13 +704,14 @@
         .score-metric {
             font-weight: 700;
             color: var(--text-primary);
+            font-size: 11.5px;
         }
 
         .progress-bar-container {
             width: 100%;
-            height: 5px;
+            height: 4px;
             background: var(--border);
-            border-radius: 3px;
+            border-radius: 2px;
             overflow: hidden;
         }
 
@@ -701,8 +726,8 @@
         .part-nav-tabs {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 8px 12px;
+            gap: 5px;
+            padding: 6px 10px;
             background: var(--bg-surface);
             border-bottom: 1px solid var(--border);
             overflow-x: auto;
@@ -711,10 +736,10 @@
 
         .part-nav-tab {
             font-family: inherit;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 700;
-            padding: 5px 10px;
-            border-radius: 6px;
+            padding: 4px 8px;
+            border-radius: 5px;
             border: 1px solid var(--border);
             background: var(--bg-subtle);
             color: var(--text-secondary);
@@ -723,7 +748,7 @@
             transition: all 0.12s ease;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
 
             .part-nav-tab:hover {
@@ -743,45 +768,31 @@
                 border-color: var(--warning) !important;
             }
 
-        .part-badge {
-            font-size: 10px;
-            padding: 1px 5px;
-            border-radius: 10px;
-            background: rgba(100, 116, 139, 0.2);
-            color: var(--text-secondary);
-            font-weight: 700;
-        }
-
-        .part-nav-tab.active .part-badge {
-            background: rgba(255, 255, 255, 0.25);
-            color: #ffffff;
-        }
-
         /* Questions Grid */
         .sheet-body {
             flex: 1;
             overflow-y: auto;
-            padding: 12px;
+            padding: 10px;
         }
 
         .q-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(162px, 1fr));
-            gap: 8px;
+            grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+            gap: 6px;
         }
 
         .q-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
         }
 
         .q-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 6px 8px;
-            border-radius: 8px;
+            padding: 5px 7px;
+            border-radius: 7px;
             border: 1px solid var(--border);
             background: var(--bg-surface);
             box-shadow: 0 1px 2px rgba(0,0,0,0.04);
@@ -801,16 +812,16 @@
             display: flex;
             align-items: center;
             gap: 4px;
-            min-width: 38px;
+            min-width: 34px;
         }
 
         .q-number {
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 800;
             color: var(--text-primary);
         }
 
-        /* Cờ đánh dấu ẩn mặc định, chỉ hiện khi rê chuột hoặc đã gắn */
+        /* Cờ đánh dấu ẩn mặc định */
         .btn-flag {
             background: transparent;
             border: none;
@@ -819,7 +830,7 @@
             color: var(--text-muted);
             opacity: 0;
             transition: opacity 0.15s ease, transform 0.1s ease;
-            padding: 0 2px;
+            padding: 0 1px;
             line-height: 1;
         }
 
@@ -841,17 +852,17 @@
 
         .q-options {
             display: flex;
-            gap: 4px;
+            gap: 3px;
         }
 
         .q-bubble {
-            width: 27px;
-            height: 27px;
-            border-radius: 5px;
+            width: 25px;
+            height: 25px;
+            border-radius: 4px;
             border: 1.5px solid var(--border);
             background: var(--bg-surface);
             color: var(--text-secondary);
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -891,13 +902,13 @@
 
         .btn-quick-expl {
             font-family: inherit;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 700;
             color: #d97706;
             background: rgba(245, 158, 11, 0.12);
             border: 1px solid rgba(245, 158, 11, 0.35);
             border-radius: 5px;
-            padding: 4px 6px;
+            padding: 3px 5px;
             cursor: pointer;
             text-align: center;
             width: 100%;
@@ -908,8 +919,8 @@
             background: var(--bg-surface);
             border: 1.5px solid rgba(245, 158, 11, 0.5);
             border-radius: 6px;
-            padding: 9px 11px;
-            font-size: 12px;
+            padding: 8px 10px;
+            font-size: 11.5px;
             line-height: 1.6;
         }
 
@@ -999,7 +1010,7 @@
             overflow-y: auto;
         }
 
-        /* Giao diện Từ điển Card */
+        /* Giao diện Từ điển */
         .vocab-card {
             background: var(--bg-subtle);
             border: 1px solid var(--border);
@@ -1282,7 +1293,7 @@
         @media (max-width: 768px) {
             .sidebar {
                 position: fixed;
-                top: 52px;
+                top: 50px;
                 left: 0;
                 bottom: 0;
                 z-index: 45;
@@ -1304,8 +1315,8 @@
             }
 
             .viewer-panel {
-                height: 42vh;
-                flex: none;
+                height: 45vh;
+                flex: none !important;
             }
 
             .q-grid {
@@ -1372,7 +1383,7 @@
         <div class="main-stage" id="mainStage"></div>
         <div class="backdrop" id="backdrop"></div>
 
-        <!-- Tra từ vựng đa năng Anh - Việt & Việt - Anh -->
+        <!-- Tra từ vựng hai chiều -->
         <div class="drawer" id="vocabDrawer">
             <div class="drawer-head">
                 <span class="drawer-title">Tra từ & Dịch nghĩa</span>
@@ -1402,8 +1413,9 @@
         window.TOEIC_SCRIPTS = window.TOEIC_SCRIPTS || {};
         window.TOEIC_EXPLANATIONS = window.TOEIC_EXPLANATIONS || {};
 
-        // Biến lưu trạng thái đóng/mở thanh Audio
+        // Trạng thái hiển thị
         let isAudioToolbarOpen = true;
+        let isFocusPdfMode = false;
 
         function showCustomDialog({ title = 'Thông báo', message = '', isConfirm = false, onConfirm = null }) {
             const overlay = document.getElementById('customModalOverlay');
@@ -1819,7 +1831,7 @@
             sidebarEl.classList.remove('open');
         });
 
-        // Khởi tạo 10 đề ETS phân tách file PDF và Audio tuyệt đối
+        // Khởi tạo 10 đề ETS
         let tests = [];
         for (let i = 1; i <= 10; i++) {
             tests.push({
@@ -1903,7 +1915,7 @@
             localStorage.setItem('toeic_user_aim', val);
         };
 
-        // CÁC HÀM ĐIỀU KHIỂN AUDIO CHUYÊN DỤNG
+        // CÁC HÀM ĐIỀU KHIỂN AUDIO
         window.skipAudio = function (seconds) {
             const audio = document.getElementById('mainAudioPlayer');
             if (audio) {
@@ -1918,25 +1930,19 @@
             }
         };
 
-        // Hàm bật tắt hiển thị thanh Audio
-        window.toggleAudioToolbar = function () {
-            isAudioToolbarOpen = !isAudioToolbarOpen;
-            const bar = document.getElementById('audioBarContainer');
-            const toggleBtn = document.getElementById('audioToggleViewBtn');
-            if (!bar || !toggleBtn) return;
-
-            if (isAudioToolbarOpen) {
-                bar.classList.remove('collapsed');
-                toggleBtn.innerHTML = '▲ Thu gọn';
-                toggleBtn.title = 'Thu gọn thanh phát âm thanh để rộng chỗ đọc đề';
-            } else {
-                bar.classList.add('collapsed');
-                toggleBtn.innerHTML = '🔊 Mở Audio';
-                toggleBtn.title = 'Mở lại thanh điều khiển âm thanh';
-            }
+        // Hàm ẩn / hiện thanh Audio hoàn toàn
+        window.setAudioToolbarVisible = function (visible) {
+            isAudioToolbarOpen = visible;
+            renderMain();
         };
 
-        // Bắt phím mũi tên <- / -> để tua âm thanh nhanh 5s
+        // Chế độ mở rộng khung đọc đề Reading
+        window.toggleFocusPdfMode = function () {
+            isFocusPdfMode = !isFocusPdfMode;
+            renderMain();
+        };
+
+        // Phím tắt tua nhanh
         window.addEventListener('keydown', (e) => {
             if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
             if (e.key === 'ArrowLeft') {
@@ -1948,7 +1954,7 @@
             }
         });
 
-        // Xử lý gắn cờ phân vân
+        // Gắn cờ câu phân vân
         window.toggleFlag = function (q) {
             const t = tests.find(x => x.id === activeId);
             if (!t) return;
@@ -2112,36 +2118,35 @@
 
             const testKey = window.TOEIC_KEYS[t.testNum] || {};
 
-            // Audio Player với khả năng mở ra / đóng vô linh hoạt
-            const audioBar = document.createElement('div');
-            audioBar.id = 'audioBarContainer';
-            audioBar.className = 'audio-toolbar' + (isAudioToolbarOpen ? '' : ' collapsed');
-            audioBar.innerHTML = `
-        <div class="audio-full-box">
-          <audio id="mainAudioPlayer" controls src="${t.audioUrl}"></audio>
-          <div class="audio-ctrl-group">
-            <button class="audio-btn" onclick="skipAudio(-10)" title="Lùi 10s">↺ 10s</button>
-            <button class="audio-btn" onclick="skipAudio(-5)" title="Lùi 5s (hoặc bấm phím ←)">↺ 5s</button>
-            <button class="audio-btn" onclick="skipAudio(5)" title="Tiến 5s (hoặc bấm phím →)">5s ↻</button>
-            <button class="audio-btn" onclick="skipAudio(10)" title="Tiến 10s">10s ↻</button>
-            <select class="select-native" onchange="changeAudioSpeed(this.value)" title="Tốc độ phát">
-              <option value="0.75">0.75x</option>
-              <option value="1.0" selected>1.0x</option>
-              <option value="1.1">1.1x</option>
-              <option value="1.2">1.2x</option>
-              <option value="1.25">1.25x</option>
-              <option value="1.5">1.5x</option>
-            </select>
+            // Audio Bar độc lập (chỉ xuất hiện khi isAudioToolbarOpen = true)
+            if (isAudioToolbarOpen) {
+                const audioBar = document.createElement('div');
+                audioBar.className = 'audio-toolbar';
+                audioBar.innerHTML = `
+          <div class="audio-full-box">
+            <audio id="mainAudioPlayer" controls src="${t.audioUrl}"></audio>
+            <div class="audio-ctrl-group">
+              <button class="audio-btn" onclick="skipAudio(-10)" title="Lùi 10s">↺ 10s</button>
+              <button class="audio-btn" onclick="skipAudio(-5)" title="Lùi 5s (phím ←)">↺ 5s</button>
+              <button class="audio-btn" onclick="skipAudio(5)" title="Tiến 5s (phím →)">5s ↻</button>
+              <button class="audio-btn" onclick="skipAudio(10)" title="Tiến 10s">10s ↻</button>
+              <select class="select-native" onchange="changeAudioSpeed(this.value)" title="Tốc độ phát">
+                <option value="0.75">0.75x</option>
+                <option value="1.0" selected>1.0x</option>
+                <option value="1.1">1.1x</option>
+                <option value="1.2">1.2x</option>
+                <option value="1.25">1.25x</option>
+                <option value="1.5">1.5x</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <button class="audio-toggle-view-btn" id="audioToggleViewBtn" onclick="toggleAudioToolbar()">
-          ${isAudioToolbarOpen ? '▲ Thu gọn' : '🔊 Mở Audio'}
-        </button>
-      `;
-            mainStage.appendChild(audioBar);
+          <button class="btn-hide-audio" onclick="setAudioToolbarVisible(false)" title="Đóng thanh Audio để rộng chỗ đọc đề Reading">✕ Đóng Audio</button>
+        `;
+                mainStage.appendChild(audioBar);
+            }
 
             const panels = document.createElement('div');
-            panels.className = 'panels-split';
+            panels.className = 'panels-split' + (isFocusPdfMode ? ' focus-mode' : '');
 
             const currentActivePdf = t.viewMode === 'pdfR' ? t.pdfReadingUrl : t.pdfListeningUrl;
 
@@ -2153,7 +2158,14 @@
           <button class="viewer-tab ${t.viewMode === 'pdfL' ? 'active' : ''}" id="tabPdfL">Đề Listening (PDF)</button>
           <button class="viewer-tab ${t.viewMode === 'pdfR' ? 'active' : ''}" id="tabPdfR">Đề Reading (PDF)</button>
           <button class="viewer-tab ${t.viewMode === 'transcript' ? 'active' : ''}" id="tabTranscript">Listening Script</button>
-          <a href="${currentActivePdf}" target="_blank" class="viewer-tab" style="text-decoration:none; margin-left:auto; color:var(--brand); font-weight:700;">↗ Mở tab mới</a>
+
+          <div style="display:flex; align-items:center; gap:6px; margin-left:auto;">
+            ${!isAudioToolbarOpen ? `<button class="tab-action-btn" onclick="setAudioToolbarVisible(true)" style="color:var(--brand); font-weight:700;">🔊 Mở Audio</button>` : ''}
+            <button class="tab-action-btn" onclick="toggleFocusPdfMode()" title="Mở rộng / Thu gọn khung đọc đề">
+              ${isFocusPdfMode ? '⛶ Thu gọn đề' : '⛶ Đọc rộng hơn'}
+            </button>
+            <a href="${currentActivePdf}" target="_blank" class="tab-action-btn" style="color:var(--brand); font-weight:700;">↗ Mở tab mới</a>
+          </div>
         </div>
         <div class="viewer-content" id="docArea"></div>
       `;
@@ -2195,7 +2207,7 @@
                   <option value="none" ${selectedTimerMode === 'none' ? 'selected' : ''}>Không giới hạn</option>
                 </select>
                 <span class="timer-display" id="timerText">${selectedTimerMode === 'none' ? '--:--' : formatTimer(timerSeconds)}</span>
-                <button id="timerToggleBtn" class="btn-outline" style="padding:4px 8px; font-size:11px;">
+                <button id="timerToggleBtn" class="btn-outline" style="padding:3px 7px; font-size:11px;">
                   ${isTimerRunning ? 'Dừng' : 'Chạy'}
                 </button>
               </div>
@@ -2255,7 +2267,6 @@
                 else { startTimer(); document.getElementById('timerToggleBtn').textContent = 'Dừng'; }
             });
 
-            // Nút Làm lại kích hoạt Pop-up tùy chỉnh
             document.getElementById('clearBtn').addEventListener('click', () => {
                 showCustomDialog({
                     title: 'Làm lại đề thi',
@@ -2292,7 +2303,7 @@
                 const pdfUrl = isListening ? t.pdfListeningUrl : t.pdfReadingUrl;
                 const fileLabel = isListening ? `test${t.testNum}L.pdf` : `test${t.testNum}R.pdf`;
 
-                docArea.innerHTML = `<div style="color:var(--text-muted); text-align:center; padding:35px 10px; font-size:13px; font-weight:600;">Đang chuẩn bị trang đề ${isListening ? 'Listening' : 'Reading'}...</div>`;
+                docArea.innerHTML = `<div style="color:var(--text-muted); text-align:center; padding:35px 10px; font-size:13px; font-weight:600;">Đang tải trang đề ${isListening ? 'Listening' : 'Reading'}...</div>`;
                 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
                 pdfjsLib.getDocument(pdfUrl).promise.then(async (pdf) => {
@@ -2329,7 +2340,7 @@
                     : `<div style="padding:40px; color:var(--text-muted); text-align:center;">Chưa có transcript cho đề này.</div>`;
             }
 
-            // Tự động thu gọn thanh Audio khi bấm sang đề Reading để màn hình rộng rãi nhất
+            // Tự động ẩn hẳn Audio khi chuyển sang đề Reading
             document.getElementById('tabPdfL').addEventListener('click', () => {
                 t.viewMode = 'pdfL';
                 isAudioToolbarOpen = true;
@@ -2337,7 +2348,7 @@
             });
             document.getElementById('tabPdfR').addEventListener('click', () => {
                 t.viewMode = 'pdfR';
-                isAudioToolbarOpen = false; // Thu gọn audio khi qua Reading
+                isAudioToolbarOpen = false; // Tự động đóng hoàn toàn khi xem Reading
                 renderMain();
             });
             document.getElementById('tabTranscript').addEventListener('click', () => {
@@ -2351,7 +2362,7 @@
             }
         }
 
-        // Khởi chạy ban đầu
+        // Khởi chạy
         ensureTestDataLoaded(1, () => {
             renderSidebar();
             renderMain();
