@@ -28,6 +28,8 @@
             --success-subtle: rgba(46, 160, 67, 0.15);
             --danger: #da3633;
             --danger-subtle: rgba(248, 81, 73, 0.15);
+            --warning: #d29922;
+            --warning-subtle: rgba(210, 153, 34, 0.15);
             --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
@@ -47,6 +49,8 @@
             --success-subtle: #ecfdf5;
             --danger: #dc2626;
             --danger-subtle: #fef2f2;
+            --warning: #b45309;
+            --warning-subtle: #fffbeb;
         }
 
         * {
@@ -246,6 +250,7 @@
             overflow: hidden;
         }
 
+        /* Audio Toolbar Chuyên Dụng */
         .audio-toolbar {
             background: var(--bg-surface);
             border: 1px solid var(--border);
@@ -253,20 +258,42 @@
             padding: 8px 14px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-shrink: 0;
+            flex-wrap: wrap;
         }
 
             .audio-toolbar audio {
                 flex: 1;
                 height: 34px;
+                min-width: 220px;
             }
 
-        .audio-empty {
-            font-size: 12.5px;
-            color: var(--text-muted);
-            font-weight: 600;
+        .audio-ctrl-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
+
+        .audio-btn {
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            height: 28px;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+            background: var(--bg-subtle);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.12s ease;
+            white-space: nowrap;
+        }
+
+            .audio-btn:hover {
+                background: var(--border);
+                color: var(--text-primary);
+            }
 
         .panels-split {
             flex: 1;
@@ -342,7 +369,7 @@
             border-radius: 4px;
         }
 
-        /* Transcript Layout */
+        /* Transcript */
         .script-container {
             padding: 16px 20px;
             line-height: 1.7;
@@ -667,6 +694,12 @@
                 border-color: var(--brand) !important;
             }
 
+            .part-nav-tab.flag-tab.active {
+                background: var(--warning) !important;
+                color: #ffffff !important;
+                border-color: var(--warning) !important;
+            }
+
         .part-badge {
             font-size: 10px;
             padding: 1px 5px;
@@ -690,7 +723,7 @@
 
         .q-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(154px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(162px, 1fr));
             gap: 8px;
         }
 
@@ -709,18 +742,52 @@
             border: 1px solid var(--border);
             background: var(--bg-surface);
             box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+            transition: border-color 0.15s ease;
         }
+
+            .q-item.flagged {
+                border-color: var(--warning) !important;
+                background: var(--warning-subtle);
+            }
 
             .q-item.graded {
                 background: var(--bg-subtle);
             }
 
+        .q-left-box {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            min-width: 38px;
+        }
+
         .q-number {
             font-size: 12px;
             font-weight: 800;
             color: var(--text-primary);
-            min-width: 24px;
         }
+
+        /* Nút Cờ Đánh Dấu */
+        .btn-flag {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            color: var(--text-muted);
+            padding: 0 2px;
+            line-height: 1;
+            transition: transform 0.1s ease, color 0.15s ease;
+        }
+
+            .btn-flag:hover {
+                transform: scale(1.2);
+                color: var(--warning);
+            }
+
+            .btn-flag.active {
+                color: var(--warning) !important;
+                text-shadow: 0 0 8px rgba(210, 153, 34, 0.6);
+            }
 
         .q-options {
             display: flex;
@@ -728,13 +795,13 @@
         }
 
         .q-bubble {
-            width: 28px;
-            height: 28px;
+            width: 27px;
+            height: 27px;
             border-radius: 5px;
             border: 1.5px solid var(--border);
             background: var(--bg-surface);
             color: var(--text-secondary);
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -882,7 +949,7 @@
             overflow-y: auto;
         }
 
-        /* Giao diện Từ điển Card Chuẩn */
+        /* Giao diện Từ điển Card */
         .vocab-card {
             background: var(--bg-subtle);
             border: 1px solid var(--border);
@@ -898,7 +965,6 @@
             letter-spacing: -0.01em;
         }
 
-        /* Khung hiển thị Nghĩa Tiếng Việt Mới */
         .vocab-vi-box {
             background: linear-gradient(135deg, rgba(35, 134, 54, 0.12) 0%, rgba(35, 134, 54, 0.04) 100%);
             border: 1px solid rgba(46, 160, 67, 0.35);
@@ -1330,7 +1396,7 @@
             document.head.appendChild(script);
         }
 
-        // Menu & Dark mode
+        // Menu & Theme
         const menuToggleBtn = document.getElementById('menuToggleBtn');
         const dropdownMenu = document.getElementById('dropdownMenu');
         menuToggleBtn.addEventListener('click', (e) => {
@@ -1346,7 +1412,7 @@
             localStorage.setItem('toeic_theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
         });
 
-        // Sidebar Mục Lục
+        // Sidebar
         const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
         const sidebarEl = document.getElementById('sidebar');
         const backdrop = document.getElementById('backdrop');
@@ -1712,7 +1778,8 @@
                 audioUrl: `/audio/test${i}.mp3`,
                 viewMode: 'pdfL',
                 isGraded: false,
-                answers: {}
+                answers: {},
+                flags: {} // Lưu trạng thái gắn cờ phân vân
             });
         }
         let activeId = 1;
@@ -1783,6 +1850,42 @@
             localStorage.setItem('toeic_user_aim', val);
         };
 
+        // CÁC HÀM ĐIỀU KHIỂN AUDIO CHUYÊN DỤNG
+        window.skipAudio = function (seconds) {
+            const audio = document.getElementById('mainAudioPlayer');
+            if (audio) {
+                audio.currentTime = Math.max(0, Math.min(audio.duration || 0, audio.currentTime + seconds));
+            }
+        };
+
+        window.changeAudioSpeed = function (speed) {
+            const audio = document.getElementById('mainAudioPlayer');
+            if (audio) {
+                audio.playbackRate = parseFloat(speed);
+            }
+        };
+
+        // Bắt phím mũi tên <- / -> để tua âm thanh nhanh 5s
+        window.addEventListener('keydown', (e) => {
+            // Không nhận phím khi đang nhập từ ở ô tra cứu hoặc tên hồ sơ
+            if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                window.skipAudio(-5);
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                window.skipAudio(5);
+            }
+        });
+
+        // Xử lý gắn cờ phân vân
+        window.toggleFlag = function (q) {
+            const t = tests.find(x => x.id === activeId);
+            if (!t) return;
+            t.flags[q] = !t.flags[q];
+            renderQuestionsGridOnly();
+        };
+
         function renderSidebar() {
             const list = document.getElementById('testList');
             list.innerHTML = '';
@@ -1849,17 +1952,31 @@
 
             const testKey = window.TOEIC_KEYS[t.testNum] || {};
             const currentExpl = window.TOEIC_EXPLANATIONS[t.testNum] || {};
-            const range = PART_RANGES[activePartFilter] || [1, 200];
 
-            for (let q = range[0]; q <= range[1]; q++) {
+            let targetQuestions = [];
+            if (activePartFilter === 'flagged') {
+                for (let q = 1; q <= 200; q++) {
+                    if (t.flags[q]) targetQuestions.push(q);
+                }
+                if (targetQuestions.length === 0) {
+                    grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:35px 10px; color:var(--text-muted); font-size:13px; font-weight:600;">Chưa có câu nào được gắn cờ phân vân ⚑.</div>';
+                    return;
+                }
+            } else {
+                const range = PART_RANGES[activePartFilter] || [1, 200];
+                for (let q = range[0]; q <= range[1]; q++) targetQuestions.push(q);
+            }
+
+            targetQuestions.forEach(q => {
                 const hasKey = !!testKey[q];
                 const isWrong = t.isGraded && hasKey && t.answers[q] && t.answers[q] !== testKey[q];
+                const isFlagged = !!t.flags[q];
                 const wrapper = document.createElement('div');
                 wrapper.className = 'q-wrapper';
 
                 const row = document.createElement('div');
                 row.id = `qrow-${q}`;
-                row.className = 'q-item' + (t.isGraded && hasKey ? ' graded' : '');
+                row.className = 'q-item' + (t.isGraded && hasKey ? ' graded' : '') + (isFlagged ? ' flagged' : '');
 
                 const opts = (q >= 7 && q <= 31) ? ['A', 'B', 'C'] : ['A', 'B', 'C', 'D'];
                 let optsHtml = '<div class="q-options">';
@@ -1874,7 +1991,12 @@
                 });
                 optsHtml += '</div>';
 
-                row.innerHTML = `<span class="q-number">${q}</span>` + optsHtml;
+                row.innerHTML = `
+          <div class="q-left-box">
+            <button class="btn-flag ${isFlagged ? 'active' : ''}" onclick="toggleFlag(${q})" title="Gắn cờ câu phân vân">⚑</button>
+            <span class="q-number">${q}</span>
+          </div>
+        ` + optsHtml;
                 wrapper.appendChild(row);
 
                 if (isWrong) {
@@ -1893,7 +2015,7 @@
                     wrapper.appendChild(explBox);
                 }
                 grid.appendChild(wrapper);
-            }
+            });
 
             document.querySelectorAll('.part-nav-tab').forEach(tab => {
                 tab.classList.toggle('active', tab.getAttribute('data-part') === activePartFilter);
@@ -1920,12 +2042,26 @@
 
             const testKey = window.TOEIC_KEYS[t.testNum] || {};
 
-            // Audio Player
+            // Audio Player với bộ phím tua và tốc độ
             const audioBar = document.createElement('div');
             audioBar.className = 'audio-toolbar';
-            audioBar.innerHTML = t.audioUrl
-                ? `<audio controls src="${t.audioUrl}" style="flex:1; height:34px;"></audio>`
-                : `<div class="audio-empty">File âm thanh chưa được tải lên</div>`;
+            audioBar.innerHTML = `
+        <audio id="mainAudioPlayer" controls src="${t.audioUrl}"></audio>
+        <div class="audio-ctrl-group">
+          <button class="audio-btn" onclick="skipAudio(-10)" title="Lùi 10s">↺ 10s</button>
+          <button class="audio-btn" onclick="skipAudio(-5)" title="Lùi 5s (hoặc bấm phím ←)">↺ 5s</button>
+          <button class="audio-btn" onclick="skipAudio(5)" title="Tiến 5s (hoặc bấm phím →)">5s ↻</button>
+          <button class="audio-btn" onclick="skipAudio(10)" title="Tiến 10s">10s ↻</button>
+          <select class="select-native" onchange="changeAudioSpeed(this.value)" title="Tốc độ phát">
+            <option value="0.75">0.75x</option>
+            <option value="1.0" selected>1.0x</option>
+            <option value="1.1">1.1x</option>
+            <option value="1.2">1.2x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+          </select>
+        </div>
+      `;
             mainStage.appendChild(audioBar);
 
             const panels = document.createElement('div');
@@ -1997,6 +2133,7 @@
 
         <div class="part-nav-tabs">
           <button class="part-nav-tab active" data-part="all" onclick="switchPartTab('all')">Tất cả</button>
+          <button class="part-nav-tab flag-tab" data-part="flagged" onclick="switchPartTab('flagged')">⚑ Đã gắn cờ</button>
           <button class="part-nav-tab" data-part="p1" onclick="switchPartTab('p1')">Part 1</button>
           <button class="part-nav-tab" data-part="p2" onclick="switchPartTab('p2')">Part 2</button>
           <button class="part-nav-tab" data-part="p3" onclick="switchPartTab('p3')">Part 3</button>
@@ -2049,7 +2186,7 @@
                     message: 'Bạn có chắc chắn muốn xóa toàn bộ câu trả lời để làm lại đề này từ đầu không?',
                     isConfirm: true,
                     onConfirm: () => {
-                        t.answers = {}; t.isGraded = false; stopTimer();
+                        t.answers = {}; t.flags = {}; t.isGraded = false; stopTimer();
                         if (selectedTimerMode !== 'none') timerSeconds = parseInt(selectedTimerMode, 10) * 60;
                         renderMain();
                     }
