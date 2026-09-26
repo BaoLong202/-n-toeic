@@ -303,7 +303,7 @@
     border-radius: 4px;
   }
 
-  /* CĂN CHỈNH BẢNG TRANSCRIPT NGAY NGẮN & ĐẸP */
+  /* Transcript layout */
   .script-container { 
     padding: 16px 20px; 
     line-height: 1.7; 
@@ -356,7 +356,7 @@
     color: var(--text-secondary);
   }
 
-  /* SHEET PANEL */
+  /* Sheet Panel */
   .sheet-panel {
     flex: 1;
     background: var(--bg-surface);
@@ -403,7 +403,7 @@
   }
   .btn-reset:hover { background: var(--bg-subtle); color: var(--text-primary); }
 
-  /* SCORE STRIP CĂN CHỈNH GỌN GÀNG */
+  /* SCORE STRIP & AIM CONTROLLER */
   .score-strip {
     background: var(--bg-subtle);
     padding: 10px 14px;
@@ -434,19 +434,57 @@
     font-weight: 700;
     color: var(--text-muted);
   }
-  .aim-box input {
-    width: 52px;
-    padding: 4px 6px;
-    border-radius: 6px;
+
+  /* Ẩn mũi tên mặc định của input type=number */
+  .aim-control-group input::-webkit-outer-spin-button,
+  .aim-control-group input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .aim-control-group input[type=number] {
+    -moz-appearance: textfield;
+  }
+  .aim-control-group {
+    display: inline-flex;
+    align-items: center;
+    background: var(--bg-surface);
     border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .aim-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 800;
+    width: 24px;
+    height: 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+  }
+  .aim-btn:hover {
+    background: var(--bg-subtle);
+    color: var(--brand);
+  }
+  .aim-control-group input {
+    width: 44px;
+    height: 28px;
+    border: none;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    background: transparent;
+    color: var(--brand);
     font-family: inherit;
     font-weight: 800;
-    font-size: 12px;
+    font-size: 12.5px;
     text-align: center;
-    background: var(--bg-surface);
-    color: var(--text-primary);
     outline: none;
   }
+
   .timer-box { 
     display: flex; 
     align-items: center; 
@@ -585,22 +623,6 @@
   }
   .inline-expl-box.show { display: block; }
 
-  /* Review Section */
-  .review-section { margin-top: 18px; display: flex; flex-direction: column; gap: 8px; }
-  .review-header-row { display: flex; align-items: center; justify-content: space-between; }
-  .review-header { font-size: 12.5px; font-weight: 800; text-transform: uppercase; color: var(--text-primary); }
-  .filter-tabs { display: flex; gap: 4px; }
-  .filter-tab {
-    font-family: inherit; font-size: 11px; font-weight: 700; padding: 4px 8px;
-    border-radius: 4px; border: 1px solid var(--border); background: var(--bg-surface);
-    color: var(--text-secondary); cursor: pointer;
-  }
-  .filter-tab.active { background: var(--brand-subtle); color: var(--brand); border-color: var(--brand); }
-  .review-card { border: 1px solid var(--border); border-radius: 6px; background: var(--bg-surface); overflow: hidden; }
-  .review-card-header { padding: 10px 12px; font-size: 12.5px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; }
-  .review-card-body { padding: 12px 14px; font-size: 12.5px; line-height: 1.65; border-top: 1px solid var(--border); display: none; background: var(--bg-page); }
-  .review-card.open .review-card-body { display: block; }
-
   /* Drawer & Overlays */
   .drawer {
     position: fixed; top: 0; right: -380px; width: 360px; max-width: 90vw; height: 100%;
@@ -623,16 +645,6 @@
   .vocab-body { flex: 1; overflow-y: auto; }
   .backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4); z-index: 40; display: none; }
   .backdrop.open { display: block; }
-
-  .profile-overlay {
-    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 100;
-    display: none; align-items: center; justify-content: center; padding: 16px;
-  }
-  .profile-overlay.open { display: flex; }
-  .profile-card {
-    background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px;
-    padding: 20px; width: 100%; max-width: 380px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-  }
 
   @media (max-width: 768px) {
     .panels-split { flex-direction: column; }
@@ -797,6 +809,17 @@ function startTimer() {
     }
   }, 1000);
 }
+
+// Xử lý tăng giảm điểm Aim bằng 2 nút - và +
+window.changeAim = function(delta) {
+  const input = document.getElementById('aimInput');
+  if (!input) return;
+  let val = (parseInt(input.value, 10) || 700) + delta;
+  val = Math.max(10, Math.min(990, val));
+  input.value = val;
+  userAimScore = val;
+  localStorage.setItem('toeic_user_aim', val);
+};
 
 function renderSidebar() {
   const list = document.getElementById('testList');
@@ -977,7 +1000,11 @@ function renderMain() {
         <div class="strip-left">
           <div class="aim-box">
             <span>Aim:</span>
-            <input type="number" id="aimInput" value="${userAimScore}" step="50">
+            <div class="aim-control-group">
+              <button class="aim-btn" onclick="changeAim(-50)">-</button>
+              <input type="number" id="aimInput" value="${userAimScore}" step="50" min="10" max="990">
+              <button class="aim-btn" onclick="changeAim(50)">+</button>
+            </div>
           </div>
           <div class="timer-box">
             <select id="timerModeSelect" class="select-native">
