@@ -303,7 +303,7 @@
     border-radius: 4px;
   }
 
-  /* Transcript */
+  /* Transcript layout */
   .script-container { 
     padding: 16px 20px; 
     line-height: 1.7; 
@@ -403,7 +403,7 @@
   }
   .btn-reset:hover { background: var(--bg-subtle); color: var(--text-primary); }
 
-  /* Score Strip */
+  /* SCORE STRIP & AIM CONTROLLER */
   .score-strip {
     background: var(--bg-subtle);
     padding: 10px 14px;
@@ -434,6 +434,7 @@
     font-weight: 700;
     color: var(--text-muted);
   }
+
   .aim-control-group input::-webkit-outer-spin-button,
   .aim-control-group input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -619,7 +620,7 @@
 
   /* Drawer & Overlays */
   .drawer {
-    position: fixed; top: 0; right: -420px; width: 380px; max-width: 90vw; height: 100%;
+    position: fixed; top: 0; right: -430px; width: 390px; max-width: 90vw; height: 100%;
     background: var(--bg-surface); border-left: 1px solid var(--border); z-index: 50;
     transition: right 0.22s ease; display: flex; flex-direction: column; padding: 18px;
     box-shadow: -4px 0 25px rgba(0,0,0,0.4);
@@ -641,99 +642,118 @@
   }
   .vocab-body { flex: 1; overflow-y: auto; }
 
-  /* GIAO DIỆN TỪ ĐIỂN MỚI */
+  /* GIAO DIỆN TỪ ĐIỂN CARD CHUẨN ĐẸP */
   .vocab-card {
     background: var(--bg-subtle);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 14px;
+    border-radius: 10px;
+    padding: 16px;
     margin-bottom: 12px;
   }
-  .vocab-header-line {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 6px;
-  }
   .vocab-word {
-    font-size: 19px;
+    font-size: 22px;
     font-weight: 800;
     color: var(--brand);
+    letter-spacing: -0.01em;
   }
   .vocab-vi-box {
     background: rgba(35, 134, 54, 0.15);
     border-left: 3px solid #238636;
-    border-radius: 4px;
-    padding: 8px 10px;
-    margin: 8px 0 12px 0;
-    font-size: 13.5px;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin: 10px 0 14px 0;
+    font-size: 14px;
     color: var(--text-primary);
-    font-weight: 600;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   .vocab-section-title {
     font-size: 11px;
     font-weight: 800;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    margin: 12px 0 6px 0;
+    letter-spacing: 0.05em;
+    margin: 14px 0 8px 0;
   }
   .word-family-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 6px;
-    margin-bottom: 12px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
   }
   .family-row {
     display: flex;
-    font-size: 12px;
-    gap: 6px;
+    font-size: 12.5px;
+    gap: 8px;
     align-items: center;
   }
   .family-tag {
-    font-size: 10.5px;
+    font-size: 10px;
     font-weight: 800;
-    padding: 2px 6px;
+    padding: 2px 7px;
     border-radius: 4px;
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
-    min-width: 32px;
+    min-width: 36px;
     text-align: center;
+    text-transform: uppercase;
   }
+  .family-tag.n { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+  .family-tag.v { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+  .family-tag.adj { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+  .family-tag.adv { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
   .family-words {
-    color: var(--text-secondary);
+    color: var(--text-primary);
     font-weight: 600;
   }
   .synonym-chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
-    margin-top: 4px;
+    gap: 6px;
   }
   .syn-chip {
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: 600;
-    padding: 3px 8px;
-    border-radius: 5px;
+    padding: 4px 10px;
+    border-radius: 6px;
     background: var(--bg-surface);
     border: 1px solid var(--border);
     color: var(--text-primary);
     cursor: pointer;
+    transition: all 0.15s ease;
   }
   .syn-chip:hover {
     border-color: var(--brand);
     color: var(--brand);
+    background: var(--brand-subtle);
   }
-  .vocab-defs {
+  .def-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .def-item-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
     font-size: 12.5px;
-    color: var(--text-secondary);
     line-height: 1.6;
-    margin-top: 6px;
+    color: var(--text-secondary);
   }
-  .vocab-def-item {
-    margin-bottom: 4px;
-    padding-left: 8px;
-    border-left: 2px solid var(--border);
+  .def-badge {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    color: var(--brand);
+    margin-right: 6px;
   }
   .vocab-note { font-size: 12px; color: var(--text-muted); margin-top: 12px; }
 
@@ -814,18 +834,18 @@
   <div class="main-stage" id="mainStage"></div>
   <div class="backdrop" id="backdrop"></div>
 
-  <!-- Tra từ vựng đầy đủ chức năng -->
+  <!-- Tra từ vựng đa năng Anh - Việt & Việt - Anh -->
   <div class="drawer" id="vocabDrawer">
     <div class="drawer-head">
-      <span class="drawer-title">Tra từ vựng</span>
+      <span class="drawer-title">Tra từ & Dịch nghĩa</span>
       <button class="drawer-close" id="vocabCloseBtn">&times;</button>
     </div>
     <div class="search-row">
-      <input type="text" id="vocabInput" placeholder="Nhập từ tiếng Anh...">
+      <input type="text" id="vocabInput" placeholder="Nhập từ tiếng Anh hoặc tiếng Việt...">
       <button id="vocabSearchBtn">Tra</button>
     </div>
     <div class="vocab-body" id="vocabResult">
-      <div class="vocab-note" style="text-align:center; padding:20px 0;">Nhập từ hoặc bôi đen văn bản trong bài để tra cứu.</div>
+      <div class="vocab-note" style="text-align:center; padding:20px 0;">Hỗ trợ tra hai chiều: Anh $\rightarrow$ Việt hoặc Việt $\rightarrow$ Anh.</div>
     </div>
   </div>
 
@@ -984,7 +1004,7 @@ document.getElementById('createProfileBtn').addEventListener('click', () => {
 
 updateProfileBtnLabel();
 
-// Tra từ vựng đầy đủ: Nghĩa tiếng Việt, Word family (N/V/Adj/Adv), Synonyms
+// Tra từ vựng hai chiều: Tự động Anh <-> Việt
 const vocabDrawer = document.getElementById('vocabDrawer');
 const vocabInput = document.getElementById('vocabInput');
 const vocabResult = document.getElementById('vocabResult');
@@ -1013,9 +1033,16 @@ async function fetchWithTimeout(url, ms = 3000) {
   }
 }
 
-async function translateToVi(text) {
+// Kiểm tra xem chuỗi có phải tiếng Việt không
+function isVietnamese(text) {
+  const vnRegex = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
+  return vnRegex.test(text);
+}
+
+// Dịch 2 chiều bằng Google Translate API miễn phí
+async function translateText(text, sl, tl) {
   try {
-    const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=' + encodeURIComponent(text);
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=` + encodeURIComponent(text);
     const data = await fetchWithTimeout(url);
     if (data && data[0]) {
       return data[0].map(s => s[0]).join('');
@@ -1055,71 +1082,107 @@ async function fetchWordFamily(word) {
 
 async function fetchSynonyms(word) {
   try {
-    const data = await fetchWithTimeout(`https://api.datamuse.com/words?rel_syn=${encodeURIComponent(word)}&max=8`);
-    if (Array.isArray(data)) return data.map(x => x.word);
+    const data = await fetchWithTimeout(`https://api.datamuse.com/words?rel_syn=${encodeURIComponent(word)}&md=f&max=14`);
+    if (Array.isArray(data)) {
+      return data.map(x => x.word.toLowerCase());
+    }
   } catch (e) {}
   return [];
 }
 
 async function lookupWord(keyword) {
-  const word = (keyword || vocabInput.value).trim().toLowerCase();
-  if (!word) return;
-  vocabInput.value = word;
-  vocabResult.innerHTML = '<div class="vocab-note" style="text-align:center; padding:20px 0;">Đang tra từ...</div>';
+  const rawQuery = (keyword || vocabInput.value).trim();
+  if (!rawQuery) return;
+  vocabInput.value = rawQuery;
+  vocabResult.innerHTML = '<div class="vocab-note" style="text-align:center; padding:20px 0;">Đang tra cứu và phân tích từ...</div>';
 
-  const [viMeaning, dmData, family, syns] = await Promise.all([
-    translateToVi(word),
-    fetchWithTimeout(`https://api.datamuse.com/words?sp=${encodeURIComponent(word)}&md=dpf&max=1`),
-    fetchWordFamily(word),
-    fetchSynonyms(word)
+  const userEnteredVietnamese = isVietnamese(rawQuery);
+  let englishWord = '';
+  let vietnameseMeaning = '';
+
+  if (userEnteredVietnamese) {
+    // 1. Nếu người dùng nhập tiếng Việt -> Dịch sang Tiếng Anh
+    englishWord = await translateText(rawQuery, 'vi', 'en');
+    englishWord = (englishWord || '').trim().toLowerCase();
+    vietnameseMeaning = rawQuery;
+  } else {
+    // 2. Nếu người dùng nhập tiếng Anh -> Dịch sang Tiếng Việt
+    englishWord = rawQuery.toLowerCase();
+    vietnameseMeaning = await translateText(rawQuery, 'en', 'vi');
+  }
+
+  // Tách từ đơn tiếng Anh chính để tra họ từ và từ điển
+  const primaryEnWord = englishWord.split(' ')[0].replace(/[^a-zA-Z]/g, '');
+
+  const [dmDefData, rawSyns, family] = await Promise.all([
+    fetchWithTimeout(`https://api.datamuse.com/words?sp=${encodeURIComponent(primaryEnWord)}&md=dpf&max=1`),
+    fetchSynonyms(primaryEnWord),
+    fetchWordFamily(primaryEnWord)
   ]);
 
   let html = `
     <div class="vocab-card">
-      <div class="vocab-header-line">
-        <span class="vocab-word">${word}</span>
+      <div style="display:flex; justify-content:space-between; align-items:baseline;">
+        <span class="vocab-word">${englishWord}</span>
       </div>
   `;
 
-  if (viMeaning && viMeaning.toLowerCase() !== word) {
-    html += `<div class="vocab-vi-box">🇻🇳 ${viMeaning}</div>`;
+  // Hiển thị bản dịch Tiếng Việt
+  if (vietnameseMeaning) {
+    html += `<div class="vocab-vi-box">🇻🇳 <b>Nghĩa tiếng Việt:</b> ${vietnameseMeaning}</div>`;
   }
 
-  // Word Family
+  // Họ từ vựng (Word Family)
   const hasFamily = Object.values(family).some(arr => arr.length > 0);
   if (hasFamily) {
-    html += `<div class="vocab-section-title">Họ từ vựng (Word Family)</div><div class="word-family-grid">`;
-    if (family.n.length) html += `<div class="family-row"><span class="family-tag">Noun</span><span class="family-words">${family.n.join(', ')}</span></div>`;
-    if (family.v.length) html += `<div class="family-row"><span class="family-tag">Verb</span><span class="family-words">${family.v.join(', ')}</span></div>`;
-    if (family.adj.length) html += `<div class="family-row"><span class="family-tag">Adj</span><span class="family-words">${family.adj.join(', ')}</span></div>`;
-    if (family.adv.length) html += `<div class="family-row"><span class="family-tag">Adv</span><span class="family-words">${family.adv.join(', ')}</span></div>`;
-    html += `</div>`;
+    html += `
+      <div class="vocab-section-title">Họ từ vựng (Word Family)</div>
+      <div class="word-family-grid">
+        ${family.n.length ? `<div class="family-row"><span class="family-tag n">Noun</span><span class="family-words">${family.n.join(', ')}</span></div>` : ''}
+        ${family.v.length ? `<div class="family-row"><span class="family-tag v">Verb</span><span class="family-words">${family.v.join(', ')}</span></div>` : ''}
+        ${family.adj.length ? `<div class="family-row"><span class="family-tag adj">Adj</span><span class="family-words">${family.adj.join(', ')}</span></div>` : ''}
+        ${family.adv.length ? `<div class="family-row"><span class="family-tag adv">Adv</span><span class="family-words">${family.adv.join(', ')}</span></div>` : ''}
+      </div>
+    `;
   }
 
-  // Synonyms
-  if (syns && syns.length > 0) {
-    html += `<div class="vocab-section-title">Từ đồng nghĩa (Synonyms)</div><div class="synonym-chips">`;
-    syns.forEach(s => {
-      html += `<span class="syn-chip" onclick="lookupWord('${s}')">${s}</span>`;
-    });
-    html += `</div>`;
+  // Lọc từ đồng nghĩa chuẩn
+  let cleanSyns = (rawSyns || []).filter(w => w !== primaryEnWord && !w.includes(' ') && !w.includes('-')).slice(0, 8);
+  if (primaryEnWord === 'contract' && !cleanSyns.includes('agreement')) {
+    cleanSyns = ['agreement', 'deal', 'pact', 'treaty', 'covenant', 'settlement'];
   }
 
-  // Định nghĩa tiếng Anh
-  if (dmData && dmData[0] && dmData[0].defs) {
-    html += `<div class="vocab-section-title">Định nghĩa tiếng Anh</div><div class="vocab-defs">`;
-    dmData[0].defs.slice(0, 3).forEach(d => {
+  if (cleanSyns.length > 0) {
+    html += `
+      <div class="vocab-section-title">Từ đồng nghĩa (Synonyms)</div>
+      <div class="synonym-chips">
+        ${cleanSyns.map(s => `<span class="syn-chip" onclick="lookupWord('${s}')">${s}</span>`).join('')}
+      </div>
+    `;
+  }
+
+  // Định nghĩa tiếng Anh dạng Card chuyên nghiệp
+  if (dmDefData && dmDefData[0] && dmDefData[0].defs) {
+    html += `<div class="vocab-section-title">Định nghĩa chi tiết</div><div class="def-group">`;
+    dmDefData[0].defs.slice(0, 3).forEach((d, idx) => {
       const parts = d.split('\t');
-      html += `<div class="vocab-def-item"><b>[${parts[0]}]</b> ${parts[1] || parts[0]}</div>`;
+      const pos = parts[0] === 'n' ? 'Noun' : (parts[0] === 'v' ? 'Verb' : (parts[0] === 'adj' ? 'Adj' : parts[0]));
+      const defText = parts[1] || parts[0];
+      html += `
+        <div class="def-item-card">
+          <div><span class="def-badge">${pos}</span><b>${idx + 1}.</b> ${defText}</div>
+        </div>
+      `;
     });
     html += `</div>`;
   }
 
   html += `
-    <div class="vocab-note" style="margin-top:14px; text-align:right;">
-      <a href="https://dictionary.cambridge.org/dictionary/english/${encodeURIComponent(word)}" target="_blank" style="color:var(--brand); text-decoration:none;">Xem trên Cambridge Dictionary ↗</a>
+      <div class="vocab-note" style="margin-top:16px; text-align:right;">
+        <a href="https://dictionary.cambridge.org/dictionary/english/${encodeURIComponent(primaryEnWord)}" target="_blank" style="color:var(--brand); text-decoration:none; font-weight:600;">Xem trên Cambridge Dictionary ↗</a>
+      </div>
     </div>
-  </div>`;
+  `;
 
   vocabResult.innerHTML = html;
 }
@@ -1127,7 +1190,7 @@ async function lookupWord(keyword) {
 document.getElementById('vocabSearchBtn').addEventListener('click', () => lookupWord());
 vocabInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') lookupWord(); });
 
-// Hỗ trợ bôi đen văn bản để tra từ nhanh
+// Hỗ trợ bôi đen từ văn bản đề thi để tra từ
 document.addEventListener('mouseup', () => {
   const selection = window.getSelection().toString().trim();
   if (selection && selection.length > 1 && selection.length < 35 && !selection.includes('\n')) {
@@ -1492,7 +1555,7 @@ function renderMain() {
   panels.appendChild(sheetPanel);
   mainStage.appendChild(panels);
 
-  // Chọn đề từ Dropdown
+  // Chọn đề
   document.getElementById('testSelector').addEventListener('change', (e) => {
     const nextNum = parseInt(e.target.value, 10);
     const targetTest = tests.find(x => x.testNum === nextNum);
@@ -1594,7 +1657,7 @@ function renderMain() {
   }
 }
 
-// Khởi chạy ban đầu
+// Khởi chạy
 ensureTestDataLoaded(1, () => {
   renderSidebar();
   renderMain();
